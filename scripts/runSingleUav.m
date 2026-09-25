@@ -30,7 +30,7 @@ maximumAltitudeM = max(-points(:,3));
 
 requiredObstacleClearanceM = ...
     cfg.vehicle.radiusM ...
-    + cfg.safety.minimumObstacleDistanceM;
+    + cfg.safety.minimumSurfaceClearanceM;
 
 fprintf("Simulation completed.\n");
 fprintf("Final position: [%.2f, %.2f, %.2f] m\n", finalPosition);

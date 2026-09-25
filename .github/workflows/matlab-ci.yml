@@ -38,10 +38,10 @@ jobs:
             Control_System_Toolbox
             Stateflow
 
-      - name: Run single-UAV acceptance simulation
+      - name: Run single-UAV sim with data pipeline
         uses: matlab-actions/run-command@v3
         with:
           command: |
             proj = openProject(pwd);
             set(groot, "defaultFigureVisible", "off");
-            run(fullfile(proj.RootFolder, "scripts", "runSingleUav.m"));
+            run(fullfile(proj.RootFolder, "scripts", "captureNominalSingleUavRun.m"));
