@@ -45,3 +45,6 @@ results/
 # Simulink generated build folders
 *_ert_rtw/
 *_grt_rtw/
+
+# Reproducible Simulation Data
+data/processed

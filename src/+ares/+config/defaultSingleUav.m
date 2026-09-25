@@ -24,11 +24,10 @@ cfg.mission.waypointsNed = [
     ];
 
 cfg.safety.maxHorizontalSpeedMps = 3.0;
-cfg.safety.minimumClearanceM = 1.5;
 cfg.safety.brakingDecelerationMps2 = 2.0;
 cfg.safety.sensorLatencySeconds = 0.2;
 cfg.safety.additionalMarginM = 0.5;
-cfg.safety.minimumObstacleDistanceM = 1.0;
+cfg.safety.minimumSurfaceClearanceM = 1.0;
 
 cfg.acceptance.finalWaypointToleranceM = 1.0;
 cfg.acceptance.minimumAltitudeM = 5.0;
