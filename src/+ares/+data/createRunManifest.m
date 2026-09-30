@@ -1,13 +1,14 @@
-function manifest = createRunManifest(projectRoot, modelName, scenarioName)
+function manifest = createRunManifest( ...
+        projectRoot, modelName, scenarioName, configuration)
 
 arguments
     projectRoot (1,1) string
     modelName (1,1) string = "ares_single_uav_top"
     scenarioName (1,1) string = "nominal-single-uav"
+    configuration (1,1) struct = ares.config.defaultSingleUav()
 end
 
 contract = ares.data.defaultDataContract();
-cfg = ares.config.defaultSingleUav();
 
 createdAt = datetime( ...
     "now", "TimeZone", "UTC", "Format", "yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
@@ -42,6 +43,6 @@ end
 manifest.repository.isDirty = ...
     gitStatusCode ~= 0 || strlength(strtrim(string(gitOutput))) > 0;
 
-manifest.configuration = cfg;
+manifest.configuration = configuration;
 
 end
