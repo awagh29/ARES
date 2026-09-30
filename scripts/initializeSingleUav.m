@@ -1,5 +1,12 @@
-cfg = ares.config.defaultSingleUav();
+if exist("SingleUavConfigOverride", "var")
+    cfg = SingleUavConfigOverride;
 
+    clear SingleUavConfigOverride;
+else
+    cfg = ares.config.defaultSingleUav();
+end
+
+LidarEnabled = logical(cfg.sensors.lidar.enabled);
 UAVSampleTime = cfg.simulation.sampleTime;
 DroneMass = cfg.vehicle.massKg;
 Gravity = cfg.vehicle.gravityMps2;

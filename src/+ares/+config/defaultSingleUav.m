@@ -35,4 +35,6 @@ cfg.acceptance.maximumAltitudeM = 9.0;
 
 cfg.avoidance.planningSafetyDistanceM = 1.5;
 
+cfg.sensors.lidar.enabled = true;
+
 end
