@@ -7,6 +7,20 @@ else
 end
 
 LidarEnabled = logical(cfg.sensors.lidar.enabled);
+
+if exist("SingleUavLidarScheduleOverride", "var")
+
+    LidarEnableSchedule = SingleUavLidarScheduleOverride;
+
+    clear SingleUavLidarScheduleOverride;
+
+else
+    simulationStopTime = double(cfg.simulation.stopTime);
+
+    LidarEnableSchedule = timeseries( ...
+        double([LidarEnabled; LidarEnabled]), ...
+        [0; simulationStopTime]);
+end
 UAVSampleTime = cfg.simulation.sampleTime;
 DroneMass = cfg.vehicle.massKg;
 Gravity = cfg.vehicle.gravityMps2;
@@ -63,7 +77,11 @@ uavSensor( ...
 
 ObstaclePositions = [
     10  0
-    20 10
+    15 15
+    10 20
+    5 15
+    22 18
+    15 25
     10 20
     ];
 

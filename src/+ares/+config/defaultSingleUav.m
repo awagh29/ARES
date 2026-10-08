@@ -18,12 +18,10 @@ cfg.mission.initialPositionNed = [0 0 -7];
 
 cfg.mission.waypointsNed = [
     0   0  -7
-    0  20  -7
-    20  20  -7
-    20   0  -7
+    30   35  -7
     ];
 
-cfg.safety.maxHorizontalSpeedMps = 3.0;
+cfg.safety.maxHorizontalSpeedMps = 5.0;
 cfg.safety.brakingDecelerationMps2 = 2.0;
 cfg.safety.sensorLatencySeconds = 0.2;
 cfg.safety.additionalMarginM = 0.5;
