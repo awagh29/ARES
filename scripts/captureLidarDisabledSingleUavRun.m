@@ -23,10 +23,7 @@ failureIdentifier = "";
 failureMessage = "";
 
 try
-    run(fullfile( ...
-        projectRoot, ...
-        "scripts", ...
-        "runSingleUav.m"));
+    run(fullfile(projectRoot, "scripts", "runSingleUav.m"));
 
 catch simulationError
     simulationCompleted = ...
@@ -51,17 +48,13 @@ catch simulationError
         failureMessage);
 end
 
-assert(~LidarEnabled, ...
-    "LiDAR was not disabled during the experiment.");
+assert(~LidarEnabled, "LiDAR was not disabled during the experiment.");
 
-manifest.groundTruth.faultEndTime_s = ...
-    simOut.tout(end);
+manifest.groundTruth.faultEndTime_s = simOut.tout(end);
 
-manifest.outcome.safetyChecksPassed = ...
-    safetyChecksPassed;
+manifest.outcome.safetyChecksPassed = safetyChecksPassed;
 
-manifest.outcome.failureIdentifier = ...
-    failureIdentifier;
+manifest.outcome.failureIdentifier = failureIdentifier;
 
 manifest.outcome.failureMessage = ...
     failureMessage;
