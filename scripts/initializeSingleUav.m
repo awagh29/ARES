@@ -1,10 +1,14 @@
 if exist("SingleUavConfigOverride", "var")
     cfg = SingleUavConfigOverride;
-
     clear SingleUavConfigOverride;
 else
     cfg = ares.config.defaultSingleUav();
 end
+
+initializerDirectory = fileparts(mfilename("fullpath"));
+
+run(fullfile(initializerDirectory, ...
+    "setupSingleUavBusObjects.m"));
 
 LidarEnabled = logical(cfg.sensors.lidar.enabled);
 

@@ -13,11 +13,9 @@ if sampleCount == 0
         "The timeseries contains no samples.");
 end
 
-% [channels x 1 x samples].
 if size(rawValues, ndims(rawValues)) == sampleCount
     values = reshape(rawValues, [], sampleCount).';
 
-    % Also support ordinary [samples x channels] data.
 elseif size(rawValues, 1) == sampleCount
     values = reshape(rawValues, sampleCount, []);
 
