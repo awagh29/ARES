@@ -1,5 +1,4 @@
 function telemetryPath = saveRawTelemetry(projectRoot, telemetry)
-%SAVERAWTELEMETRY Saves telemetry beside its matching run manifest.
 
 arguments
     projectRoot (1,1) string
@@ -20,8 +19,7 @@ for fieldName = requiredFields'
     end
 end
 
-runFolder = fullfile( ...
-    projectRoot, ...
+runFolder = fullfile(projectRoot, ...
     "data", ...
     "raw", ...
     telemetry.runId);
@@ -47,7 +45,8 @@ if string(savedManifest.schemaVersion) ~= ...
         "Manifest and telemetry schema versions do not match.");
 end
 
-telemetryPath = fullfile(runFolder, "telemetry.mat");
+filename = savedManifest.simulation.scenarioName + "_telemetry" + ".mat";
+telemetryPath = fullfile(runFolder, filename);
 
 if isfile(telemetryPath)
     error("ARES:TelemetryAlreadyExists", ...
