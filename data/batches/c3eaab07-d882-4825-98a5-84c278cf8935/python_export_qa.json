@@ -1,0 +1,579 @@
+{
+  "schemaVersion": "ares-python-export-qa-v1",
+  "batchPath": "A:\\Projects\\ares\\data\\batches\\c3eaab07-d882-4825-98a5-84c278cf8935",
+  "software": {
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "h5py": "3.16.0"
+  },
+  "exporterSha256": "1800867f5510bcc42c8d23fe7400439d7f0d5b36c6cbc5bb918703a6bf0e87f4",
+  "sourceIndexSha256": "021698a0c157d9a08f423d666a0e8cc1b2b2b991addb7549cf920684a0c7abb9",
+  "sourceDatasetQaSha256": "d94d35a03fd9f98737af81f29933b78c06ddec0afe2568f7b928042db6e94246",
+  "partialTestExport": false,
+  "completedRuns": 80,
+  "exportedRuns": 80,
+  "totalScans": 19185,
+  "allExportChecksPassed": true,
+  "files": [
+    {
+      "runId": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\episode.npz",
+      "npzSha256": "dc30f9fa3623a09be8d923d0e798391dfe17cf9bffb9118cd558e8910341b842",
+      "sourceEpisodeSha256": "7b0b6741eb04f411e4135a4b9c3dbafda7c9ee5818993de65f6001be8fa6acc1",
+      "scanCount": 302
+    },
+    {
+      "runId": "23c6555d-55a9-43f8-85d4-0f1d8565366f",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\23c6555d-55a9-43f8-85d4-0f1d8565366f\\episode.npz",
+      "npzSha256": "6884e5e6bf59e45492755a288d35bed25e12f661a36b52518f66bcb74fb3c3b6",
+      "sourceEpisodeSha256": "08f130378055384f8263ce635c50b8b2a3a4bb3265ce697d966cafb0e4c59d51",
+      "scanCount": 316
+    },
+    {
+      "runId": "81651fd8-6933-470c-9a44-c3e378151a7b",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\81651fd8-6933-470c-9a44-c3e378151a7b\\episode.npz",
+      "npzSha256": "a5368779f65a2880d1cf1857499a73b052274bad251d453d7f255c959a1d2226",
+      "sourceEpisodeSha256": "f5e5f6436c2fe295c450eceeb6512306c9d31206ed1ca4258d607e6b7fb65501",
+      "scanCount": 302
+    },
+    {
+      "runId": "c11f789e-9939-4343-ab73-7b1d8a17b7f6",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\c11f789e-9939-4343-ab73-7b1d8a17b7f6\\episode.npz",
+      "npzSha256": "aaa74f811f49c0798479d6fb025d0eafb50f842cc26dfafc969fbabb0bf624c0",
+      "sourceEpisodeSha256": "f8c50a789c87729d3f88efcebd6e2e47ff6248e94ef7c6e79bd716ea4d334f8f",
+      "scanCount": 329
+    },
+    {
+      "runId": "c9ad6707-7861-4b9d-a63f-30d64206ae6c",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\c9ad6707-7861-4b9d-a63f-30d64206ae6c\\episode.npz",
+      "npzSha256": "9d42264759c3910564028abfc74ad55282ce558bfdd2092a48f4ae0339782fe0",
+      "sourceEpisodeSha256": "f8c9e069d32313dbc53c3677ae9667be191425a2cf3ccdaf5a5fbe8b7d684637",
+      "scanCount": 395
+    },
+    {
+      "runId": "793b7cde-276d-47a8-b1b7-d6d05069f6dc",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\793b7cde-276d-47a8-b1b7-d6d05069f6dc\\episode.npz",
+      "npzSha256": "41e150a9e372d12e87fa15954583de2233caf8a979a6e03e90ce01d81315bb97",
+      "sourceEpisodeSha256": "3aa5a6b63aa95e3c51904c9f94a4b5e461e2f3c248a9b806a289fc1b539776b1",
+      "scanCount": 405
+    },
+    {
+      "runId": "bd1c0834-67ef-4abd-ab89-6a2c6d40e2b1",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\bd1c0834-67ef-4abd-ab89-6a2c6d40e2b1\\episode.npz",
+      "npzSha256": "32c508736f3f0077b5a6c0b6db6ab882cd13a840d646bc174d4ce26d60f409c5",
+      "sourceEpisodeSha256": "bf549de87ef708e7dd40652f3a0a647565356a848170ee0a3963ebc78a232681",
+      "scanCount": 311
+    },
+    {
+      "runId": "69010f2a-5ceb-454d-bfc8-eb7c8a2c46a2",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\69010f2a-5ceb-454d-bfc8-eb7c8a2c46a2\\episode.npz",
+      "npzSha256": "fc23e1528c8a47dfc13503fb8259b6001abfccee6518ddd2377a25b6e86da2d3",
+      "sourceEpisodeSha256": "0adefc171cb2c18e2042915bcccb24d3e7fde5d8928f086aae1a126ae292d011",
+      "scanCount": 296
+    },
+    {
+      "runId": "4ebf327d-1aee-409d-8608-9985d29f1e67",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\4ebf327d-1aee-409d-8608-9985d29f1e67\\episode.npz",
+      "npzSha256": "b47e4ca257c581858490aaaa682d1f52328683283be5e182115f23b0c0b6f4f6",
+      "sourceEpisodeSha256": "845a5ae97a6fb7ef4000e992d012a93ec0b991ede5520f815eac8b73fab0d6b6",
+      "scanCount": 306
+    },
+    {
+      "runId": "a38773df-3f7a-4800-a646-071eee247b96",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\a38773df-3f7a-4800-a646-071eee247b96\\episode.npz",
+      "npzSha256": "5dd916a13fecd843fbd14f1285f4a9895509bb805c030776dda109feb097e332",
+      "sourceEpisodeSha256": "9e2c5b4e640c1d808b3a41028f78cd78def134bf76c36c67c7e56a1b15ff94ab",
+      "scanCount": 307
+    },
+    {
+      "runId": "7b912088-bc34-4f41-8eea-2ba50a4c4627",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\7b912088-bc34-4f41-8eea-2ba50a4c4627\\episode.npz",
+      "npzSha256": "67e110703091653cd6cdb7e523af33f384d392990dba6ef4596b1a1a8c51a05c",
+      "sourceEpisodeSha256": "d7d97d18a4cb59bf31ded445dcce3c2d658aecec62b05d010fca7d23c0b75460",
+      "scanCount": 285
+    },
+    {
+      "runId": "9e597da8-e54a-4b13-a711-ffb1972eaa8b",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\9e597da8-e54a-4b13-a711-ffb1972eaa8b\\episode.npz",
+      "npzSha256": "79f24627a246fd97d9c6f054933552b85c0e1f2d2085d0673b2815f6acdb4144",
+      "sourceEpisodeSha256": "4a12749a29bec72f270cbd0912055ab377546c6e4363834c05b73c1353254f09",
+      "scanCount": 290
+    },
+    {
+      "runId": "0c69c9da-e744-4d82-88de-42efef5e9cf5",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\0c69c9da-e744-4d82-88de-42efef5e9cf5\\episode.npz",
+      "npzSha256": "f75792b4c23cf941f03e0678f59ee3f4ab2eae74534f466fe667a3ecf7788cf7",
+      "sourceEpisodeSha256": "f535170ceae6d0ce7cf31708385d7e543b187a4b55427680ea040e94189b3d47",
+      "scanCount": 247
+    },
+    {
+      "runId": "74ef59f3-3b02-4d6e-b706-6ea18b791fc1",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\74ef59f3-3b02-4d6e-b706-6ea18b791fc1\\episode.npz",
+      "npzSha256": "ee51dd5f5e06ef08a3a10fecb482d6f384c1c8087ca044c6d64a9c2f4f842ebe",
+      "sourceEpisodeSha256": "c9bae9104dccb9f05c6bbcb6e99f51da400f5f05873c2d228121713261b31840",
+      "scanCount": 273
+    },
+    {
+      "runId": "a2f0d33c-8904-4968-bf9c-c5793e05c60c",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\a2f0d33c-8904-4968-bf9c-c5793e05c60c\\episode.npz",
+      "npzSha256": "d94c799d2f7ca37265d2485327f9ed17a41e0570045f0b7b942eda1e9f361e51",
+      "sourceEpisodeSha256": "62ef7d5becb4cb6fd3b22727f86c2296c744ca9a575f3cf95a8c9ce6dec2d6af",
+      "scanCount": 268
+    },
+    {
+      "runId": "33a18f85-215c-4d83-90c1-9613c253204a",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\33a18f85-215c-4d83-90c1-9613c253204a\\episode.npz",
+      "npzSha256": "d29b1082bce12332194f6214c7d07005e775de84b3ea9127e315690c75554254",
+      "sourceEpisodeSha256": "29ff38e5008383a4c4ac20e29225306928329e8e4759754341487d090d9dd139",
+      "scanCount": 277
+    },
+    {
+      "runId": "8ec02a18-b444-4642-b8ab-69c9418cf859",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\8ec02a18-b444-4642-b8ab-69c9418cf859\\episode.npz",
+      "npzSha256": "8cd40335185aad91e576893fd3c99b1bb155622b4e1288b605fa4b83f4f3b626",
+      "sourceEpisodeSha256": "667a77e75a5a57a607d91464fd143c2e00e81669370104aab846f98d5d20933e",
+      "scanCount": 267
+    },
+    {
+      "runId": "a4821c4c-8cc0-4be0-9652-5420505b88e9",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\a4821c4c-8cc0-4be0-9652-5420505b88e9\\episode.npz",
+      "npzSha256": "96f548eb69690dfc05021eb25315804f956d11c32639af5ee4bf2a0d539ea303",
+      "sourceEpisodeSha256": "0bb2e7507449e35777fa4e16a3507d3bfc79c68caea58d4514385a8be0f10f5a",
+      "scanCount": 293
+    },
+    {
+      "runId": "cf4c824e-b01a-445b-967e-bc9ba10596f2",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\cf4c824e-b01a-445b-967e-bc9ba10596f2\\episode.npz",
+      "npzSha256": "a694fd8ba5f97c30c7aca8d7af9cef168d79d732dd9f62b22837d6da6cdd73b0",
+      "sourceEpisodeSha256": "73fbf60eff43d1253332c44be22f30a622446d4678bdec284dc9d1a58a250d3c",
+      "scanCount": 268
+    },
+    {
+      "runId": "778e1cc7-7abd-4cb5-a87e-bd0654999ad1",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\778e1cc7-7abd-4cb5-a87e-bd0654999ad1\\episode.npz",
+      "npzSha256": "aa18e4f4f6d3f9f5a99a53202903b5a20482af4e9175ee6add4ad61604a6e22b",
+      "sourceEpisodeSha256": "69adc6a008c60a009a130d2d6f511698900fadfc3d60b3cd9f1ac23f5a0d8a72",
+      "scanCount": 355
+    },
+    {
+      "runId": "06266dbb-d8d4-457f-bfbf-0651b30811f7",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\06266dbb-d8d4-457f-bfbf-0651b30811f7\\episode.npz",
+      "npzSha256": "3f3dc7f18c43e8b9ada889420e5013ffe447bfd8d48cc82abf1cc67b0e8d5adf",
+      "sourceEpisodeSha256": "156af5baef0917159bcc97140d0f8ed71c75a12b5ef7c6e9bcb8d347e98fe894",
+      "scanCount": 304
+    },
+    {
+      "runId": "9a3b16ba-b744-493c-8e82-ab08d7a363ff",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\9a3b16ba-b744-493c-8e82-ab08d7a363ff\\episode.npz",
+      "npzSha256": "64d495af8e49af9d926c1e61a4bb4d4534ce40b693d14bc9b57708da740c952b",
+      "sourceEpisodeSha256": "03074e317d770e002bf26b00c83aba9a9baa8078c16f5c50e7a315d188baa54a",
+      "scanCount": 309
+    },
+    {
+      "runId": "20dc4364-2b33-4dea-a399-4fef2c3d4178",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\20dc4364-2b33-4dea-a399-4fef2c3d4178\\episode.npz",
+      "npzSha256": "adde57ae17ff7f5a51989b171da4b65b7a2d1c85d36e7ed2acb75baf496c8776",
+      "sourceEpisodeSha256": "761460dc31d2b585f61e2e1f56e2a0e36090c8d85b668f8ade4b196cf096a8e9",
+      "scanCount": 259
+    },
+    {
+      "runId": "d0e1068c-c299-419d-ae51-b5633fcf4094",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\d0e1068c-c299-419d-ae51-b5633fcf4094\\episode.npz",
+      "npzSha256": "abd32fed0b49dad84ce429ce8ce9e45db589a0b595f11c31f5db8736a65ae176",
+      "sourceEpisodeSha256": "f20d14f8b8e6255fb6b7c35ac487dbb0b004ed9e170cd76a0dc8d6b9f00b04d1",
+      "scanCount": 244
+    },
+    {
+      "runId": "64c0a77c-1cb0-409d-9ba0-c2a1ff6f32a6",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\64c0a77c-1cb0-409d-9ba0-c2a1ff6f32a6\\episode.npz",
+      "npzSha256": "049a734c447d47401a0ba39bd17a6c4dfefda5e989cdbb2e6550a57b327b3011",
+      "sourceEpisodeSha256": "da22479b8d25ebba3ef058c12974151d007201ada92ee21905fc22b38b8eb74d",
+      "scanCount": 244
+    },
+    {
+      "runId": "f06db9ed-0cea-4d33-aeb5-259da0fefb7d",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\f06db9ed-0cea-4d33-aeb5-259da0fefb7d\\episode.npz",
+      "npzSha256": "af8160aa6402bd694e6bf6ef1ee54952b411a98d6bbdaf78afd3f68d36b3e655",
+      "sourceEpisodeSha256": "f2198ca6e59f63dd5407bad11e5331f70e3487db0b3f2a36c7d563a2e2a0b167",
+      "scanCount": 236
+    },
+    {
+      "runId": "ad45bf3a-ef67-47df-bac9-fb466e841209",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\ad45bf3a-ef67-47df-bac9-fb466e841209\\episode.npz",
+      "npzSha256": "7801c5d4121f4faff54e97a3ed2484589d060e007b2ddf041724570ab2aa9342",
+      "sourceEpisodeSha256": "4597b7cb97a2d0bd1af3635587c9c55b5615dd4cdd87db7ca5ff792f1bcebe20",
+      "scanCount": 245
+    },
+    {
+      "runId": "1ac47c00-7ec9-4c8c-98b6-7663e08512bd",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\1ac47c00-7ec9-4c8c-98b6-7663e08512bd\\episode.npz",
+      "npzSha256": "c4dbb6de9d4c3569a15a2550c02abc9f9d00cab7b7bcd3b7557cd9f1ac961daf",
+      "sourceEpisodeSha256": "9f6b4ba6c65a1a350f8ffea09abf0789f743a9ab178c87b7c5945fa95bc550bd",
+      "scanCount": 246
+    },
+    {
+      "runId": "44ca6829-f1a3-4583-aa37-f0b6a5e60883",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\44ca6829-f1a3-4583-aa37-f0b6a5e60883\\episode.npz",
+      "npzSha256": "16c8ada7e7ac730dfb700d9a108161f5c0b6cb0161158ad2d86c76145e426fc4",
+      "sourceEpisodeSha256": "bbf4bb557684026910b08cefa6570f4d07d7c242ef8aaa0baa08c43b3a2b6aac",
+      "scanCount": 257
+    },
+    {
+      "runId": "52851b8d-f914-4a0e-928b-1e2f7d003f3b",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\52851b8d-f914-4a0e-928b-1e2f7d003f3b\\episode.npz",
+      "npzSha256": "3cb11f44fab2d26c3c244807fce10bb26bd188976b085932fa5892b0a0a18467",
+      "sourceEpisodeSha256": "5088d532f52eaf898a52b2d143f3aa89f2c7c6d489e5298163a59c3b479d1689",
+      "scanCount": 224
+    },
+    {
+      "runId": "e7b548bc-4f5a-4dcb-9d71-205319a3b609",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\e7b548bc-4f5a-4dcb-9d71-205319a3b609\\episode.npz",
+      "npzSha256": "5978535992d1321fce075eb38c967a13ad45d31903557260b154e0655ec6ec3a",
+      "sourceEpisodeSha256": "90d894a17f8849b5a55879af463175252b29176e88622ecc2e3397ac38990bfd",
+      "scanCount": 220
+    },
+    {
+      "runId": "7a7f62d9-9add-4e9d-8382-34fcf7319e47",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\7a7f62d9-9add-4e9d-8382-34fcf7319e47\\episode.npz",
+      "npzSha256": "c590088d0d3a5de800abd4e59868a3c38c379b1706dc6b362814984b641266a5",
+      "sourceEpisodeSha256": "474ac60efffa043feb197d52f888d7e5b13d41c0fe19371ecd2409229c543ba2",
+      "scanCount": 215
+    },
+    {
+      "runId": "bd51e4d7-99f5-43d4-88b0-35def0451d54",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\bd51e4d7-99f5-43d4-88b0-35def0451d54\\episode.npz",
+      "npzSha256": "d1ed79852732e54dbacfdb2a7b97c27bb97689174769efb39e927af3a691d755",
+      "sourceEpisodeSha256": "1cba11b542fb52133102e9ce7295694026a8a75604fb5be26b90295ddb6e3b28",
+      "scanCount": 214
+    },
+    {
+      "runId": "a469dba9-c5c1-4876-994a-a2b5e68396ed",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\a469dba9-c5c1-4876-994a-a2b5e68396ed\\episode.npz",
+      "npzSha256": "5929e6aec68e36736b6895fb4138162cd4ffca54c4a6b776df4527ee14a1c775",
+      "sourceEpisodeSha256": "15b79bb0ad0c4e562e6b27df0374604cd1be7fa493f6620171c25d5e3c45dea4",
+      "scanCount": 212
+    },
+    {
+      "runId": "219d2145-9771-4c71-96e8-4541d8d403dc",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\219d2145-9771-4c71-96e8-4541d8d403dc\\episode.npz",
+      "npzSha256": "d307c3bff2f81828ef26d361fdc57ed0633206121614c9b9593d3ac699c7ef61",
+      "sourceEpisodeSha256": "9155e85acb7d5a742dcb3273accbc12da0c94767a4648bdbc327e3ca08a89db5",
+      "scanCount": 202
+    },
+    {
+      "runId": "8ff6c9fc-3120-4fad-bad0-7f38ae8acfe3",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\8ff6c9fc-3120-4fad-bad0-7f38ae8acfe3\\episode.npz",
+      "npzSha256": "eb899582a082153584ebfd9093af2ce4bab31bdcafc746010d18742f9af60c15",
+      "sourceEpisodeSha256": "3f1fd665b4b0e0b5929561031fd394c29abb7293eb65894487321fd29728dad9",
+      "scanCount": 197
+    },
+    {
+      "runId": "389845b6-44bd-4b93-8f1b-3b09e2c3f08c",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\389845b6-44bd-4b93-8f1b-3b09e2c3f08c\\episode.npz",
+      "npzSha256": "38ea5bd8b5b78d7c2708dbd7318f20adc0b756854d2d1590c61a8f5f45dc4d20",
+      "sourceEpisodeSha256": "0c7532054d5dc8cb0d6a88dafe7aabe50aad5ef2cea557c4bd625069908183c5",
+      "scanCount": 196
+    },
+    {
+      "runId": "47ddd551-981a-4d59-8c9a-e273c047b8b1",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\47ddd551-981a-4d59-8c9a-e273c047b8b1\\episode.npz",
+      "npzSha256": "a65fdf0351201507ef2cd46144a8838a9ab78267ac3be4e4d683a7546d9f09d9",
+      "sourceEpisodeSha256": "5389709d711001e59613b5b5afb422d768579966201786b10326f220d53107e3",
+      "scanCount": 195
+    },
+    {
+      "runId": "4ec4a23f-a68d-4a24-be9b-c87697bd74ca",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\4ec4a23f-a68d-4a24-be9b-c87697bd74ca\\episode.npz",
+      "npzSha256": "11ed9467f2aa1a344473031d08b270353320001fe1871cf491a2feda9ef8d2d4",
+      "sourceEpisodeSha256": "921b73f4f76916412c6c529cedf97c7b8751706bce243de2844a0e8d15aaa35b",
+      "scanCount": 195
+    },
+    {
+      "runId": "141831e8-14b1-4848-a249-9efcd1dc0bad",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\141831e8-14b1-4848-a249-9efcd1dc0bad\\episode.npz",
+      "npzSha256": "8837d7e116a5104c077cdae03c9485b36fe1141d31a0f42bdbfc6d0f8fa47555",
+      "sourceEpisodeSha256": "bd1a5b7b83f7d341ec0bd29ac85ddb73bb7b7cf95aa9efe48a56b6c0f5c0d170",
+      "scanCount": 199
+    },
+    {
+      "runId": "183fc8d7-95a6-463a-b453-8267c046fa63",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\183fc8d7-95a6-463a-b453-8267c046fa63\\episode.npz",
+      "npzSha256": "084bb0787084dc94ec35ca122b24b4c348065553e76f34a7171e2516faea486f",
+      "sourceEpisodeSha256": "c17aed1a0ceee1f6ea74be9887e535eaacfd0f8f8a6ca66b497d898da5c9c5a5",
+      "scanCount": 312
+    },
+    {
+      "runId": "8dc88f10-ed87-481c-80a0-8d02f7ddf3ce",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\8dc88f10-ed87-481c-80a0-8d02f7ddf3ce\\episode.npz",
+      "npzSha256": "8e9b3d91eadf9a2bce31e78db3867701eb03f8a9da1e3e9e3c5208ceac4f41fb",
+      "sourceEpisodeSha256": "9691db4242906d62d6688d32c0519cf1575894c9aef54ce9025cf8f672f7c970",
+      "scanCount": 311
+    },
+    {
+      "runId": "cd511447-1742-4715-9b8f-1423bb9fa8d5",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\cd511447-1742-4715-9b8f-1423bb9fa8d5\\episode.npz",
+      "npzSha256": "edb329d2d8aca606778a03f4609e9b0ef7f39344ddab0ef24acd0457b1746ade",
+      "sourceEpisodeSha256": "964bceef5af86677f7859bd7059e95cb02aa21985b86bc6b33c30d78928ec5d7",
+      "scanCount": 312
+    },
+    {
+      "runId": "64163f62-d561-458e-967b-bd27fe12f834",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\64163f62-d561-458e-967b-bd27fe12f834\\episode.npz",
+      "npzSha256": "f2bd7914a345abb5415eddf9f97b011f20cd40cabaecd4fe93d66b3d225638cf",
+      "sourceEpisodeSha256": "d41ca0d026c9da732bc5dd71011bdb58de6918c20ce8399ab7090c537866170c",
+      "scanCount": 276
+    },
+    {
+      "runId": "e723ba0d-5da2-45d1-8f66-6e06d0c32cf9",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\e723ba0d-5da2-45d1-8f66-6e06d0c32cf9\\episode.npz",
+      "npzSha256": "177f0851164ed986af9b706b071464f82518c3eff71914ca354b856485e89866",
+      "sourceEpisodeSha256": "9528783566d7d21d4791d3ef0faa205e229f6735d49e1c97c0a51639fdfa73ad",
+      "scanCount": 271
+    },
+    {
+      "runId": "6f3bd976-4e74-47c0-892a-2b2e836acff3",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\6f3bd976-4e74-47c0-892a-2b2e836acff3\\episode.npz",
+      "npzSha256": "6ebcce0ee63ffc2fb40acf073f288f996d9a1918edf7267536febd04b9a13758",
+      "sourceEpisodeSha256": "44a16313f688f569248a27c9772d61c218f52af1ec5d6098c060300db2d87d4e",
+      "scanCount": 274
+    },
+    {
+      "runId": "5ac370b8-a977-42f5-8056-d0e74435fe3c",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\5ac370b8-a977-42f5-8056-d0e74435fe3c\\episode.npz",
+      "npzSha256": "a86bfa30a9d990a83d1957174b0c2bd8d047f913185d4ee79d320312e1be67ad",
+      "sourceEpisodeSha256": "1dfd16de4eb3c2d6bb46b3059f5234f2508ba67cab09c23a724e12e1956186ff",
+      "scanCount": 269
+    },
+    {
+      "runId": "472388a9-a707-4908-8240-22bf24313f1a",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\472388a9-a707-4908-8240-22bf24313f1a\\episode.npz",
+      "npzSha256": "5f12c75bb303fb4a82dbb84e249b20df7df7c3f99974830c6aa552843a4ad8b2",
+      "sourceEpisodeSha256": "0a375a959f5ad83cf5264355b1a898966605363ba2736837991b50e244fff9ee",
+      "scanCount": 258
+    },
+    {
+      "runId": "8ab09b19-ad0c-4ede-a1ac-ec67339725ef",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\8ab09b19-ad0c-4ede-a1ac-ec67339725ef\\episode.npz",
+      "npzSha256": "965a9e5855f306e5b93cca5e9916721284c16851e6a3289abad67689d035b9ee",
+      "sourceEpisodeSha256": "a10cfd4ee8a8c4adc77cbaf7626a8c48ba48fbff275ecc56a509a40562016042",
+      "scanCount": 263
+    },
+    {
+      "runId": "b0a27e7b-d8a3-45ec-bf59-4c3579ebd910",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\b0a27e7b-d8a3-45ec-bf59-4c3579ebd910\\episode.npz",
+      "npzSha256": "c81379c6b4fbeee7e0edc9c6396d6e8ae66b265f96aa5cc77e309c54ba98f3a0",
+      "sourceEpisodeSha256": "a9ce6016bb8768f474282f1c58ab2b4fb1a10d6a843d007c04401ef3c1da3926",
+      "scanCount": 271
+    },
+    {
+      "runId": "e2b23748-a9d5-4270-82c3-2bf638357e60",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\e2b23748-a9d5-4270-82c3-2bf638357e60\\episode.npz",
+      "npzSha256": "29fd642624146a14e4acfbb79ed97293eccea00df4987a78b750968bcaedbb13",
+      "sourceEpisodeSha256": "668ed8718f19209bd4ae838fcff2414e3d8a4b0a3c434983a113fd9d39340945",
+      "scanCount": 223
+    },
+    {
+      "runId": "7200e319-8e45-4f5c-9fd8-bb04c5b1c26b",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\7200e319-8e45-4f5c-9fd8-bb04c5b1c26b\\episode.npz",
+      "npzSha256": "2efc5fc46f0f26c4757ecee19872c93f78db721c091215a9f874367a9027a8db",
+      "sourceEpisodeSha256": "df8e55ca1457075486452953e42bc12565a8699ca488f53d8cf88386030dd296",
+      "scanCount": 218
+    },
+    {
+      "runId": "2d44ab43-bb05-4e6f-9d16-795e1118e193",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\2d44ab43-bb05-4e6f-9d16-795e1118e193\\episode.npz",
+      "npzSha256": "6e7dd5865bc814d198e19d9bafd92de9a3fe8521d9a2c00f8bd8fb1344ff3e5b",
+      "sourceEpisodeSha256": "71f472590745c265875c5bec377ad793c99db6e1154842da8934c9b0e795123b",
+      "scanCount": 217
+    },
+    {
+      "runId": "9f19ea54-9508-484b-9c8c-2e1617d838a9",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\9f19ea54-9508-484b-9c8c-2e1617d838a9\\episode.npz",
+      "npzSha256": "c589b5a35c8465e9f865035fe9e1b84f03e771424ec80a5c0b87665dfc0d2f3f",
+      "sourceEpisodeSha256": "c639a6324be3e7949e508fc49f7dce5b7d4996628bf25c1ec4529e4bbd6174b7",
+      "scanCount": 214
+    },
+    {
+      "runId": "bf8d5d64-81f3-482a-b561-58fab2cabf5d",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\bf8d5d64-81f3-482a-b561-58fab2cabf5d\\episode.npz",
+      "npzSha256": "c31354e44b0f769e79e5a267baa579cae7611fffa7827823d8dccf5542f93e0e",
+      "sourceEpisodeSha256": "f42cb510a547bb5be6f42d1717e3277af444f3ebf969b51e845d4ad5dd698aa1",
+      "scanCount": 210
+    },
+    {
+      "runId": "3cc38b09-fe8c-4e4e-a2ff-0282ba9e7486",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\3cc38b09-fe8c-4e4e-a2ff-0282ba9e7486\\episode.npz",
+      "npzSha256": "e6a03bfd7019b0fdd3393c2b535fb2d75e6cf5c30f55e0ec3ad19bc10a704c01",
+      "sourceEpisodeSha256": "f0ff7b2a687b293d35946806203393b652fb0b9714e413b686d51536a63c5465",
+      "scanCount": 206
+    },
+    {
+      "runId": "f65a886d-a6d0-4a6c-adac-908fb98f3dcf",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\f65a886d-a6d0-4a6c-adac-908fb98f3dcf\\episode.npz",
+      "npzSha256": "2007d13c54dfef611800bd931cf86e108d71b1c58ba7ac8a5d05a6b71ca936bc",
+      "sourceEpisodeSha256": "c29b83564aa1af3462ddcbbcaafa72e8af5efae89144678875a02d18daaaf86e",
+      "scanCount": 205
+    },
+    {
+      "runId": "8d6522a9-7fa6-4900-bc8e-de2351cbaf02",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\8d6522a9-7fa6-4900-bc8e-de2351cbaf02\\episode.npz",
+      "npzSha256": "e19c35f39958bdef5b5feaa9507bb6e7cdd4e8aa955e5a2b6e8c927934de1ce8",
+      "sourceEpisodeSha256": "05176b1c29c8567a1f667a7a2afffaccc1f7753f3d699dbc059728be2464c8a8",
+      "scanCount": 201
+    },
+    {
+      "runId": "2f2b03cd-1ef0-4188-b05c-7a48ea9bb6de",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\2f2b03cd-1ef0-4188-b05c-7a48ea9bb6de\\episode.npz",
+      "npzSha256": "b163b291a494277a3a171b9f35d6806842f279afb52a06a5f031d195a6a95e91",
+      "sourceEpisodeSha256": "ed88d3ae3627b47184996824f6678a97be391cd0cd8ae6e28a2da65ce356ce4c",
+      "scanCount": 200
+    },
+    {
+      "runId": "f8d38e14-ae64-4b8b-9501-6cd1867a5121",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\f8d38e14-ae64-4b8b-9501-6cd1867a5121\\episode.npz",
+      "npzSha256": "0108e2e972474d288f034486c436c100ac23a9144bcac33047c63589ac973779",
+      "sourceEpisodeSha256": "1e02c1ad9fb6259adf3ffb2a621279052cc2d12f1a4cd8d612c39fbc51f8aeeb",
+      "scanCount": 198
+    },
+    {
+      "runId": "373b962f-a29e-4be1-ad44-353fd59fd72a",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\373b962f-a29e-4be1-ad44-353fd59fd72a\\episode.npz",
+      "npzSha256": "4d1e57bb28e804c99cb1f01724f77e3366fe2815a66262699c7cb04dff734c85",
+      "sourceEpisodeSha256": "8bb04be2b0d2fd5a8bd2b45e3c27091256a192051d53d463b1d642d0012a05a5",
+      "scanCount": 191
+    },
+    {
+      "runId": "765b2a2d-d1c2-490a-8a3a-e73f64eddb41",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\765b2a2d-d1c2-490a-8a3a-e73f64eddb41\\episode.npz",
+      "npzSha256": "2eb6d3e19bef76ee89ab9eb4ea3316e03449513b39f6a545c7cb5a1348217049",
+      "sourceEpisodeSha256": "81c70beb1661ca698f914cfd8be54b2003bf9b46f011f7b3d30cbb2e69824ddd",
+      "scanCount": 187
+    },
+    {
+      "runId": "9005a073-b7fe-425d-b2ec-06258117baac",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\9005a073-b7fe-425d-b2ec-06258117baac\\episode.npz",
+      "npzSha256": "4a6ff298f4ef8b24f995010b8db401a3fec2b045f9682bfc3a5c7baa0aff8804",
+      "sourceEpisodeSha256": "4a8f679499fc359ab51b1ded7c7f82252fa335e65f5da48df5abf787be5b2003",
+      "scanCount": 188
+    },
+    {
+      "runId": "62a287a8-1b25-44fc-8ee5-85e0b9c70e00",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\62a287a8-1b25-44fc-8ee5-85e0b9c70e00\\episode.npz",
+      "npzSha256": "51cb03ce587455196bd83d57b6d634cea2637dec59f97115b73b52592bbdcb1d",
+      "sourceEpisodeSha256": "464ce2375c9aa3e6097c6a69a0c1813d94c52cbf3f5a13122fa1fd6e2e3ac9a3",
+      "scanCount": 185
+    },
+    {
+      "runId": "fd1e6670-8fad-40be-9fab-a67b4277be16",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\fd1e6670-8fad-40be-9fab-a67b4277be16\\episode.npz",
+      "npzSha256": "2e8d08a179043dcb5478b95a606d2a39e43e8cee297bb94f70f80fafc85f5394",
+      "sourceEpisodeSha256": "a555f24b529238edce32961edbdbb4535db2615fdd28bdb07d11a17f65e22241",
+      "scanCount": 179
+    },
+    {
+      "runId": "fc9ec0b6-6be1-45ca-ac50-fbeb5ca3c265",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\fc9ec0b6-6be1-45ca-ac50-fbeb5ca3c265\\episode.npz",
+      "npzSha256": "cb272eec1d94160531260e9c92b2d855f336cbafb66e248d371e4354319e25df",
+      "sourceEpisodeSha256": "f31b5e6d1035f12fff94bc4b12ff5eaf413ccb6cd4912161027088994702ba82",
+      "scanCount": 182
+    },
+    {
+      "runId": "2fe80ad6-2fa9-494c-bbdb-c787222a21f2",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\2fe80ad6-2fa9-494c-bbdb-c787222a21f2\\episode.npz",
+      "npzSha256": "943a97692e8e2b0c5ac8fe3100dafdfa4420184cd0cc6ce3440a3e2c96f4f8e2",
+      "sourceEpisodeSha256": "339027a651b8309d9852bccfe97513f50738dcff90d8582f443d9b19ba4d8340",
+      "scanCount": 181
+    },
+    {
+      "runId": "01134b84-8609-48ae-a44b-8fab65149adc",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\01134b84-8609-48ae-a44b-8fab65149adc\\episode.npz",
+      "npzSha256": "30bccd68b3232969ead83446a7d51c91fe02f6c8b8e43dc7a7f10f6b6e697026",
+      "sourceEpisodeSha256": "4a69df9bb19d98bbeebb9c8a278e5216aa24143174d98b8b3258589eda593108",
+      "scanCount": 179
+    },
+    {
+      "runId": "5efe5fa1-8473-49f8-8064-4c767561447c",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\5efe5fa1-8473-49f8-8064-4c767561447c\\episode.npz",
+      "npzSha256": "a6e74bf35695782bb9da383466073f377ba12fc00b2416f69d3cfcb25216df77",
+      "sourceEpisodeSha256": "04b205cebba47b3607fff23988fffe6f0da80eb5e39c0191623f60f575d7b688",
+      "scanCount": 177
+    },
+    {
+      "runId": "10a47d54-5014-4bdf-a943-692705562a78",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\10a47d54-5014-4bdf-a943-692705562a78\\episode.npz",
+      "npzSha256": "20b0b02b0aad9f00524e9e9ee7245c774a4dc9779b90363a2c7317042a523eef",
+      "sourceEpisodeSha256": "f31441c7a538852386e97d1400d2621e28df3062b1bde95cb21e661c809ea5ab",
+      "scanCount": 178
+    },
+    {
+      "runId": "51f31091-61d0-466e-b45c-daf12a85e15a",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\51f31091-61d0-466e-b45c-daf12a85e15a\\episode.npz",
+      "npzSha256": "756ba89bd1291b1c48235a2a519b1abf8ed297075dd3f8c43811bd821323ab9a",
+      "sourceEpisodeSha256": "3d277763a0796ed7e557c3f61f43100b3cbe6901c2db558202aabaed489ce4a8",
+      "scanCount": 177
+    },
+    {
+      "runId": "79f55bc6-bff1-4463-9c6b-7012e6628b10",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\79f55bc6-bff1-4463-9c6b-7012e6628b10\\episode.npz",
+      "npzSha256": "4f99e4ad7984d9629f86d78640e90cf8a19d49073f0a5d38d01168dab160f70f",
+      "sourceEpisodeSha256": "52c4b7d0b63148c53c97c6e71de6f6d917ff60d27510c0f4794d5afe4b136bc0",
+      "scanCount": 174
+    },
+    {
+      "runId": "60c61279-5d32-469a-9087-cb56237b65a6",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\60c61279-5d32-469a-9087-cb56237b65a6\\episode.npz",
+      "npzSha256": "26f31c7e3dc76ed6cd6dd08ca78d662824110bb20bd536404d23bf3c52b053fd",
+      "sourceEpisodeSha256": "af83038bc0118de77cd7d5de8262ebc9891fbad3fa3cebdee9d0c5f26ce3e7f9",
+      "scanCount": 170
+    },
+    {
+      "runId": "e85cd94c-d6af-4850-881b-a73457a2c9c2",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\e85cd94c-d6af-4850-881b-a73457a2c9c2\\episode.npz",
+      "npzSha256": "266dda80887922980a799a6b464121fdd1d75974e86cdd829bf645f5aa37931c",
+      "sourceEpisodeSha256": "d870577ee158ef91c79665288e42960909347ed09ed40d9d8b023f1dae6fd5b3",
+      "scanCount": 173
+    },
+    {
+      "runId": "035a2f47-0add-4b88-b273-9da0c02f5dd1",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\035a2f47-0add-4b88-b273-9da0c02f5dd1\\episode.npz",
+      "npzSha256": "0e61fd1c8b37d81e4790ad5dafd0bc1773a735e56386386968c161bd0a8c6533",
+      "sourceEpisodeSha256": "c74157d188939a2d3107be6f37ec3f350bab5ba15e4b4c1c87a6b2ef630b2aab",
+      "scanCount": 175
+    },
+    {
+      "runId": "2909b382-e157-48cc-ad39-e1623fcada48",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\2909b382-e157-48cc-ad39-e1623fcada48\\episode.npz",
+      "npzSha256": "637fad38f86e3222a0054fbdbb662c35d547722953a62edd5bc80520d7a49615",
+      "sourceEpisodeSha256": "38ce360a937a1df1d877ca7ec920912435925583c9c0749b3d16611fde9078b2",
+      "scanCount": 177
+    },
+    {
+      "runId": "ec561202-d454-493e-a76d-2f4fc9eaa0f7",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\ec561202-d454-493e-a76d-2f4fc9eaa0f7\\episode.npz",
+      "npzSha256": "39135fbf2eb55b8c2571c1af756dafd76a685f9fbb7de3562e4c0d22d8cb2cb8",
+      "sourceEpisodeSha256": "7a5bf138440c96704e082461b165b2f07c8e5610db7c992b491e071b8e8546c1",
+      "scanCount": 177
+    },
+    {
+      "runId": "362de5b7-10d6-43b0-901e-3f5f9c388e94",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\362de5b7-10d6-43b0-901e-3f5f9c388e94\\episode.npz",
+      "npzSha256": "b2b351ad7c45e7cb779bc581447e9b4f7e0526660b3af66337534ad35e882cde",
+      "sourceEpisodeSha256": "280364d7fb1d65121de0a84717ddb2673e23a11d7e0621909be2ed05c3da1888",
+      "scanCount": 173
+    },
+    {
+      "runId": "f5db98ff-a546-4617-9c69-c55098c5ccf6",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\f5db98ff-a546-4617-9c69-c55098c5ccf6\\episode.npz",
+      "npzSha256": "761ec5d69686212e112a94dceeed71f702341e79aa324046e8a1775eb6dea6e1",
+      "sourceEpisodeSha256": "804f5a876457c062a91cfa6d0b633117d1990ddec96d821afca27bcde287c53c",
+      "scanCount": 174
+    },
+    {
+      "runId": "60e4ece9-4bae-4748-b989-79ec77868f54",
+      "npzPath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\60e4ece9-4bae-4748-b989-79ec77868f54\\episode.npz",
+      "npzSha256": "0f1faf1a0e8495e297baf665f5b880b31f0bc90fa2248c40f4a4d199d7cdac6c",
+      "sourceEpisodeSha256": "ac7a861aceb8390396fdba3abe9a7e054e91f2175150c7aa1fb0eff65e07c2a2",
+      "scanCount": 174
+    }
+  ]
+}
