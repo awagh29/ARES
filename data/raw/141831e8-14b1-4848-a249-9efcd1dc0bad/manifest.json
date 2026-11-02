@@ -1,0 +1,448 @@
+{
+  "schemaVersion": "2.0.0",
+  "runId": "141831e8-14b1-4848-a249-9efcd1dc0bad",
+  "createdAtUtc": "2026-11-02T09:58:09.268Z",
+  "system": {
+    "name": "ARES",
+    "vehicleScope": "single-uav"
+  },
+  "simulation": {
+    "modelName": "ares_single_uav_top",
+    "scenarioName": "lidar-on-axis-single-uav",
+    "coordinateFrame": "NED",
+    "timeBase": "simulation-time"
+  },
+  "software": {
+    "matlabRelease": "2026a",
+    "platform": "PCWIN64"
+  },
+  "repository": {
+    "commit": "f42c4ee1ce35b92e040663a5892b18f45408a637",
+    "isDirty": true
+  },
+  "configuration": {
+    "identity": {
+      "id": "uav_001"
+    },
+    "frames": {
+      "world": "world_ned",
+      "body": "uav_001/base_link",
+      "lidar": "uav_001/lidar_link"
+    },
+    "simulation": {
+      "sampleTime": 0.001,
+      "stopTime": 60
+    },
+    "vehicle": {
+      "massKg": 0.1,
+      "gravityMps2": 9.81,
+      "radiusM": 0.1
+    },
+    "mission": {
+      "initialPositionNed": [
+        29.927539064111048,
+        0,
+        -7
+      ],
+      "waypointsNed": [
+        [
+          29.927539064111048,
+          0,
+          -7
+        ],
+        [
+          30,
+          35,
+          -7
+        ]
+      ]
+    },
+    "safety": {
+      "maxHorizontalSpeedMps": 5,
+      "brakingDecelerationMps2": 2,
+      "sensorLatencySeconds": 0.2,
+      "additionalMarginM": 0.5,
+      "minimumSurfaceClearanceM": 1
+    },
+    "acceptance": {
+      "finalWaypointToleranceM": 1,
+      "minimumAltitudeM": 5,
+      "maximumAltitudeM": 9
+    },
+    "avoidance": {
+      "planningSafetyDistanceM": 1.5
+    },
+    "sensors": {
+      "lidar": {
+        "enabled": true
+      }
+    }
+  },
+  "experiment": {
+    "batchId": "c3eaab07-d882-4825-98a5-84c278cf8935",
+    "runIndex": 40,
+    "axis": "North",
+    "axisIndex": 40,
+    "randomSeed": 2.0261142E+7,
+    "samplingSeed": 2.0261102E+7,
+    "attempt": 1,
+    "scenarioType": "healthy-lidar-axis-start"
+  },
+  "groundTruth": {
+    "condition": "nominal-lidar-on",
+    "faultType": "none",
+    "faultActive": false,
+    "expectedMissionOutcome": "reach-goal-without-collision"
+  },
+  "static": {
+    "maximum_sensor_range_m": 7,
+    "nominal_observation_schema": "organized-lidar-range-vector-v1",
+    "nominal_observation_dimension": 10740,
+    "lidar_grid_size": [
+      15,
+      716
+    ],
+    "observation_channel_order": "elevation-index-fastest-then-azimuth-index",
+    "invalid_lidar_return_encoding": "maximum-range-with-validity-mask",
+    "initial_position_ned_m": [
+      29.927539064111048,
+      0,
+      -7
+    ],
+    "waypoints_ned_m": [
+      [
+        29.927539064111048,
+        0,
+        -7
+      ],
+      [
+        30,
+        35,
+        -7
+      ]
+    ],
+    "obstacle_centers_enu_m": [
+      [
+        10,
+        0
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        10,
+        20
+      ],
+      [
+        5,
+        15
+      ],
+      [
+        22,
+        18
+      ],
+      [
+        15,
+        25
+      ],
+      [
+        10,
+        20
+      ]
+    ],
+    "obstacle_centers_ned_m": [
+      [
+        0,
+        10
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        15,
+        5
+      ],
+      [
+        18,
+        22
+      ],
+      [
+        25,
+        15
+      ],
+      [
+        20,
+        10
+      ]
+    ],
+    "obstacle_width_m": 3,
+    "obstacle_height_m": 15,
+    "obstacle_mesh_reference_frame": "ENU",
+    "lidar_mounting_location_m": [
+      0,
+      0,
+      -0.4
+    ],
+    "lidar_mounting_angles_deg": [
+      0,
+      0,
+      180
+    ],
+    "lidar_points_frame": "sensor frame: x forward, y left, z up",
+    "state_truth_note": "Simulator ground truth; no estimator is present.",
+    "lidar_effective_block_parameters": {
+      "SensorName": {
+        "expression": "UAV/Lidar",
+        "value": "UAV/Lidar"
+      },
+      "MaxRange": {
+        "expression": "MaxRange",
+        "value": 7
+      },
+      "RangeAccuracy": {
+        "expression": "0.02",
+        "value": 0.02
+      },
+      "AzimuthLimits": {
+        "expression": "AzimuthLimits",
+        "value": [
+          -179,
+          179
+        ]
+      },
+      "AzimuthResolution": {
+        "expression": "AzimuthResolution",
+        "value": 0.5
+      },
+      "ElevationLimits": {
+        "expression": "ElevationLimits",
+        "value": [
+          -15,
+          15
+        ]
+      },
+      "ElevationResolution": {
+        "expression": "ElevationResolution",
+        "value": 2
+      },
+      "HasNoise": {
+        "expression": "off",
+        "value": "off"
+      },
+      "HasOrganizedOutput": {
+        "expression": "on",
+        "value": "on"
+      },
+      "SampleTime": {
+        "expression": "0.1",
+        "value": 0.1
+      }
+    }
+  },
+  "provenance": {
+    "matlabVersion": "26.1.0.3346908 (R2026a) Update 5",
+    "platform": "PCWIN64",
+    "toolboxes": [
+      {
+        "Name": "Aerospace Blockset",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Aerospace Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Control System Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "MATLAB",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "19-Nov-2025"
+      },
+      {
+        "Name": "Navigation Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Parallel Computing Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "ROS Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Sensor Fusion and Tracking Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Simulink",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Stateflow",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Statistics and Machine Learning Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "12-Jan-2026"
+      },
+      {
+        "Name": "UAV Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      }
+    ],
+    "files": [
+      {
+        "path": "models/ares_single_uav_top.slx",
+        "sha256": "f9984025b16439b5bb47cf7c723de2c20654abf5dfcb64b8321c965380041d10"
+      },
+      {
+        "path": "scripts/initializeSingleUav.m",
+        "sha256": "3a1c866b45bf11078805800f1725474b3fe72ec2ecffc0dec1eb0493c08a762f"
+      },
+      {
+        "path": "scripts/setupSingleUavBusObjects.m",
+        "sha256": "2786063f0f8daabaea71bac9028f3e0f2cf7d701837fe49a7fcd5b56dab1ee9d"
+      },
+      {
+        "path": "src/+ares/+config/defaultSingleUav.m",
+        "sha256": "9fc0282c089991d24323b06448694c37c9156321aba8d65be342ef483cc7f1de"
+      },
+      {
+        "path": "src/+ares/+data/extractRawTelemetry.m",
+        "sha256": "7a522a33f2b953a11d68aee0868c591785f12a57ebd5392a66be463b96b5516d"
+      },
+      {
+        "path": "src/+ares/+data/defaultDataContract.m",
+        "sha256": "0ee04271b86cbe9a5a94d8e3b0921b5570af10eee28b3c1c33a6bd538730342a"
+      },
+      {
+        "path": "src/+ares/+data/timeseriesToSignal.m",
+        "sha256": "8e3a971f01abd031b43417f7cad4b993dba7d59d111193281d2e5c4b4dcf13ee"
+      },
+      {
+        "path": "src/+ares/+data/createRunManifest.m",
+        "sha256": "d1fb2c1a11ed92ca394cb6d5573d6ae9d3d8efedd304a7294c9f08de60d9069e"
+      },
+      {
+        "path": "src/+ares/+data/saveRuntimeManifest.m",
+        "sha256": "58df34a83787cf8ce17963e1059efd950a38fa45b958641be998aaeb297bdf9a"
+      },
+      {
+        "path": "src/+ares/+data/saveRawTelemetry.m",
+        "sha256": "d07b5d04931d445d08f1079c8915a361efc8252e8af75052c34c9c23300a5bc8"
+      }
+    ],
+    "collectionCode": [
+      {
+        "name": "captureLidarAxisBatch",
+        "sha256": "3e5338c4bd25468bf8dd8621d53efd5a388155708a371741b88fa33e037e5953"
+      },
+      {
+        "name": "buildLidarEpisode",
+        "sha256": "9f572b7c11789a4fbf4465c02324227cd341058050f5ce3f84afa249a5da0d88"
+      },
+      {
+        "name": "ares.data.createAxisStartPlan",
+        "sha256": "fc1ea64ef5f017a96591c097258f3e85153fcf82c6bd4255d94d2f917551ae34"
+      },
+      {
+        "name": "ares.data.evaluateAxisRun",
+        "sha256": "3ec34de98f4c610ecbb0b815f4a8b4330284905f913ba4fccf45917e88ac2cf0"
+      }
+    ]
+  },
+  "metrics": {
+    "positionSampleCount": 19801,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      29.927539064111048,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      29.927539825439453,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      29.846426010131836,
+      35.082935333251953,
+      -7.2500252723693848
+    ],
+    "initialPositionErrorM": 7.6132840476361707E-7,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 0.30491945934791453,
+    "minimumAltitudeM": 6.9790434837341309,
+    "maximumAltitudeM": 7.2500252723693848,
+    "minimumObstacleCenterDistanceM": 3.3175249606087958,
+    "minimumObstacleClearanceM": 3.2175249606087957,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": false,
+    "nearCollisionOccurred": false,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": true,
+    "goalReachedAtTermination": true,
+    "firstGoalEntryTimeS": 19.278,
+    "durationS": 19.8,
+    "finalTimeS": 19.8,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 35.131257566317039,
+    "safetyChecksPassed": true,
+    "missionSuccess": true,
+    "terminationReason": "goal-reached",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "outcome": {
+    "safetyChecksPassed": true,
+    "missionSuccess": true,
+    "collisionOccurred": false,
+    "terminationReason": "goal-reached",
+    "instrumentationValid": true,
+    "failureIdentifier": "",
+    "failureMessage": ""
+  },
+  "runtime": {
+    "wallSeconds": 14.1553841,
+    "simulationSampleCount": 41028,
+    "completedAtUtc": "2026-11-02T09:58:23.596Z"
+  }
+}

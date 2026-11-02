@@ -1,0 +1,15 @@
+{
+  "runIndex": 4,
+  "runId": "c11f789e-9939-4343-ab73-7b1d8a17b7f6",
+  "attempt": 1,
+  "status": "instrumentation-failed",
+  "stage": "build-episode",
+  "completedAtUtc": "2026-11-02T09:52:30.807Z",
+  "wallSeconds": 48.9829153,
+  "failureIdentifier": "ARES:ResamplingOutsideTimeRange",
+  "failureMessage": "Signal lidar_enabled does not cover the full LiDAR timeline.",
+  "failureReport": "Error using assert\nSignal lidar_enabled does not cover the full LiDAR timeline.\n\nError in buildLidarEpisode>sample (line 219)\nassert(masterTime(1) >= nativeTime(1) && masterTime(end) <= nativeTime(end), ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nError in buildLidarEpisode (line 71)\nenabledAtScan = sample(signals.lidar_enabled, time_s, \"previous\", ...\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nError in captureLidarAxisBatch (line 207)\n        episode=buildLidarEpisode(telemetryPath,episodePath);\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nError in runLidarAxisWorker (line 14)\n[~,index]=captureLidarAxisBatch(projectRoot,ResumeBatchPath=batchPath, ...\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nError in aresWorker01 (line 4)\nrunLidarAxisWorker(projectRoot,batchPath,\"worker01\",1:20);\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nError in run (line 100)\nevalin('caller', strcat(scriptStem, ';'));\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "rawTelemetryPath": "A:\\Projects\\ares\\data\\raw\\c11f789e-9939-4343-ab73-7b1d8a17b7f6\\lidar-on-axis-single-uav_telemetry.mat",
+  "episodePath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\c11f789e-9939-4343-ab73-7b1d8a17b7f6\\lidar-on-axis-single-uav_lidar_episode.mat",
+  "scanTablePath": ""
+}
