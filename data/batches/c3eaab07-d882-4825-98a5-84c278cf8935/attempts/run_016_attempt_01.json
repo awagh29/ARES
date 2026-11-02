@@ -1,0 +1,15 @@
+{
+  "runIndex": 16,
+  "runId": "33a18f85-215c-4d83-90c1-9613c253204a",
+  "attempt": 1,
+  "status": "complete",
+  "stage": "complete",
+  "completedAtUtc": "2026-11-02T10:29:12.182Z",
+  "wallSeconds": 68.3889391,
+  "failureIdentifier": "",
+  "failureMessage": "",
+  "failureReport": "",
+  "rawTelemetryPath": "A:\\Projects\\ares\\data\\raw\\33a18f85-215c-4d83-90c1-9613c253204a\\lidar-on-axis-single-uav_telemetry.mat",
+  "episodePath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\33a18f85-215c-4d83-90c1-9613c253204a\\lidar-on-axis-single-uav_lidar_episode.mat",
+  "scanTablePath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\33a18f85-215c-4d83-90c1-9613c253204a\\scans.csv"
+}

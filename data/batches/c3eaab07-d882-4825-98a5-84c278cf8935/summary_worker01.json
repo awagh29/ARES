@@ -1,0 +1,10 @@
+{
+  "batchId": "c3eaab07-d882-4825-98a5-84c278cf8935",
+  "plannedRuns": 80,
+  "completedRuns": 20,
+  "instrumentationFailures": 0,
+  "missionSuccesses": 1,
+  "collisions": 0,
+  "totalScans": 6092,
+  "updatedAtUtc": "2026-11-02T10:31:35.812Z"
+}

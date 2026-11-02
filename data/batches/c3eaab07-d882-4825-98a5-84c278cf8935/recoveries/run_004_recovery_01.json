@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "lidar-axis-export-recovery-v1",
+  "batchId": "c3eaab07-d882-4825-98a5-84c278cf8935",
+  "runIndex": 4,
+  "runId": "c11f789e-9939-4343-ab73-7b1d8a17b7f6",
+  "recoveredAtUtc": "2026-11-02T10:13:36.626Z",
+  "workerCheckpoint": "checkpoint_worker01.mat",
+  "originalStatus": "instrumentation-failed",
+  "originalFailureIdentifier": "ARES:ResamplingOutsideTimeRange",
+  "originalFailureMessage": "Signal lidar_enabled does not cover the full LiDAR timeline.",
+  "attemptCountPreserved": 1,
+  "operation": "rebuild derived episode and scan summary from original saved raw telemetry",
+  "simulationRerun": false,
+  "newRunIdAllocated": false,
+  "rawTelemetryPath": "A:\\Projects\\ares\\data\\raw\\c11f789e-9939-4343-ab73-7b1d8a17b7f6\\lidar-on-axis-single-uav_telemetry.mat",
+  "rawTelemetrySha256": "a9c92a17fd49c0ab8aff1374864a6419879a98f09299739312fbcdcf20f0b32f",
+  "manifestPath": "A:\\Projects\\ares\\data\\raw\\c11f789e-9939-4343-ab73-7b1d8a17b7f6\\manifest.json",
+  "manifestSha256": "1119667c5a24bc15f8a992a19b072be7a74fbe1c74946bf074476f17ac642b7c",
+  "episodePath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\c11f789e-9939-4343-ab73-7b1d8a17b7f6\\lidar-on-axis-single-uav_lidar_episode.mat",
+  "scanTablePath": "A:\\Projects\\ares\\data\\processed\\lidar_episode_v1\\c11f789e-9939-4343-ab73-7b1d8a17b7f6\\scans.csv",
+  "episodeReused": false,
+  "scanTableReused": false,
+  "episodeBuilderPath": "A:\\Projects\\ares\\scripts\\buildLidarEpisode.m",
+  "episodeBuilderSha256": "74d8fd44a7ac7cd8ec3fd56e6809b478aee59c32dfffb64936a6495ea874f4ee",
+  "originalRunProvenance": {
+    "matlabVersion": "26.1.0.3346908 (R2026a) Update 5",
+    "platform": "PCWIN64",
+    "toolboxes": [
+      {
+        "Name": "Aerospace Blockset",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Aerospace Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Control System Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "MATLAB",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "19-Nov-2025"
+      },
+      {
+        "Name": "Navigation Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Parallel Computing Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "ROS Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Sensor Fusion and Tracking Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Simulink",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Stateflow",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      },
+      {
+        "Name": "Statistics and Machine Learning Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "12-Jan-2026"
+      },
+      {
+        "Name": "UAV Toolbox",
+        "Version": "26.1",
+        "Release": "(R2026a)",
+        "Date": "20-Nov-2025"
+      }
+    ],
+    "files": [
+      {
+        "path": "models/ares_single_uav_top.slx",
+        "sha256": "f9984025b16439b5bb47cf7c723de2c20654abf5dfcb64b8321c965380041d10"
+      },
+      {
+        "path": "scripts/initializeSingleUav.m",
+        "sha256": "3a1c866b45bf11078805800f1725474b3fe72ec2ecffc0dec1eb0493c08a762f"
+      },
+      {
+        "path": "scripts/setupSingleUavBusObjects.m",
+        "sha256": "2786063f0f8daabaea71bac9028f3e0f2cf7d701837fe49a7fcd5b56dab1ee9d"
+      },
+      {
+        "path": "src/+ares/+config/defaultSingleUav.m",
+        "sha256": "9fc0282c089991d24323b06448694c37c9156321aba8d65be342ef483cc7f1de"
+      },
+      {
+        "path": "src/+ares/+data/extractRawTelemetry.m",
+        "sha256": "7a522a33f2b953a11d68aee0868c591785f12a57ebd5392a66be463b96b5516d"
+      },
+      {
+        "path": "src/+ares/+data/defaultDataContract.m",
+        "sha256": "0ee04271b86cbe9a5a94d8e3b0921b5570af10eee28b3c1c33a6bd538730342a"
+      },
+      {
+        "path": "src/+ares/+data/timeseriesToSignal.m",
+        "sha256": "8e3a971f01abd031b43417f7cad4b993dba7d59d111193281d2e5c4b4dcf13ee"
+      },
+      {
+        "path": "src/+ares/+data/createRunManifest.m",
+        "sha256": "d1fb2c1a11ed92ca394cb6d5573d6ae9d3d8efedd304a7294c9f08de60d9069e"
+      },
+      {
+        "path": "src/+ares/+data/saveRuntimeManifest.m",
+        "sha256": "58df34a83787cf8ce17963e1059efd950a38fa45b958641be998aaeb297bdf9a"
+      },
+      {
+        "path": "src/+ares/+data/saveRawTelemetry.m",
+        "sha256": "d07b5d04931d445d08f1079c8915a361efc8252e8af75052c34c9c23300a5bc8"
+      }
+    ],
+    "collectionCode": [
+      {
+        "name": "captureLidarAxisBatch",
+        "sha256": "3e5338c4bd25468bf8dd8621d53efd5a388155708a371741b88fa33e037e5953"
+      },
+      {
+        "name": "buildLidarEpisode",
+        "sha256": "9f572b7c11789a4fbf4465c02324227cd341058050f5ce3f84afa249a5da0d88"
+      },
+      {
+        "name": "ares.data.createAxisStartPlan",
+        "sha256": "fc1ea64ef5f017a96591c097258f3e85153fcf82c6bd4255d94d2f917551ae34"
+      },
+      {
+        "name": "ares.data.evaluateAxisRun",
+        "sha256": "3ec34de98f4c610ecbb0b815f4a8b4330284905f913ba4fccf45917e88ac2cf0"
+      }
+    ]
+  },
+  "scanCount": 329,
+  "missionOutcomePreserved": {
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "collisionOccurred": false,
+    "terminationReason": "goal-reached",
+    "instrumentationValid": true,
+    "failureIdentifier": "",
+    "failureMessage": ""
+  }
+}
