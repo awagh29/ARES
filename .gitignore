@@ -2,6 +2,10 @@
 *.asv
 *.m~
 *.autosave
+
+# Python bytecode
+__pycache__/
+*.py[cod]
 *.slx.r*
 *.mdl.r*
 
