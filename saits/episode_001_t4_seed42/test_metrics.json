@@ -1,0 +1,19 @@
+{
+  "scored_timestep_count": 8,
+  "scored_distance_count": 56,
+  "distance_mae_m": 0.98388671875,
+  "distance_rmse_m": 1.0971175803144084,
+  "return_fraction_mae": 0.2573325974600656,
+  "persistence_distance_mae_m": 0.0,
+  "persistence_return_fraction_mae": 0.0,
+  "returning_sector_count": 0,
+  "target_no_return_only": true,
+  "distinct_target_rows": 1,
+  "obstacle_distance_overestimation_m": null,
+  "near_obstacle_overestimation_m": null,
+  "prediction_outside_physical_bounds_count": 31,
+  "metrics_use_unclipped_predictions": true,
+  "run_id": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "split_name": "test",
+  "best_epoch": 7
+}
