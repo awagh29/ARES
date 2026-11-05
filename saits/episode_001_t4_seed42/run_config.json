@@ -1,0 +1,255 @@
+{
+  "format_version": "ares-saits-endpoint-training-v1",
+  "config": {
+    "epochs": 200,
+    "batch_size": 128,
+    "device": "cuda",
+    "amp": true,
+    "seed": 42,
+    "d_model": 64,
+    "n_heads": 4,
+    "d_ff": 128,
+    "n_layers": 1,
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "auxiliary_weight": 0.1,
+    "huber_delta": 0.1,
+    "clip_grad_norm": 1.0,
+    "patience": 25,
+    "min_delta": 1e-05,
+    "lr_patience": 8,
+    "checkpoint_every": 10,
+    "log_every": 10
+  },
+  "model_kwargs": {
+    "n_steps": 50,
+    "n_features": 31,
+    "n_targets": 14,
+    "d_model": 64,
+    "n_heads": 4,
+    "d_ff": 128,
+    "n_layers": 1,
+    "dropout": 0.1
+  },
+  "initial_config": {
+    "epochs": 200,
+    "batch_size": 128,
+    "device": "cuda",
+    "amp": true,
+    "seed": 42,
+    "d_model": 64,
+    "n_heads": 4,
+    "d_ff": 128,
+    "n_layers": 1,
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "auxiliary_weight": 0.1,
+    "huber_delta": 0.1,
+    "clip_grad_norm": 1.0,
+    "patience": 25,
+    "min_delta": 1e-05,
+    "lr_patience": 8,
+    "checkpoint_every": 10,
+    "log_every": 10
+  },
+  "sessions": [
+    {
+      "started_at_utc": "2026-11-05T09:11:37.777055+00:00",
+      "start_epoch": 1,
+      "requested_epochs": 200,
+      "hardware": {
+        "torch": "2.11.0+cu130",
+        "numpy": "2.4.6",
+        "device_type": "cuda",
+        "effective_amp": true,
+        "mixed_precision_dtype": "float16",
+        "cuda_runtime": "13.0",
+        "note": "Seeded execution; bitwise equality across GPU/library versions is not guaranteed.",
+        "gpu": "Tesla T4",
+        "compute_capability": [
+          7,
+          5
+        ],
+        "gpu_memory_bytes": 15637086208
+      }
+    }
+  ],
+  "source_signature": {
+    "train_saits_t4.py": "92aa45562000314cf8ec64deb12d5d52c7417083a046522b579f94995a885cd8",
+    "saits_endpoint_model.py": "b5e1ce284fcee387ad628d777d171a06295fb6d436fc4cbaa3ff5648ca993a2c",
+    "lidar_reconstruction_data.py": "723a574e184388deac112f5314a6c411a37f7e663b1e32c130448243ffb8d528"
+  },
+  "hardware": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.4.6",
+    "device_type": "cuda",
+    "effective_amp": true,
+    "mixed_precision_dtype": "float16",
+    "cuda_runtime": "13.0",
+    "note": "Seeded execution; bitwise equality across GPU/library versions is not guaranteed.",
+    "gpu": "Tesla T4",
+    "compute_capability": [
+      7,
+      5
+    ],
+    "gpu_memory_bytes": 15637086208
+  },
+  "data_signature": {
+    "train": "1ccd52ee5cb932b340d1b2cf90b09fb0c47b5b1003561d7b7009e793b5ab96d5",
+    "validation": "9db3b6bde9246ea07b1a560a0793f7f23d09ae9972becdaa8210b485e76cc61a"
+  },
+  "run_id": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "train_window_count": 68,
+  "validation_window_count": 8,
+  "train_diagnostics": {
+    "seed": 42,
+    "n_outages": 3,
+    "duration_s": [
+      1.5,
+      3.0
+    ],
+    "warmup_s": 3.0,
+    "min_healthy_gap_s": 2.0,
+    "scan_period_s": 0.09999999999999964,
+    "n_sectors": 7,
+    "forward_half_angle_deg": 60.0,
+    "window_size": 50,
+    "min_scored_steps": 5,
+    "sector_body_bearing_edges_deg": [
+      -60.0,
+      -42.85714285714286,
+      -25.714285714285715,
+      -8.57142857142857,
+      8.57142857142857,
+      25.714285714285708,
+      42.85714285714286,
+      60.0
+    ],
+    "sector_beam_counts": [
+      510,
+      525,
+      510,
+      510,
+      510,
+      525,
+      510
+    ],
+    "sensor_mount_zyx_deg": [
+      0,
+      0,
+      180
+    ],
+    "target_units": [
+      "m",
+      "m",
+      "m",
+      "m",
+      "m",
+      "m",
+      "m",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction"
+    ],
+    "target_count": 14,
+    "input_count": 31,
+    "perturbation_type": "known-complete-lidar-outage",
+    "split_name": "train",
+    "raw_lidar_enabled_is_provenance": true,
+    "window_endpoint_sampling": "at-least-min_scored_steps-per-first-outage",
+    "scored_endpoint_count": 68,
+    "scored_endpoints_with_returns": 52,
+    "distinct_scored_target_rows": 53,
+    "scored_target_content": "contains-returns",
+    "constant_scored_target_columns": []
+  },
+  "validation_diagnostics": {
+    "seed": 42,
+    "n_outages": 1,
+    "duration_s": [
+      1.5,
+      3.0
+    ],
+    "warmup_s": 3.0,
+    "min_healthy_gap_s": 2.0,
+    "scan_period_s": 0.10000000000000142,
+    "n_sectors": 7,
+    "forward_half_angle_deg": 60.0,
+    "window_size": 50,
+    "min_scored_steps": 5,
+    "sector_body_bearing_edges_deg": [
+      -60.0,
+      -42.85714285714286,
+      -25.714285714285715,
+      -8.57142857142857,
+      8.57142857142857,
+      25.714285714285708,
+      42.85714285714286,
+      60.0
+    ],
+    "sector_beam_counts": [
+      510,
+      525,
+      510,
+      510,
+      510,
+      525,
+      510
+    ],
+    "sensor_mount_zyx_deg": [
+      0,
+      0,
+      180
+    ],
+    "target_units": [
+      "m",
+      "m",
+      "m",
+      "m",
+      "m",
+      "m",
+      "m",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction"
+    ],
+    "target_count": 14,
+    "input_count": 31,
+    "perturbation_type": "known-complete-lidar-outage",
+    "split_name": "validation",
+    "raw_lidar_enabled_is_provenance": true,
+    "window_endpoint_sampling": "at-least-min_scored_steps-per-first-outage",
+    "scored_endpoint_count": 8,
+    "scored_endpoints_with_returns": 0,
+    "distinct_scored_target_rows": 1,
+    "scored_target_content": "no-return-only",
+    "constant_scored_target_columns": [
+      "sector_00_distance_m",
+      "sector_01_distance_m",
+      "sector_02_distance_m",
+      "sector_03_distance_m",
+      "sector_04_distance_m",
+      "sector_05_distance_m",
+      "sector_06_distance_m",
+      "sector_00_return_fraction",
+      "sector_01_return_fraction",
+      "sector_02_return_fraction",
+      "sector_03_return_fraction",
+      "sector_04_return_fraction",
+      "sector_05_return_fraction",
+      "sector_06_return_fraction"
+    ]
+  },
+  "model_source_sha256": "b5e1ce284fcee387ad628d777d171a06295fb6d436fc4cbaa3ff5648ca993a2c",
+  "trainer_source_sha256": "92aa45562000314cf8ec64deb12d5d52c7417083a046522b579f94995a885cd8"
+}

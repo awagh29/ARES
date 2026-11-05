@@ -1,0 +1,46 @@
+{
+  "format_version": "ares-saits-endpoint-training-v1",
+  "best_epoch": 7,
+  "best_validation_mae_normalized": 0.23899896442890167,
+  "completed_epochs": 32,
+  "early_stopped": true,
+  "session_elapsed_seconds": 2.376885226000013,
+  "hardware": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.4.6",
+    "device_type": "cuda",
+    "effective_amp": true,
+    "mixed_precision_dtype": "float16",
+    "cuda_runtime": "13.0",
+    "note": "Seeded execution; bitwise equality across GPU/library versions is not guaranteed.",
+    "gpu": "Tesla T4",
+    "compute_capability": [
+      7,
+      5
+    ],
+    "gpu_memory_bytes": 15637086208
+  },
+  "validation": {
+    "scored_timestep_count": 8,
+    "scored_distance_count": 56,
+    "distance_mae_m": 1.30474853515625,
+    "distance_rmse_m": 1.7658563732359163,
+    "return_fraction_mae": 0.2916052682059152,
+    "persistence_distance_mae_m": 0.0,
+    "persistence_return_fraction_mae": 0.0,
+    "returning_sector_count": 0,
+    "target_no_return_only": true,
+    "distinct_target_rows": 1,
+    "obstacle_distance_overestimation_m": null,
+    "near_obstacle_overestimation_m": null,
+    "prediction_outside_physical_bounds_count": 26,
+    "metrics_use_unclipped_predictions": true,
+    "run_id": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+    "split_name": "validation",
+    "best_epoch": 7
+  },
+  "peak_cuda_allocated_mb": 47.19921875,
+  "test_used_for_model_selection": false,
+  "interpretation": "pipeline-check-only",
+  "completed_at_utc": "2026-11-05T09:11:40.157378+00:00"
+}
