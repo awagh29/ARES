@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "saits-intermittent-run-summary-v1",
+  "runId": "7d2225c0-b8ca-43a7-823f-594b2352aac4",
+  "createdAtUtc": "2026-11-08T10:50:13.336Z",
+  "artifactSha256": "6836ad5d287ff2872b013efa652bc60ebf09795a7460ce37d3d588c0a64a3739",
+  "faultSeed": 513,
+  "outageIntervalsS": [
+    [
+      3.5443486030280162,
+      5.1058226856548945
+    ],
+    [
+      10.356031289257292,
+      12.010370739258892
+    ],
+    [
+      14.974288494995,
+      16.549329689818645
+    ]
+  ],
+  "metrics": {
+    "positionSampleCount": 27701,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      30.010427474975586,
+      35.225444793701172,
+      -7.1486606597900391
+    ],
+    "initialPositionErrorM": 0,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 0.27024818040190418,
+    "minimumAltitudeM": 6.8387775421142578,
+    "maximumAltitudeM": 7.1703958511352539,
+    "minimumObstacleCenterDistanceM": -1.4250087738037109,
+    "minimumObstacleClearanceM": -1.525008773803711,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": true,
+    "nearCollisionOccurred": true,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": true,
+    "goalReachedAtTermination": true,
+    "firstGoalEntryTimeS": 27.079,
+    "durationS": 27.7,
+    "finalTimeS": 27.7,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 48.487000676706408,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "goal-reached",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "runtimeProof": {
+    "scanCount": 278,
+    "observedOutageCount": 3,
+    "observedRecoveryCount": 3,
+    "disabledLidarScanCount": 49,
+    "enabledLidarScanCount": 229,
+    "reconstructionUsedScanCount": 36,
+    "compiledInferenceScanCount": 36,
+    "compiledBackendSelected": true,
+    "warmupFallbackScanCount": 13,
+    "invalidPredictionFallbackScanCount": 0,
+    "controllerInfluencedScanCount": 36,
+    "controllerInfluencedDuringOutage": true,
+    "maximumUsedReferenceDifferenceM": 4.6696422021175268,
+    "totalInferenceSeconds": 0.042176,
+    "meanInferenceMilliseconds": 1.1715555555555559,
+    "maximumInferenceMilliseconds": 4.0169000000000006,
+    "oracleOutageScansWithReturns": 28,
+    "failedChecks": [],
+    "instrumentationChecksPassed": true
+  },
+  "safetyChecksPassed": false,
+  "missionSuccess": false,
+  "collisionOccurred": true,
+  "wallSeconds": 100.3980652,
+  "collisionDetectionMethod": "signed-3d-box-distance-at-native-position-samples",
+  "interpretation": "Online integration test; sector proxy observations are approximate and reconstruction use is not a safety guarantee."
+}

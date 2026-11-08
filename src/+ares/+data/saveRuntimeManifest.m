@@ -1,9 +1,12 @@
-function manifestPath = saveRuntimeManifest(projectRoot, manifest)
+function manifestPath = saveRuntimeManifest(projectRoot, manifest, dataSubdirectory)
 
 arguments
     projectRoot (1,1) string
     manifest (1,1) struct
+    dataSubdirectory (1,1) string = "raw"
 end
+
+validateDataSubdirectory(dataSubdirectory);
 
 requiredFields = [
     "schemaVersion"
@@ -19,7 +22,7 @@ for fieldName = requiredFields'
     end
 end
 
-runFolder = fullfile(projectRoot, "data", "raw", manifest.runId);
+runFolder = fullfile(projectRoot, "data", dataSubdirectory, manifest.runId);
 
 if isfolder(runFolder)
     error("ARES:RunAlreadyExists", ...
@@ -48,4 +51,11 @@ fileCleanup = onCleanup(@() fclose(fileId));
 fprintf(fileId, "%s", jsonText);
 clear fileCleanup;
 
+end
+
+function validateDataSubdirectory(value)
+valid = ~isempty(regexp(value,"^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$","once"));
+reserved = ~isempty(regexpi(value,"^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$","once"));
+assert(valid && ~reserved,"ARES:InvalidDataSubdirectory", ...
+    "Data subdirectory must be one safe folder name using letters, digits, underscores or hyphens.");
 end
