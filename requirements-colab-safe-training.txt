@@ -1,0 +1,8 @@
+# Additive dependencies: retain Colab's installed CUDA-enabled PyTorch wheel.
+# The trainer checks CUDA, AMP, FP64 QP/backward and plant gradients before fit.
+torch>=2.5
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+matplotlib>=3.8
+# Optional reconstruction-only ONNX export: install onnx separately.

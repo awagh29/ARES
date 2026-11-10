@@ -1,0 +1,647 @@
+{
+  "schemaVersion": "ares-guidance-dynamics-calibration-v1",
+  "calibrationComplete": true,
+  "createdAtUtc": "2026-11-09T11:33:02.954Z",
+  "parameters": {
+    "mass_kg": 0.1,
+    "gravity_mps2": 9.81,
+    "roll_kp": 3402.97,
+    "roll_kd": 116.67,
+    "pitch_kp": 3402.97,
+    "pitch_kd": 116.67,
+    "yaw_rate_gain": 1950,
+    "thrust_gain": 3900,
+    "roll_limit_rad": 0.43633231299858238,
+    "pitch_limit_rad": 0.43633231299858238,
+    "yaw_rate_limit_radps": 0.5
+  },
+  "state_order": [
+    "pN",
+    "pE",
+    "pD",
+    "vN",
+    "vE",
+    "vD",
+    "roll",
+    "pitch",
+    "yaw",
+    "body_p",
+    "body_q",
+    "body_r",
+    "actual_thrust"
+  ],
+  "command_order": [
+    "roll",
+    "pitch",
+    "Euler_yaw_rate",
+    "thrust"
+  ],
+  "reference": {
+    "public_api": "multirotor/derivative",
+    "matlab_release": "2026a",
+    "platform": "PCWIN64",
+    "model_path": "A:\\Projects\\ARES\\models\\ares_single_uav_top.slx",
+    "model_sha256": "f9984025b16439b5bb47cf7c723de2c20654abf5dfcb64b8321c965380041d10",
+    "solver_configured": "VariableStepAuto",
+    "reference_integrator": "ode15s",
+    "trajectory_max_step_s": 0.0001,
+    "tracking_max_step_s": 0.001,
+    "closed_loop_guidance_not_motor_hardware": true,
+    "derivative_source_path": "C:\\Program Files\\MATLAB\\R2026a\\toolbox\\uav\\uavmatlab\\+uav\\+internal\\+impl\\+multirotor\\GuidanceModel.m",
+    "derivative_source_sha256": "dc1a04f0d8a3a5b8886cf625eaec5c76ecdaae1bcf23745bb8ce00e730ef77f8",
+    "calibration_source_sha256": "813c0fcbf96d90c6f3dfaed3b25afd280192673673c9ef77a6923350d4bd8332"
+  },
+  "software_design_envelope": {
+    "acceleration_lower_mps2": [
+      -1,
+      -1,
+      -4
+    ],
+    "acceleration_upper_mps2": [
+      1,
+      1,
+      4
+    ],
+    "acceleration_slew_mps3": [
+      1,
+      1,
+      1
+    ],
+    "yaw_rate_limit_radps": 0.5,
+    "roll_limit_rad": 0.43633231299858238,
+    "pitch_limit_rad": 0.43633231299858238,
+    "policy_step_s": 0.1,
+    "truth_sample_step_s": 0.001,
+    "thrust_lower_n": 0.58100000000000007,
+    "thrust_upper_n": 1.6812885510665729,
+    "bounds_are_software_design_not_motor_hardware": true,
+    "nominal_policy": "new frozen differentiable goal/sector policy; original VFH/PID not replayed"
+  },
+  "tracking_error": {
+    "bound_dimension": "horizontal-XY",
+    "empirical_max_xy_mps2": 0.16924911456604624,
+    "xy_bound_mps2": 0.21924911456604623,
+    "bound_mps2": 0.21924911456604623,
+    "engineering_padding_mps2": 0.05,
+    "empirical_max_full3d_mps2": 9.81,
+    "full3d_bound_mps2": 9.8600000000000012,
+    "startup_max_xy_mps2": 0.15479965576172156,
+    "startup_max_full3d_mps2": 9.81,
+    "flight_ready_xy_bound_mps2": 0.21924911456604623,
+    "max_endpoint_xy_mps2": 0.0721507709037482,
+    "max_interval_average_xy_mps2": 0.077583385632056009,
+    "policy_step_s": 0.1,
+    "profile_count": 33,
+    "provenance": "empirical authoritative-ODE grid/ramped-command measurements plus declared engineering padding",
+    "certified": false,
+    "includes_zero_thrust_startup": true,
+    "between_grid_times_not_formally_bounded": true,
+    "coverage": {
+      "initial_position_ned_m": [
+        0,
+        0,
+        -7
+      ],
+      "initial_velocity_ned_mps": [
+        0,
+        0,
+        0
+      ],
+      "initial_roll_pitch_rad": [
+        0,
+        0
+      ],
+      "initial_body_rates_radps": [
+        0,
+        0,
+        0
+      ],
+      "virtual_acceleration_starts_at_zero": true,
+      "slew_limit_is_per_axis": true,
+      "maximum_increment_per_axis_mps2": 0.1,
+      "profile_family": "monotone ramps to 27-grid points plus yaw-rate and F=0 startup cases",
+      "arbitrary_command_histories_not_certified": true
+    }
+  },
+  "tracking_profiles": [
+    {
+      "target_acceleration_mps2": [
+        -1,
+        -1,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14425051194011765,
+      "maximum_full3d_error_mps2": 0.17549990838599128,
+      "maximum_endpoint_xy_error_mps2": 0.0028291557080024647,
+      "maximum_interval_average_xy_error_mps2": 0.047990709683755545,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        -1,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10200066362239309,
+      "maximum_full3d_error_mps2": 0.14282905344051333,
+      "maximum_endpoint_xy_error_mps2": 0.0020006636223930813,
+      "maximum_interval_average_xy_error_mps2": 0.033941280568425519,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        -1,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14425051194011765,
+      "maximum_full3d_error_mps2": 0.17549990838599128,
+      "maximum_endpoint_xy_error_mps2": 0.0028291557080024647,
+      "maximum_interval_average_xy_error_mps2": 0.047990709683755545,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        0,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10200066362239309,
+      "maximum_full3d_error_mps2": 0.14282905344051333,
+      "maximum_endpoint_xy_error_mps2": 0.0020006636223930813,
+      "maximum_interval_average_xy_error_mps2": 0.033941280568425519,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        0,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0,
+      "maximum_full3d_error_mps2": 0.10000000000000242,
+      "maximum_endpoint_xy_error_mps2": 0,
+      "maximum_interval_average_xy_error_mps2": 0,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        0,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10200066362239309,
+      "maximum_full3d_error_mps2": 0.14282905344051333,
+      "maximum_endpoint_xy_error_mps2": 0.0020006636223930813,
+      "maximum_interval_average_xy_error_mps2": 0.033941280568425519,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        1,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14425051194011765,
+      "maximum_full3d_error_mps2": 0.17549990838599128,
+      "maximum_endpoint_xy_error_mps2": 0.0028291557080024647,
+      "maximum_interval_average_xy_error_mps2": 0.047990709683755545,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        1,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10200066362239309,
+      "maximum_full3d_error_mps2": 0.14282905344051333,
+      "maximum_endpoint_xy_error_mps2": 0.0020006636223930813,
+      "maximum_interval_average_xy_error_mps2": 0.033941280568425519,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        1,
+        -4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14425051194011765,
+      "maximum_full3d_error_mps2": 0.17549990838599128,
+      "maximum_endpoint_xy_error_mps2": 0.0028291557080024647,
+      "maximum_interval_average_xy_error_mps2": 0.047990709683755545,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        -1,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14426448717951865,
+      "maximum_full3d_error_mps2": 0.14426451023510062,
+      "maximum_endpoint_xy_error_mps2": 0.0028431309679369274,
+      "maximum_interval_average_xy_error_mps2": 0.0484644378241174,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        -1,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10201110680899725,
+      "maximum_full3d_error_mps2": 0.10201111496608045,
+      "maximum_endpoint_xy_error_mps2": 0.0020111068089972151,
+      "maximum_interval_average_xy_error_mps2": 0.034276545581785778,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        -1,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14426448717951865,
+      "maximum_full3d_error_mps2": 0.14426451023510062,
+      "maximum_endpoint_xy_error_mps2": 0.0028431309679369274,
+      "maximum_interval_average_xy_error_mps2": 0.0484644378241174,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        0,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10201110680899725,
+      "maximum_full3d_error_mps2": 0.10201111496608045,
+      "maximum_endpoint_xy_error_mps2": 0.0020111068089972151,
+      "maximum_interval_average_xy_error_mps2": 0.034276545581785778,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        0,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0,
+      "maximum_full3d_error_mps2": 0,
+      "maximum_endpoint_xy_error_mps2": 0,
+      "maximum_interval_average_xy_error_mps2": 0,
+      "duration_s": 0.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        0,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10201110680899725,
+      "maximum_full3d_error_mps2": 0.10201111496608045,
+      "maximum_endpoint_xy_error_mps2": 0.0020111068089972151,
+      "maximum_interval_average_xy_error_mps2": 0.034276545581785778,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        1,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14426448717950904,
+      "maximum_full3d_error_mps2": 0.14426451023509101,
+      "maximum_endpoint_xy_error_mps2": 0.0028431309679273291,
+      "maximum_interval_average_xy_error_mps2": 0.048464437823900842,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        1,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.10201110680899725,
+      "maximum_full3d_error_mps2": 0.10201111496608045,
+      "maximum_endpoint_xy_error_mps2": 0.0020111068089972151,
+      "maximum_interval_average_xy_error_mps2": 0.034276545581785778,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        1,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.14426448717950904,
+      "maximum_full3d_error_mps2": 0.14426451023509101,
+      "maximum_endpoint_xy_error_mps2": 0.0028431309679273291,
+      "maximum_interval_average_xy_error_mps2": 0.048464437823900842,
+      "duration_s": 1.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        -1,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.15479965576172139,
+      "maximum_full3d_error_mps2": 0.17594319672227965,
+      "maximum_endpoint_xy_error_mps2": 0.0030587277842815961,
+      "maximum_interval_average_xy_error_mps2": 0.05217734763101986,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        -1,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.11060681696777297,
+      "maximum_full3d_error_mps2": 0.14311759564385218,
+      "maximum_endpoint_xy_error_mps2": 0.0021894076472599444,
+      "maximum_interval_average_xy_error_mps2": 0.03730305286418667,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        -1,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.15479965576172242,
+      "maximum_full3d_error_mps2": 0.17594319672227998,
+      "maximum_endpoint_xy_error_mps2": 0.0030587277842815961,
+      "maximum_interval_average_xy_error_mps2": 0.052177347631019867,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        0,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.11060681696777297,
+      "maximum_full3d_error_mps2": 0.14311759564385187,
+      "maximum_endpoint_xy_error_mps2": 0.0021894076472590562,
+      "maximum_interval_average_xy_error_mps2": 0.03730305286418556,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        0,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0,
+      "maximum_full3d_error_mps2": 0.10000000000000142,
+      "maximum_endpoint_xy_error_mps2": 0,
+      "maximum_interval_average_xy_error_mps2": 0,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        0,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.11060681696777297,
+      "maximum_full3d_error_mps2": 0.14311759564385218,
+      "maximum_endpoint_xy_error_mps2": 0.0021894076472599444,
+      "maximum_interval_average_xy_error_mps2": 0.03730305286418667,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        1,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.15479965576172139,
+      "maximum_full3d_error_mps2": 0.17594319672227965,
+      "maximum_endpoint_xy_error_mps2": 0.0030587277842815961,
+      "maximum_interval_average_xy_error_mps2": 0.05217734763101986,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        1,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.11060681696777297,
+      "maximum_full3d_error_mps2": 0.14311759564385187,
+      "maximum_endpoint_xy_error_mps2": 0.0021894076472590562,
+      "maximum_interval_average_xy_error_mps2": 0.03730305286418556,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        1,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.15479965576172242,
+      "maximum_full3d_error_mps2": 0.17594319672227998,
+      "maximum_endpoint_xy_error_mps2": 0.0030587277842815961,
+      "maximum_interval_average_xy_error_mps2": 0.052177347631019867,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        1,
+        4
+      ],
+      "yaw_rate_command_radps": 0.5,
+      "initial_yaw_rad": 1.5707963267948966,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.16924911456604624,
+      "maximum_full3d_error_mps2": 0.18870619950359321,
+      "maximum_endpoint_xy_error_mps2": 0.072120170152216417,
+      "maximum_interval_average_xy_error_mps2": 0.077583385632056009,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        -1,
+        -4
+      ],
+      "yaw_rate_command_radps": -0.5,
+      "initial_yaw_rad": -1.5707963267948966,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.159375870941146,
+      "maximum_full3d_error_mps2": 0.18798211746887711,
+      "maximum_endpoint_xy_error_mps2": 0.0721507709037482,
+      "maximum_interval_average_xy_error_mps2": 0.072487811587409773,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        -1,
+        4
+      ],
+      "yaw_rate_command_radps": 0.5,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.16924911456604272,
+      "maximum_full3d_error_mps2": 0.18870619950359185,
+      "maximum_endpoint_xy_error_mps2": 0.072120170152211852,
+      "maximum_interval_average_xy_error_mps2": 0.077583385632038884,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        -1,
+        1,
+        -4
+      ],
+      "yaw_rate_command_radps": -0.5,
+      "initial_yaw_rad": 3.1415926535897931,
+      "startup_from_zero_thrust": false,
+      "maximum_xy_error_mps2": 0.15937587094114924,
+      "maximum_full3d_error_mps2": 0.18798211746887986,
+      "maximum_endpoint_xy_error_mps2": 0.072150770903746719,
+      "maximum_interval_average_xy_error_mps2": 0.0724878115874158,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        1,
+        1,
+        4
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": true,
+      "maximum_xy_error_mps2": 0.15479965576172156,
+      "maximum_full3d_error_mps2": 9.71102981150815,
+      "maximum_endpoint_xy_error_mps2": 0.0030587277842815961,
+      "maximum_interval_average_xy_error_mps2": 0.052177347631021435,
+      "duration_s": 4.5
+    },
+    {
+      "target_acceleration_mps2": [
+        0,
+        0,
+        0
+      ],
+      "yaw_rate_command_radps": 0,
+      "initial_yaw_rad": 0,
+      "startup_from_zero_thrust": true,
+      "maximum_xy_error_mps2": 0,
+      "maximum_full3d_error_mps2": 9.81,
+      "maximum_endpoint_xy_error_mps2": 0,
+      "maximum_interval_average_xy_error_mps2": 0,
+      "duration_s": 0.5
+    }
+  ],
+  "internal_state_error_bounds": {
+    "assumed_perfect_simulator_state": true,
+    "position_m": 0,
+    "velocity_mps": 0,
+    "attitude_rad": 0,
+    "angular_rate_radps": 0,
+    "actual_thrust_n": 0,
+    "hardware_error_bounds_implemented": false
+  },
+  "hardware_error_bounds": {
+    "position_m": null,
+    "velocity_mps": null,
+    "attitude_rad": null,
+    "angular_rate_radps": null,
+    "actual_thrust_n": null
+  },
+  "fixtures": {
+    "file": "fixtures.mat",
+    "sha256": "c62db481bdb8553913e060c9914af6f8e3bf7081a92fd7f8c403bcfb20bf318f",
+    "derivative_case_count": 32,
+    "control_jacobian_case_count": 4,
+    "rollout_case_count": 6,
+    "allocation_case_count": 81
+  }
+}
