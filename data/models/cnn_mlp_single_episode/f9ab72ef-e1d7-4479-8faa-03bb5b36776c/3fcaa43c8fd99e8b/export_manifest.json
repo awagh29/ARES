@@ -1,0 +1,21 @@
+{
+  "schema_version": "ares-cnn-mlp-single-episode-mat-v1",
+  "episode_id": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "training_run_dir": "A:\\Projects\\ARES\\results\\output_directoryZ\\single_episode\\CNN_MLP_BASELINE_SINGLE_EPISODE_20261111T114717_037239Z_612f33",
+  "checkpoint_path": "A:\\Projects\\ARES\\results\\output_directoryZ\\single_episode\\CNN_MLP_BASELINE_SINGLE_EPISODE_20261111T114717_037239Z_612f33\\best.pt",
+  "checkpoint_sha256": "acabea3050d37e35e5b665cfe85aec9b3ca7c128baf35d6f16d2426303b34de3",
+  "model_mat_sha256": "28ef7e2d24c875e9052ad6385fb7e83fdf39903513ecd97b9c7ad4e4bb5b8033",
+  "source_manifest_sha256": "16a484878064d699caa32d4c607257eb9a12e35c76b8b5aa99deb0afbce7e03c",
+  "source_npz_sha256": "dc30f9fa3623a09be8d923d0e798391dfe17cf9bffb9118cd558e8910341b842",
+  "initial_position_ned_m": [
+    0.5674238777185177,
+    0,
+    -7
+  ],
+  "best_epoch": 17,
+  "validation_mse": 3.4643073081970215,
+  "exporter_sha256": "cd843e4a37436ec05b2cbed0ff94350689d0c0d9f63ddb3805f95a2addb48c5f",
+  "model_source_sha256": "33707696483b2a1f13ba2c7a5c249dc01ddb7c883f30215150bd2ecaee89da01",
+  "matlab_parity_verified": false,
+  "reference_precision": "CPU FP32; not BF16 training autocast"
+}
