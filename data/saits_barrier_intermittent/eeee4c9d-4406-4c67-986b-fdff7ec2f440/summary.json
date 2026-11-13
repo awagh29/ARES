@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "ares-saits-barrier-run-summary-v1",
+  "runId": "eeee4c9d-4406-4c67-986b-fdff7ec2f440",
+  "checkpointSha256": "23fdd45618b27c008bfb8bb003d6290cdbc08d42071ba544841c44e21810c0bf",
+  "metrics": {
+    "positionSampleCount": 3601,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      0.28472918272018433,
+      0.333431214094162,
+      -8.24157428741455
+    ],
+    "initialPositionErrorM": 0,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 45.676140575177662,
+    "minimumAltitudeM": 5.9813551902771,
+    "maximumAltitudeM": 8.24157428741455,
+    "minimumObstacleCenterDistanceM": 8.166568785905838,
+    "minimumObstacleClearanceM": 8.0665687859058384,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": false,
+    "nearCollisionOccurred": false,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": false,
+    "goalReachedAtTermination": false,
+    "firstGoalEntryTimeS": null,
+    "durationS": 3.6,
+    "finalTimeS": 3.6,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 3.3234230155709441,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "filter-infeasible-or-invalid",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "scans": 37,
+  "observedOutageCount": 1,
+  "reconstructedScanCount": 1,
+  "filterFeasibleScanCount": 36,
+  "filterFailureObserved": true,
+  "plannedOutageIntervalsS": [
+    [
+      3.5443486030280162,
+      5.1058226856548945
+    ],
+    [
+      10.356031289257292,
+      12.010370739258892
+    ],
+    [
+      14.974288494995,
+      16.549329689818645
+    ]
+  ],
+  "finalTimeS": 3.6,
+  "safetyCertified": false
+}

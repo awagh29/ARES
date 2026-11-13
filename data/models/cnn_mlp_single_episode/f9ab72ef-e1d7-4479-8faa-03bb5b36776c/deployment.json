@@ -1,0 +1,25 @@
+{
+  "schema_version": "ares-cnn-mlp-single-episode-mat-v1",
+  "episode_id": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "training_run_dir": "A:\\Projects\\ARES\\results\\output_directoryZ\\single_episode\\CNN_MLP_BASELINE_SINGLE_EPISODE_20261111T115152_978364Z_241f12",
+  "checkpoint_path": "A:\\Projects\\ARES\\results\\output_directoryZ\\single_episode\\CNN_MLP_BASELINE_SINGLE_EPISODE_20261111T115152_978364Z_241f12\\best.pt",
+  "checkpoint_sha256": "13bac3b4f8236aa5fbdd33743057303350ed6715ed4b334be1a3d293211ead36",
+  "model_mat_sha256": "f227383a880c1571c86fa49eab6687dee986051f4affbccf55043f247ce8be82",
+  "source_manifest_sha256": "16a484878064d699caa32d4c607257eb9a12e35c76b8b5aa99deb0afbce7e03c",
+  "source_npz_sha256": "dc30f9fa3623a09be8d923d0e798391dfe17cf9bffb9118cd558e8910341b842",
+  "initial_position_ned_m": [
+    0.56742387771851766,
+    0,
+    -7
+  ],
+  "best_epoch": 17,
+  "validation_mse": 3.4522228240966797,
+  "exporter_sha256": "cd843e4a37436ec05b2cbed0ff94350689d0c0d9f63ddb3805f95a2addb48c5f",
+  "model_source_sha256": "33707696483b2a1f13ba2c7a5c249dc01ddb7c883f30215150bd2ecaee89da01",
+  "matlab_parity_verified": true,
+  "reference_precision": "CPU FP32; not BF16 training autocast",
+  "matlab_validation_report": "A:\\Projects\\ARES\\data\\models\\cnn_mlp_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\7707c0d4e8b8df75\\matlab_validation.json",
+  "matlab_maximum_prediction_error": 7.152557373046875E-6,
+  "model_path": "A:\\Projects\\ARES\\data\\models\\cnn_mlp_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\7707c0d4e8b8df75\\model.mat",
+  "export_dir": "A:\\Projects\\ARES\\data\\models\\cnn_mlp_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\7707c0d4e8b8df75"
+}
