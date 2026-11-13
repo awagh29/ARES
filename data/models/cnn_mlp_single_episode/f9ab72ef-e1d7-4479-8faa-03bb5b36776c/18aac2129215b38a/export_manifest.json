@@ -1,0 +1,29 @@
+{
+  "schema_version": "ares-cnn-mlp-single-episode-mat-v1",
+  "episode_id": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "training_run_dir": "A:\\Projects\\ARES\\results\\output_directoryZ\\single_episode\\CNN_MLP_BASELINE_SINGLE_EPISODE_20261112T223205_143998Z_20261112_143205",
+  "checkpoint_path": "A:\\Projects\\ARES\\results\\output_directoryZ\\single_episode\\CNN_MLP_BASELINE_SINGLE_EPISODE_20261112T223205_143998Z_20261112_143205\\best.pt",
+  "checkpoint_sha256": "c6b61cfe7826880333e6af4cfb1fc22b6963c1ac25976894f8cabd04a8b578f9",
+  "model_mat_sha256": "b3c808aaf84fb902b5f921a7686eb430c4951f4abbf6eb252d28be9b7b106fb1",
+  "source_manifest_sha256": "16a484878064d699caa32d4c607257eb9a12e35c76b8b5aa99deb0afbce7e03c",
+  "source_npz_sha256": "dc30f9fa3623a09be8d923d0e798391dfe17cf9bffb9118cd558e8910341b842",
+  "initial_position_ned_m": [
+    0.56742387771851766,
+    0,
+    -7
+  ],
+  "best_epoch": 21,
+  "validation_mse": 0.44532257318496704,
+  "exporter_sha256": "3dfa2fc0b80a8f77feca9568793f6771169f946224118c77f0ebcc7a74ff7e16",
+  "model_source_sha256": "c38a9afb6866834e129e17404fccf7082e57c68948d302cf076392a041ab5247",
+  "architecture_source": "legacy-hidden-dropout-linear-latent",
+  "encoder_activations": [
+    "gelu",
+    "gelu",
+    "identity"
+  ],
+  "matlab_parity_verified": true,
+  "reference_precision": "CPU FP32; not BF16 training autocast",
+  "matlab_validation_report": "A:\\Projects\\ARES\\data\\models\\cnn_mlp_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\18aac2129215b38a\\matlab_validation.json",
+  "matlab_maximum_prediction_error": 7.62939453125E-6
+}

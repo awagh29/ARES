@@ -1,0 +1,378 @@
+{
+  "schemaVersion": "2.0.0",
+  "runId": "ac392460-7032-4973-b128-4f1156c7884c",
+  "createdAtUtc": "2026-11-09T09:36:17.325Z",
+  "system": {
+    "name": "ARES",
+    "vehicleScope": "single-uav"
+  },
+  "simulation": {
+    "modelName": "ares_single_uav_saits",
+    "scenarioName": "saits-intermittent-lidar-single-uav",
+    "coordinateFrame": "NED",
+    "timeBase": "simulation-time"
+  },
+  "software": {
+    "matlabRelease": "2026a",
+    "platform": "PCWIN64"
+  },
+  "repository": {
+    "commit": "a256384c05cc04e6d8474c3f8019e3815885e096",
+    "isDirty": false
+  },
+  "configuration": {
+    "identity": {
+      "id": "uav_001"
+    },
+    "frames": {
+      "world": "world_ned",
+      "body": "uav_001/base_link",
+      "lidar": "uav_001/lidar_link"
+    },
+    "simulation": {
+      "sampleTime": 0.001,
+      "stopTime": 60
+    },
+    "vehicle": {
+      "massKg": 0.1,
+      "gravityMps2": 9.81,
+      "radiusM": 0.1
+    },
+    "mission": {
+      "initialPositionNed": [
+        0,
+        0,
+        -7
+      ],
+      "waypointsNed": [
+        [
+          0,
+          0,
+          -7
+        ],
+        [
+          30,
+          35,
+          -7
+        ]
+      ]
+    },
+    "safety": {
+      "maxHorizontalSpeedMps": 5,
+      "brakingDecelerationMps2": 2,
+      "sensorLatencySeconds": 0.2,
+      "additionalMarginM": 0.5,
+      "minimumSurfaceClearanceM": 1
+    },
+    "acceptance": {
+      "finalWaypointToleranceM": 1,
+      "minimumAltitudeM": 5,
+      "maximumAltitudeM": 9
+    },
+    "avoidance": {
+      "planningSafetyDistanceM": 1.5
+    },
+    "sensors": {
+      "lidar": {
+        "enabled": true,
+        "mode": "intermittent-saits"
+      }
+    }
+  },
+  "static": {
+    "maximum_sensor_range_m": 7,
+    "nominal_observation_dimension": 10740,
+    "lidar_grid_size": [
+      15,
+      716
+    ],
+    "observation_channel_order": "elevation-index-fastest-then-azimuth-index",
+    "obstacle_centers_enu_m": [
+      [
+        10,
+        0
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        10,
+        20
+      ],
+      [
+        5,
+        15
+      ],
+      [
+        22,
+        18
+      ],
+      [
+        15,
+        25
+      ],
+      [
+        10,
+        20
+      ]
+    ],
+    "obstacle_centers_ned_m": [
+      [
+        0,
+        10
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        15,
+        5
+      ],
+      [
+        18,
+        22
+      ],
+      [
+        25,
+        15
+      ],
+      [
+        20,
+        10
+      ]
+    ],
+    "obstacle_width_m": 3,
+    "obstacle_height_m": 15,
+    "obstacle_mesh_reference_frame": "ENU",
+    "oracle_usage": "Nominal raw LiDAR retained for scoring only during outages; never a reconstruction input."
+  },
+  "groundTruth": {
+    "condition": "intermittent-lidar-with-saits",
+    "faultType": "intermittent-lidar-unavailable",
+    "faultActive": true,
+    "faultStartTime_s": 3.5443486030280162,
+    "faultEndTime_s": 16.549329689818645,
+    "outageIntervals_s": [
+      [
+        3.5443486030280162,
+        5.1058226856548945
+      ],
+      [
+        10.356031289257292,
+        12.010370739258892
+      ],
+      [
+        14.974288494995,
+        16.549329689818645
+      ]
+    ],
+    "randomSeed": 513,
+    "numberOfOutages": 3,
+    "faultWindowEndTime_s": 21,
+    "scheduleTime_s": [
+      0,
+      3.5443486030280162,
+      5.1058226856548945,
+      10.356031289257292,
+      12.010370739258892,
+      14.974288494995,
+      16.549329689818645,
+      60
+    ],
+    "scheduleEnabled": [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true
+    ],
+    "faultConfiguration": {
+      "randomSeed": 513,
+      "numberOfOutages": 3,
+      "initialHealthyTime_s": 3,
+      "finalHealthyTime_s": 4,
+      "minimumOutageDuration_s": 1.5,
+      "maximumOutageDuration_s": 3,
+      "minimumRecoveryDuration_s": 2,
+      "faultWindowEndTime_s": 21
+    }
+  },
+  "inference": {
+    "modelType": "supervised-SAITSEndpointModel",
+    "artifactPath": "A:\\Projects\\ARES\\data\\models\\saits_endpoint\\model.mat",
+    "artifactSha256": "6836ad5d287ff2872b013efa652bc60ebf09795a7460ce37d3d588c0a64a3739",
+    "numericalValidation": {
+      "schemaVersion": "ares-saits-matlab-validation-v1",
+      "modelPath": "A:/Projects/ARES/data/models/saits_endpoint/model.mat",
+      "modelSha256": "6836ad5d287ff2872b013efa652bc60ebf09795a7460ce37d3d588c0a64a3739",
+      "predictorSourceSha256": "cdb92059086b5c7a24138269e48f1187cb43d0af3194e578ffcf6c7edb6975b0",
+      "fixtureCount": 5,
+      "absoluteTolerance": 0.0001,
+      "maximumPhysicalAbsoluteError": 1.9073486328125E-6,
+      "maximumNormalizedAbsoluteError": 3.5762786865234375E-7,
+      "maximumStage1AbsoluteError": 3.5762786865234375E-7,
+      "maximumStage2AbsoluteError": 2.384185791015625E-7,
+      "maximumAttentionAbsoluteError": 5.5879354476928711E-9,
+      "physicalAbsoluteErrorsByCase": [
+        1.9073486328125E-6,
+        9.5367431640625E-7,
+        9.5367431640625E-7,
+        1.9073486328125E-6,
+        9.5367431640625E-7
+      ],
+      "nativeMeanPredictionSeconds": 0.00100202,
+      "benchmarkCount": 100,
+      "finalSecondStageEndpointOnly": true,
+      "allParityChecksPassed": true,
+      "matlabRelease": "2026a",
+      "platform": "PCWIN64",
+      "mexBuilt": true,
+      "mexMeanPredictionSeconds": 0.000605267,
+      "maximumMexPhysicalAbsoluteError": 1.9073486328125E-6,
+      "mexDirectory": "A:/Projects/ARES/data/models/saits_endpoint/mex",
+      "mexFunctionName": "saits_endpoint_mex",
+      "mexIncludesModelArgument": true,
+      "mexBackend": "cpp-matlab-blas",
+      "mexSourceSha256": "49cd90ae0968a9559253574de53b0cdd9e4e8c4267be0d9e2f44f5bb557bbaa5",
+      "mexBuilderSourceSha256": "6f30e11c3237d6588dbc6b5a98e8622c1db85d849e43211ffd1d03d869ce5d22",
+      "mexCompilerName": "Microsoft Visual C++ 2026",
+      "requiresMatlabCoder": false,
+      "mexFullPath": "A:\\Projects\\ARES\\data\\models\\saits_endpoint\\mex\\saits_endpoint_mex.mexw64",
+      "mexSha256": "2221220a619d346c15aba09aae5c2ef22deef3ffe1d5d084c68efce52a5965af",
+      "mexManifestPath": "A:\\Projects\\ARES\\data\\models\\saits_endpoint\\mex\\saits_endpoint_mex_manifest.json"
+    },
+    "inputFeatureCount": 31,
+    "targetFeatureCount": 14,
+    "historyLength": 50,
+    "scanPeriodS": 0.1,
+    "wiring": {
+      "originalAvoidanceMaxAge": "3",
+      "experimentAvoidanceMaxAge": 0,
+      "schemaVersion": "ares-saits-controller-wiring-v1",
+      "artifactSha256": "6836ad5d287ff2872b013efa652bc60ebf09795a7460ce37d3d588c0a64a3739",
+      "pointCloudAdapter": "forward-sector-conservative-proxy-with-unknown-side-rear-guard",
+      "reconstructionSampleTimeSeconds": 0.1,
+      "originalModelUnchanged": true
+    },
+    "sectorBodyBearingEdgesDeg": [
+      -60,
+      -42.857142857142854,
+      -25.714285714285715,
+      -8.5714285714285712,
+      8.5714285714285712,
+      25.714285714285715,
+      42.857142857142854,
+      60
+    ],
+    "controllerAdapter": "seven forward sector distance/fraction summaries adapted for VFH; not dense beam reconstruction",
+    "baselineModelPath": "A:\\Projects\\ARES\\models\\ares_single_uav_top.slx",
+    "baselineModelSha256": "f9984025b16439b5bb47cf7c723de2c20654abf5dfcb64b8321c965380041d10",
+    "temporaryModelPath": "A:\\Projects\\ARES\\results\\saits_integration\\ares_single_uav_saits.slx",
+    "fallbackReasonCodes": {
+      "healthy": 0,
+      "historyNotReady": 1,
+      "invalidPrediction": 2,
+      "modelUsed": 3
+    },
+    "runtimeProof": {
+      "scanCount": 278,
+      "observedOutageCount": 3,
+      "observedRecoveryCount": 3,
+      "disabledLidarScanCount": 49,
+      "enabledLidarScanCount": 229,
+      "reconstructionUsedScanCount": 36,
+      "compiledInferenceScanCount": 36,
+      "compiledBackendSelected": true,
+      "warmupFallbackScanCount": 13,
+      "invalidPredictionFallbackScanCount": 0,
+      "controllerInfluencedScanCount": 36,
+      "controllerInfluencedDuringOutage": true,
+      "maximumUsedReferenceDifferenceM": 4.6696422021175268,
+      "totalInferenceSeconds": 0.046824700000000004,
+      "meanInferenceMilliseconds": 1.3006861111111108,
+      "maximumInferenceMilliseconds": 6.7061,
+      "oracleOutageScansWithReturns": 28,
+      "failedChecks": [],
+      "instrumentationChecksPassed": true
+    }
+  },
+  "runtime": {
+    "visualization": {
+      "enabled": true,
+      "cloudSource": "selected-controller-observation",
+      "pacingRate": 1
+    },
+    "wallSeconds": 111.9047513,
+    "completedAtUtc": "2026-11-09T09:38:09.716Z"
+  },
+  "metrics": {
+    "positionSampleCount": 27701,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      30.010427474975586,
+      35.225444793701172,
+      -7.1486606597900391
+    ],
+    "initialPositionErrorM": 0,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 0.27024818040190418,
+    "minimumAltitudeM": 6.8387775421142578,
+    "maximumAltitudeM": 7.1703958511352539,
+    "minimumObstacleCenterDistanceM": -1.4250087738037109,
+    "minimumObstacleClearanceM": -1.525008773803711,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": true,
+    "nearCollisionOccurred": true,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": true,
+    "goalReachedAtTermination": true,
+    "firstGoalEntryTimeS": 27.079,
+    "durationS": 27.7,
+    "finalTimeS": 27.7,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 48.487000676706408,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "goal-reached",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "outcome": {
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "collisionOccurred": true,
+    "terminationReason": "goal-reached",
+    "observedOutageCount": 3,
+    "observedRecoveryCount": 3,
+    "reconstructionUsedScanCount": 36,
+    "controllerInfluencedDuringOutage": true,
+    "instrumentationChecksPassed": true,
+    "failureIdentifier": "",
+    "failureMessage": ""
+  }
+}

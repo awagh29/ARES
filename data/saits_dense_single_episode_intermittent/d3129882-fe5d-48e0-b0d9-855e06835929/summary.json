@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "saits-dense-single-episode-intermittent-run-summary-v1",
+  "runId": "d3129882-fe5d-48e0-b0d9-855e06835929",
+  "createdAtUtc": "2026-11-13T01:37:40.113Z",
+  "artifactSha256": "57d663501fa2dd17f518f1b1a8e73541173723e9fc64a536efe9b44b536998e1",
+  "faultSeed": 513,
+  "outageIntervalsS": [
+    [
+      3.5443486030280162,
+      5.1058226856548945
+    ],
+    [
+      10.356031289257292,
+      12.010370739258892
+    ],
+    [
+      14.974288494995,
+      16.549329689818645
+    ]
+  ],
+  "metrics": {
+    "positionSampleCount": 36401,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0.56742387771851766,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0.56742388010025024,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      29.71051025390625,
+      35.4260139465332,
+      -7.1235179901123047
+    ],
+    "initialPositionErrorM": 2.3817325889297081E-9,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 0.52966866021655656,
+    "minimumAltitudeM": 6.9017496109008789,
+    "maximumAltitudeM": 7.2219448089599609,
+    "minimumObstacleCenterDistanceM": -0.093994140625,
+    "minimumObstacleClearanceM": -0.193994140625,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": true,
+    "nearCollisionOccurred": true,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": true,
+    "goalReachedAtTermination": true,
+    "firstGoalEntryTimeS": 35.873,
+    "durationS": 36.4,
+    "finalTimeS": 36.4,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 52.976954115754005,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "goal-reached",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "runtimeProof": {
+    "scanCount": 365,
+    "observedOutageCount": 3,
+    "observedRecoveryCount": 3,
+    "disabledLidarScanCount": 49,
+    "enabledLidarScanCount": 316,
+    "reconstructionUsedScanCount": 49,
+    "nativeInferenceScanCount": 49,
+    "nativeBackendSelected": true,
+    "warmupFallbackScanCount": 0,
+    "invalidPredictionFallbackScanCount": 0,
+    "controllerInfluencedScanCount": 49,
+    "controllerInfluencedDuringOutage": true,
+    "maximumUsedReferenceDifferenceM": 4.591216959548011,
+    "totalInferenceSeconds": 0.7321387,
+    "meanInferenceMilliseconds": 14.941606122448977,
+    "maximumInferenceMilliseconds": 24.9704,
+    "oracleOutageScansWithReturns": 24,
+    "failedChecks": [],
+    "instrumentationChecksPassed": true,
+    "rawDenseOutageRmseM": 1.7225159351585027,
+    "rawDenseOutageMaeM": 1.0104514390787847
+  },
+  "safetyChecksPassed": false,
+  "missionSuccess": false,
+  "collisionOccurred": true,
+  "wallSeconds": 102.3714133,
+  "collisionDetectionMethod": "signed-3d-box-distance-at-native-position-samples",
+  "interpretation": "Online single-episode dense SAITS reconstruction; masked causal LiDAR history and motion predict outage scans; original VFH/PID controller."
+}

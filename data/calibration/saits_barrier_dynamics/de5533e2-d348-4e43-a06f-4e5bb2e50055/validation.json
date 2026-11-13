@@ -1,0 +1,331 @@
+{
+  "schemaVersion": "ares-guidance-dynamics-validation-v1",
+  "passed": true,
+  "created_at_utc": "2026-11-10T03:04:58.221866+00:00",
+  "calibration_sha256": "6693f052de9ccb181f989c8a47fb7c97ab777a34c89b80f269d7df0f48bf9c0b",
+  "fixtures_sha256": "c62db481bdb8553913e060c9914af6f8e3bf7081a92fd7f8c403bcfb20bf318f",
+  "dynamics_source_sha256": "910360ded5055069ee740c5cc7d42b96cff4cb3589e4deb5b0cf412d15a91b15",
+  "validator_source_sha256": "8dad445c22a6c36002b69f80326f9684bce1e472385ee09020c51435ed2348db",
+  "calibration_file": "calibration.json",
+  "fixtures_file": "fixtures.mat",
+  "integration_dt_s": 0.001,
+  "policy_step_s": 0.1,
+  "torch_version": "2.5.1+cu121",
+  "validation_device": "cpu",
+  "coverage": "Exported MATLAB derivative/Jacobian/grid-allocation and six 0.1s ZOH cases only.",
+  "limitations": [
+    "Software guidance plant, not hardware certification.",
+    "Stiff first-millisecond yaw/body-rate error has a separate explicit 0.1rad/s budget.",
+    "No GPU throughput or long-horizon global-error guarantee is inferred."
+  ],
+  "gates": {
+    "derivative_float64": {
+      "passed": true,
+      "shape": [
+        32,
+        13
+      ],
+      "all_finite": true,
+      "max_absolute_error": 2.2737367544323206e-13,
+      "atol": 3e-09,
+      "rtol": 2e-12
+    },
+    "derivative_float32": {
+      "passed": true,
+      "shape": [
+        32,
+        13
+      ],
+      "all_finite": true,
+      "max_absolute_error": 0.0001220703125,
+      "atol": 0.002,
+      "rtol": 3e-06
+    },
+    "acceleration_allocation_float64": {
+      "passed": true,
+      "shape": [
+        81,
+        4
+      ],
+      "all_finite": true,
+      "max_absolute_error": 1.3877787807814457e-17,
+      "atol": 1e-12,
+      "rtol": 1e-12
+    },
+    "continuous_control_jacobian": {
+      "passed": true,
+      "shape": [
+        4,
+        13,
+        4
+      ],
+      "all_finite": true,
+      "max_absolute_error": 2.146362021449022e-08,
+      "atol": 1e-06,
+      "rtol": 1e-08
+    },
+    "zoh_autograd_vs_central_difference": {
+      "passed": true,
+      "shape": [
+        2,
+        13,
+        4
+      ],
+      "all_finite": true,
+      "max_absolute_error": 8.999220353286819e-10,
+      "atol": 1e-06,
+      "rtol": 1e-05
+    },
+    "trajectory_float64": {
+      "position_m": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 1.3768551782256111e-05,
+        "atol": 3e-05,
+        "rtol": 0.0
+      },
+      "velocity_mps": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 0.0001368700431828903,
+        "atol": 0.0003,
+        "rtol": 0.0
+      },
+      "attitude_rad": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 3.957510712337964e-05,
+        "atol": 0.0001,
+        "rtol": 0.0
+      },
+      "body_rate_radps": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 0.0762377653502139,
+        "atol": 0.1,
+        "rtol": 0.0
+      },
+      "actual_thrust_n": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          1
+        ],
+        "all_finite": true,
+        "max_absolute_error": 4.5340169396723695e-09,
+        "atol": 1e-07,
+        "rtol": 0.0
+      }
+    },
+    "endpoint_float64": {
+      "position_m": {
+        "passed": true,
+        "shape": [
+          6,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 1.3768551782256111e-05,
+        "atol": 3e-05,
+        "rtol": 0.0
+      },
+      "velocity_mps": {
+        "passed": true,
+        "shape": [
+          6,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 0.0001368700431828903,
+        "atol": 0.0003,
+        "rtol": 0.0
+      },
+      "attitude_rad": {
+        "passed": true,
+        "shape": [
+          6,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 2.268218241008313e-08,
+        "atol": 1e-06,
+        "rtol": 0.0
+      },
+      "body_rate_radps": {
+        "passed": true,
+        "shape": [
+          6,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 1.1485892252027785e-06,
+        "atol": 2e-05,
+        "rtol": 0.0
+      },
+      "actual_thrust_n": {
+        "passed": true,
+        "shape": [
+          6,
+          1
+        ],
+        "all_finite": true,
+        "max_absolute_error": 1.1102230246251565e-16,
+        "atol": 1e-07,
+        "rtol": 0.0
+      }
+    },
+    "collision_trace_positions": {
+      "passed": true,
+      "shape": [
+        6,
+        101,
+        3
+      ],
+      "all_finite": true,
+      "max_absolute_error": 3.552713678800501e-15,
+      "atol": 2e-12,
+      "rtol": 0.0
+    },
+    "trace_endpoint_state": {
+      "passed": true,
+      "shape": [
+        6,
+        13
+      ],
+      "all_finite": true,
+      "max_absolute_error": 3.552713678800501e-15,
+      "atol": 2e-10,
+      "rtol": 0.0
+    },
+    "half_step_convergence": {
+      "position_m": {
+        "passed": true,
+        "coarse_max_absolute_error": 1.3768551782256111e-05,
+        "half_step_max_absolute_error": 1.141040983476671e-06,
+        "maximum_error_ratio": 0.2,
+        "reference_error_floor": 1e-09
+      },
+      "velocity_mps": {
+        "passed": true,
+        "coarse_max_absolute_error": 0.0001368700431828903,
+        "half_step_max_absolute_error": 1.132931389136128e-05,
+        "maximum_error_ratio": 0.2,
+        "reference_error_floor": 1e-09
+      },
+      "attitude_rad": {
+        "passed": true,
+        "coarse_max_absolute_error": 3.957510712337964e-05,
+        "half_step_max_absolute_error": 1.0793854523516444e-06,
+        "maximum_error_ratio": 0.2,
+        "reference_error_floor": 1e-09
+      },
+      "body_rate_radps": {
+        "passed": true,
+        "coarse_max_absolute_error": 0.0762377653502139,
+        "half_step_max_absolute_error": 0.0020793574165501594,
+        "maximum_error_ratio": 0.2,
+        "reference_error_floor": 1e-09
+      },
+      "actual_thrust_n": {
+        "passed": true,
+        "coarse_max_absolute_error": 4.5340169396723695e-09,
+        "half_step_max_absolute_error": 4.5340169396723695e-09,
+        "maximum_error_ratio": 0.2,
+        "reference_error_floor": 1e-07
+      }
+    },
+    "trajectory_float32": {
+      "position_m": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 3.425512982868639e-05,
+        "atol": 8e-05,
+        "rtol": 0.0
+      },
+      "velocity_mps": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 0.00013696084393412635,
+        "atol": 0.0004,
+        "rtol": 0.0
+      },
+      "attitude_rad": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 3.952230177661775e-05,
+        "atol": 0.0001,
+        "rtol": 0.0
+      },
+      "body_rate_radps": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          3
+        ],
+        "all_finite": true,
+        "max_absolute_error": 0.07623777522721045,
+        "atol": 0.1,
+        "rtol": 0.0
+      },
+      "actual_thrust_n": {
+        "passed": true,
+        "shape": [
+          6,
+          101,
+          1
+        ],
+        "all_finite": true,
+        "max_absolute_error": 5.32612640657959e-08,
+        "atol": 5e-07,
+        "rtol": 0.0
+      }
+    },
+    "allocation_design_bounds": {
+      "passed": true,
+      "maximum_absolute_commands": [
+        0.1704470104342103,
+        0.1704470104342103,
+        0.5,
+        1.3882222444551162
+      ],
+      "software_bounds_not_motor_hardware": true
+    }
+  }
+}
