@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.2.0",
+  "runId": "23f1e76a-c8a8-43cd-a5b5-14f79212b277",
+  "createdAtUtc": "2026-10-09T18:37:35.985Z",
+  "system": {
+    "name": "ARES",
+    "vehicleScope": "single-uav"
+  },
+  "simulation": {
+    "modelName": "ares_single_uav_top",
+    "scenarioName": "lidar-disabled-single-uav",
+    "coordinateFrame": "NED",
+    "timeBase": "simulation-time"
+  },
+  "software": {
+    "matlabRelease": "2026a",
+    "platform": "MACA64"
+  },
+  "repository": {
+    "commit": "1e32c800cd25142028ab68ceed1d71b1f284eaac",
+    "isDirty": true
+  },
+  "configuration": {
+    "identity": {
+      "id": "uav_001"
+    },
+    "frames": {
+      "world": "world_ned",
+      "body": "uav_001/base_link",
+      "lidar": "uav_001/lidar_link"
+    },
+    "simulation": {
+      "sampleTime": 0.001,
+      "stopTime": 60
+    },
+    "vehicle": {
+      "massKg": 0.1,
+      "gravityMps2": 9.81,
+      "radiusM": 0.1
+    },
+    "mission": {
+      "initialPositionNed": [
+        0,
+        0,
+        -7
+      ],
+      "waypointsNed": [
+        [
+          0,
+          0,
+          -7
+        ],
+        [
+          30,
+          35,
+          -7
+        ]
+      ]
+    },
+    "safety": {
+      "maxHorizontalSpeedMps": 5,
+      "brakingDecelerationMps2": 2,
+      "sensorLatencySeconds": 0.2,
+      "additionalMarginM": 0.5,
+      "minimumSurfaceClearanceM": 1
+    },
+    "acceptance": {
+      "finalWaypointToleranceM": 1,
+      "minimumAltitudeM": 5,
+      "maximumAltitudeM": 9
+    },
+    "avoidance": {
+      "planningSafetyDistanceM": 1.5
+    },
+    "sensors": {
+      "lidar": {
+        "enabled": false
+      }
+    }
+  },
+  "groundTruth": {
+    "condition": "lidar-disabled",
+    "faultType": "lidar-unavailable",
+    "faultActive": true,
+    "faultStartTime_s": 0,
+    "faultEndTime_s": 12.6
+  },
+  "outcome": {
+    "safetyChecksPassed": false,
+    "failureIdentifier": "",
+    "failureMessage": "ARES failure: final waypoint error exceeded its limit."
+  },
+  "metrics": {
+    "finalWaypointErrorM": 3.0760522411201547,
+    "minimumAltitudeM": 6.9999494552612305,
+    "maximumAltitudeM": 7.0008974075317383,
+    "minimumObstacleClearanceM": 0,
+    "requiredObstacleClearanceM": 1.1
+  }
+}

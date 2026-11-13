@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.2.0",
+  "runId": "a9c9efd9-9794-4a08-b57a-965aedce66ef",
+  "createdAtUtc": "2026-10-09T18:47:49.626Z",
+  "system": {
+    "name": "ARES",
+    "vehicleScope": "single-uav"
+  },
+  "simulation": {
+    "modelName": "ares_single_uav_top",
+    "scenarioName": "intermittent-lidar-single-uav",
+    "coordinateFrame": "NED",
+    "timeBase": "simulation-time"
+  },
+  "software": {
+    "matlabRelease": "2026a",
+    "platform": "MACA64"
+  },
+  "repository": {
+    "commit": "1e32c800cd25142028ab68ceed1d71b1f284eaac",
+    "isDirty": true
+  },
+  "configuration": {
+    "identity": {
+      "id": "uav_001"
+    },
+    "frames": {
+      "world": "world_ned",
+      "body": "uav_001/base_link",
+      "lidar": "uav_001/lidar_link"
+    },
+    "simulation": {
+      "sampleTime": 0.001,
+      "stopTime": 60
+    },
+    "vehicle": {
+      "massKg": 0.1,
+      "gravityMps2": 9.81,
+      "radiusM": 0.1
+    },
+    "mission": {
+      "initialPositionNed": [
+        0,
+        0,
+        -7
+      ],
+      "waypointsNed": [
+        [
+          0,
+          0,
+          -7
+        ],
+        [
+          30,
+          35,
+          -7
+        ]
+      ]
+    },
+    "safety": {
+      "maxHorizontalSpeedMps": 5,
+      "brakingDecelerationMps2": 2,
+      "sensorLatencySeconds": 0.2,
+      "additionalMarginM": 0.5,
+      "minimumSurfaceClearanceM": 1
+    },
+    "acceptance": {
+      "finalWaypointToleranceM": 1,
+      "minimumAltitudeM": 5,
+      "maximumAltitudeM": 9
+    },
+    "avoidance": {
+      "planningSafetyDistanceM": 1.5
+    },
+    "sensors": {
+      "lidar": {
+        "enabled": true,
+        "mode": "intermittent"
+      }
+    }
+  },
+  "groundTruth": {
+    "condition": "intermittent-lidar",
+    "faultType": "intermittent-lidar-unavailable",
+    "faultActive": true,
+    "faultStartTime_s": 8.56300903800156,
+    "faultEndTime_s": 51.706496413909669,
+    "outageIntervals_s": [
+      [
+        8.56300903800156,
+        10.685957203255317
+      ],
+      [
+        36.145616951853825,
+        38.454295851857026
+      ],
+      [
+        49.278269939260248,
+        51.706496413909669
+      ]
+    ],
+    "randomSeed": 513,
+    "scheduleTime_s": [
+      0,
+      8.56300903800156,
+      10.685957203255317,
+      36.145616951853825,
+      38.454295851857026,
+      49.278269939260248,
+      51.706496413909669,
+      60
+    ],
+    "scheduleEnabled": [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true
+    ]
+  },
+  "outcome": {
+    "safetyChecksPassed": false,
+    "failureIdentifier": "",
+    "failureMessage": "ARES collision-safety failure: actual clearance 0.00 m is below required clearance 1.10 m.",
+    "lidarOutageObserved": true,
+    "lidarRecoveryObserved": true
+  },
+  "metrics": {
+    "finalWaypointErrorM": 0.22130653879662798,
+    "minimumAltitudeM": 6.9899735450744629,
+    "maximumAltitudeM": 7.0779914855957031,
+    "minimumObstacleClearanceM": 0,
+    "requiredObstacleClearanceM": 1.1
+  }
+}
