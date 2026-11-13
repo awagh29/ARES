@@ -14,7 +14,7 @@ cfg.vehicle.massKg = 0.1;
 cfg.vehicle.gravityMps2 = 9.81;
 cfg.vehicle.radiusM = 0.1;
 
-cfg.mission.initialPositionNed = [0 0 -7];
+cfg.mission.initialPositionNed = [0 0 7];
 
 cfg.mission.waypointsNed = [
     0   0  -7

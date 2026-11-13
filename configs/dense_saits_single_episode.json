@@ -1,0 +1,85 @@
+{
+  "paths": {
+    "repo_root": "A:\\Projects\\ARES",
+    "output_root": "A:\\Projects\\ARES\\results\\saits_dense_single_episode"
+  },
+  "run": {
+    "name": "SAITS_BASELINE_SINGLE_EPISODE",
+    "seed": 42
+  },
+  "data": {
+    "episode_path": "A:\\Projects\\ARES\\data\\raw\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+    "train_fraction": 0.8,
+    "val_fraction": 0.2,
+    "split_policy": "chronological",
+    "verify_hashes": true
+  },
+  "model": {
+    "window_size": 50,
+    "d_model": 64,
+    "n_heads": 4,
+    "d_ff": 128,
+    "n_layers": 1,
+    "head_width": 64,
+    "dropout": 0.1
+  },
+  "training": {
+    "optimizer": "adamw",
+    "loss": "mse",
+    "epochs": 200,
+    "batch_size": 16,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "patience": 25,
+    "save_every_n_epochs": 0,
+    "auxiliary_weight": 0.1,
+    "observed_weight": 0.1,
+    "clip_grad_norm": 1.0,
+    "early_stopping": false
+  },
+  "scheduler": {
+    "name": "cosine",
+    "t_max_epochs": 200,
+    "min_lr": 1e-06
+  },
+  "runtime": {
+    "gpu_index": 0,
+    "amp_dtype": "bf16",
+    "num_workers": 0,
+    "pin_memory": true,
+    "persistent_workers": false,
+    "cudnn_benchmark": true,
+    "matmul_precision": "high",
+    "fused_adamw": true,
+    "device": "cuda"
+  },
+  "plots": {
+    "dpi": 160,
+    "scan_index": 0,
+    "range_min_m": 0.0,
+    "range_max_m": 7.0,
+    "colormap": "viridis"
+  },
+  "faults": {
+    "profiles": [
+      "healthy",
+      "intermittent",
+      "long"
+    ],
+    "initial_healthy_scans": 30,
+    "short_outage_scans": [
+      15,
+      30
+    ],
+    "long_outage_scans": [
+      50,
+      70
+    ],
+    "recovery_scans": 20
+  }
+}

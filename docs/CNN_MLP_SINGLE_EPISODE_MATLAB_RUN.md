@@ -37,6 +37,29 @@ Clear an override before returning to automatic selection:
 clear CnnTrainingRunDirectoryOverride
 ```
 
+## Verify the model that was actually used
+
+```matlab
+project = currentProject;
+report = verifyCnnMlpSingleEpisode(string(project.RootFolder), ...
+    "f9ab72ef-e1d7-4479-8faa-03bb5b36776c");
+assert(report.deployment_matches_latest && report.matlab_parity_verified ...
+    && report.latest_capture_used_latest && report.capture_logging_verified);
+```
+
+This command is read-only. It compares the newest completed training checkpoint,
+the deployed MAT file, and the latest completed capture by SHA-256, then checks
+the capture's scan CSV against its recorded inference-use counters. It also
+reports the artifact assigned to an open experiment diagram when present.
+Recency uses `summary.json`'s `created_at_utc`, regardless of whether the folder
+name ends in a UUID or a datetime. Selection uses `best.pt` within the newest
+completed run, not the final epoch's `last.pt`. Re-run the capture script after
+training; pressing Run in an already-open diagram reuses its assigned artifact.
+Automatic selection filters for CNN configurations and skips missing, empty,
+or malformed run metadata and missing/empty checkpoints. Deleting a recent run
+therefore makes the next valid remaining completed CNN run eligible. Explicit
+training-directory overrides stay strict; clear an override after deleting its run.
+
 ## Artifacts and model behavior
 
 The run-ID-based deployment pointer is:
@@ -51,6 +74,15 @@ MATLAB/PyTorch numerical parity; `integration_validation.json` is produced by
 The export does not change the training checkpoint. No Python host, ONNX
 importer, or Deep Learning Toolbox is needed during simulation inference;
 Python/PyTorch/SciPy are used only for export.
+
+New notebook checkpoints also contain `model_architecture`, with a readable
+`architecture.json` alongside the training and exported artifacts. This records
+the actual layer order, including dropout and whether the latent projection has
+an activation. The exporter supports both historical notebook layouts: the
+original all-activated encoder and the hidden-dropout encoder with a linear
+latent projection. Dropout is disabled for inference; a missing final activation
+is preserved. Weight loading remains strict, and unrecognized legacy layouts
+are rejected rather than silently skipping weights or selecting an older run.
 
 The model receives `[position(3), velocity(3), roll/pitch/yaw(3)]`, encodes
 each angle as sine/cosine, and predicts the complete `15 x 716` range grid.

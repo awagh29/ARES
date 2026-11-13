@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "cnn-single-episode-intermittent-run-summary-v1",
+  "runId": "e299dedc-3bf6-4bb6-8d15-3de8c7e41f5e",
+  "createdAtUtc": "2026-11-12T10:29:40.993Z",
+  "artifactSha256": "b138d4408746c18de6f1b64ec20a0bd98a3ff84ff48956a51683c4c116d83e44",
+  "faultSeed": 513,
+  "outageIntervalsS": [
+    [
+      3.5443486030280162,
+      5.1058226856548945
+    ],
+    [
+      10.356031289257292,
+      12.010370739258892
+    ],
+    [
+      14.974288494995,
+      16.549329689818645
+    ]
+  ],
+  "metrics": {
+    "positionSampleCount": 60001,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0.56742387771851766,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0.56742388010025024,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      20.465362548828125,
+      24.800102233886719,
+      -6.8956208229064941
+    ],
+    "initialPositionErrorM": 2.3817325889297081E-9,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 13.962740446526345,
+    "minimumAltitudeM": 6.8944077491760254,
+    "maximumAltitudeM": 7.1454458236694336,
+    "minimumObstacleCenterDistanceM": -1.3688297271728516,
+    "minimumObstacleClearanceM": -1.4688297271728517,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": true,
+    "nearCollisionOccurred": true,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": false,
+    "goalReachedAtTermination": false,
+    "firstGoalEntryTimeS": null,
+    "durationS": 60,
+    "finalTimeS": 60,
+    "reachedTimeLimit": true,
+    "timedOut": true,
+    "totalPathLengthM": 31.940634773665234,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "time-limit",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "runtimeProof": {
+    "scanCount": 601,
+    "observedOutageCount": 3,
+    "observedRecoveryCount": 3,
+    "disabledLidarScanCount": 49,
+    "enabledLidarScanCount": 552,
+    "reconstructionUsedScanCount": 49,
+    "nativeInferenceScanCount": 49,
+    "nativeBackendSelected": true,
+    "warmupFallbackScanCount": 0,
+    "invalidPredictionFallbackScanCount": 0,
+    "controllerInfluencedScanCount": 49,
+    "controllerInfluencedDuringOutage": true,
+    "maximumUsedReferenceDifferenceM": 4.5023291450980043,
+    "totalInferenceSeconds": 0.1572729,
+    "meanInferenceMilliseconds": 3.2096510204081632,
+    "maximumInferenceMilliseconds": 8.7875,
+    "oracleOutageScansWithReturns": 41,
+    "failedChecks": [],
+    "instrumentationChecksPassed": true,
+    "rawDenseOutageRmseM": 2.49526238112538,
+    "rawDenseOutageMaeM": 1.5801103679020241
+  },
+  "safetyChecksPassed": false,
+  "missionSuccess": false,
+  "collisionOccurred": true,
+  "wallSeconds": 154.7608443,
+  "collisionDetectionMethod": "signed-3d-box-distance-at-native-position-samples",
+  "interpretation": "Online single-episode CNN reconstruction test; measured LiDAR is used when available, state-only dense prediction during outages."
+}
