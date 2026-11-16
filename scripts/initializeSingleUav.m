@@ -34,6 +34,9 @@ AvoidanceSafetyDistance = cfg.avoidance.planningSafetyDistanceM;
 
 InitialPosition = cfg.mission.initialPositionNed;
 InitialOrientation = [0 0 0];
+if isfield(cfg.mission,"initialEulerZYXRad")
+    InitialOrientation = cfg.mission.initialEulerZYXRad;
+end
 Waypoints = cfg.mission.waypointsNed;
 
 AzimuthResolution = 0.5;
