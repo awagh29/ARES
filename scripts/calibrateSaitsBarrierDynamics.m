@@ -18,6 +18,7 @@ assert(abs(options.PolicyStepS-0.1)<1e-12 && ...
         round(options.PolicyStepS/options.CollisionSampleStepS))<1e-9, ...
     'ARES:InvalidCalibrationTiming', 'Use the declared 0.1 s policy and <=1 ms truth grid.');
 addpath(fullfile(projectRoot,'src'));
+ares.config.configureSimulinkCache(projectRoot);
 cfg = ares.config.defaultSingleUav();
 modelName = 'ares_single_uav_top';
 modelPath = fullfile(projectRoot,'models',modelName+".slx");

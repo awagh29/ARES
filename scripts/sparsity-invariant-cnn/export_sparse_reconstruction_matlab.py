@@ -17,7 +17,7 @@ import numpy as np
 from scipy.io import savemat
 import torch
 import sparse_reconstruction_inference as inference
-from export_dense_saits_matlab import atomic_json, read_json, require, sha256
+from scripts.saits.export_dense_saits_matlab import atomic_json, read_json, require, sha256
 
 SCHEMA = 'ares-sparse-reconstruction-single-episode-mat-v1'
 DEFINITIONS = ('encode_sensor_state', 'pad_ring', 'SparseConv2d', 'RingConv2d', 'SparseRangeReconstructor')

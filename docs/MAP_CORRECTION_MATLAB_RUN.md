@@ -34,8 +34,10 @@ preparation after changing inputs; already saved missions are immutable input
 snapshots. Save any diagram edits before preparing another mission. Each
 preparation uses a new directory and preserves the previous model and results.
 
-In desktop mode the scope displays the actual selected cloud: measured when
-available and map-ray-cast during outages. Without the MATLAB desktop, set
+In desktop mode the scope displays measured scans only when LiDAR is available.
+Scans are cleared during disabled/failure intervals, including full blackout,
+and reappear on recovery. Map-ray-cast observations remain internal for
+correction and diagnostics. Without the MATLAB desktop, set
 `ShowSimulation=false` for unattended validation.
 
 ## Complete blackout, healthy flight, or exact outage times
@@ -109,7 +111,8 @@ map. No new obstacles or prewritten paths are supplied.
    new controller stops on terminal position **and velocity**, or filter failure.
 5. During outage `virtualLidar` ray casts the physical boxes at the estimated
    pose, using the existing mounting offset, 180-degree roll, 7 m range and
-   15-by-716 organized scan. It provides the selected display and sector inputs.
+   15-by-716 organized scan. It provides internal sector inputs; the displayed
+   cloud is cleared during outages instead of showing these synthetic scans.
    Map safety constraints use the full 3-D boxes, not just seven forward sectors.
 
 For a convex box, let `h=distance_to_box-radius` and `n` be its outward

@@ -159,7 +159,7 @@ class Controller:
     @torch.inference_mode()
     def reference_check(self):
         """Compare actual installed inference/QP against exported CPU fixtures."""
-        from export_augmented_saits_barrier import make_reference_cases
+        from scripts.saits.export_augmented_saits_barrier import make_reference_cases
         payload = torch.load(self.folder / 'deployment.pt', map_location='cpu', weights_only=True)
         arrays, _ = make_reference_cases(self.model, self.barrier, self.normalizer, payload)
         checks = {}

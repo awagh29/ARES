@@ -6,6 +6,7 @@ else
 end
 
 initializerDirectory = fileparts(mfilename("fullpath"));
+ares.config.configureSimulinkCache(string(fileparts(initializerDirectory)));
 
 run(fullfile(initializerDirectory, ...
     "setupSingleUavBusObjects.m"));

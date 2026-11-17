@@ -153,6 +153,31 @@ classdef TestMapCorrection < matlab.unittest.TestCase
             [~,~,~,stop]=a([],options.StartState(1:3),[0 0 0],[0 0 0],false,.05);
             testCase.verifyTrue(stop);
         end
+        function viewerClearsOnFailureAndRestoresOnRecovery(testCase)
+            options=testCase.Options;
+            options.StartState=[0 3 -7 0 0 0]; options.GoalState=[2 3 -7 0 0 0];
+            options.StartEulerZYXRad=[pi/2 0 0];
+            map=testCase.Map; plan=ares.navigation.planPath(map,options);
+            file=string(tempname(fullfile(testCase.Root,'tmp')))+".mat";
+            save(file,'map','options','plan');
+            system=ares.navigation.MapCorrectionController('PlanFile',char(file));
+            cleanup=onCleanup(@()release(system)); %#ok<NASGU>
+            p=options.StartState(1:3); v=[0 0 0]; e=options.StartEulerZYXRad;
+            measured=ares.navigation.virtualLidar(map,p,e);
+            testCase.verifyTrue(any(isfinite(measured),'all'));
+            shown=system(measured,p,v,e,true,0);
+            testCase.verifyEqual(shown,measured);
+            [shown,~,packet,stop]=system(measured,p,v,e,false,.05);
+            testCase.verifyTrue(all(isnan(shown),'all'));
+            testCase.verifyEqual(packet(20:22),[0;1;1]);
+            testCase.verifyTrue(any(packet(37:43)>0)); % virtual sectors remain internal
+            testCase.verifyFalse(stop);
+            shown=system(measured,p,v,e,true,.1);
+            testCase.verifyEqual(shown,measured);
+            reset(system);
+            shown=system(measured,p,v,e,false,0);
+            testCase.verifyTrue(all(isnan(shown),'all')); % blackout from first tick
+        end
     end
 end
 function releaseBoth(a,b)

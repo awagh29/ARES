@@ -69,6 +69,25 @@ ARES/
 
 `results/`, virtual environments, compiled MEX binaries, and Simulink caches/build directories are ignored by Git. A fresh checkout may therefore lack training checkpoints or deployment bundles referenced by a local experiment guide.
 
+Simulink `.slxc` files are generated caches; the editable, loadable models use
+`.slx`. The shared initializer configures `models/` as the cache folder, so
+baseline, CNN, SAITS, sparse reconstruction, and map-correction runs reuse or
+regenerate caches there even when launched from `scripts/`. Model loading still
+uses `models/ares_single_uav_top.slx` and the experiment `.slx` copies in
+`results/`; moving a cache does not move its source model. Independent batch
+workers retain private cache/code-generation folders to avoid collisions.
+`ARES_SIMULINK_CACHE_FOLDER` can override the cache location (relative paths
+are resolved against the project root). This does not change model paths or
+code-generation settings. To set the cache folder in an existing MATLAB session
+with the project's `src` directory on the MATLAB path:
+
+```matlab
+ares.config.configureSimulinkCache();
+```
+
+For collaboration, share the tracked `.slx` models, source scripts, and required
+deployment artifacts. `.slxc` caches remain ignored by Git and can be rebuilt.
+
 ## Requirements
 
 ### MATLAB simulation

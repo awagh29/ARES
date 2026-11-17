@@ -82,6 +82,9 @@ classdef MapCorrectionController < matlab.System
             % Keep a nonempty native trajectory even when start equals goal.
             stop=~info.Feasible || (goal && time>=o.ControlSampleTimeS);
             sectors=double(ares.inference.sectorFeatures(cloud));
+            % The viewer shows measured scans only. Keep virtual observations
+            % internal, and clear the previous rendered scan during outages.
+            if ~available, cloud(:)=NaN; end
             packet=[double(command);u';nominal';reference';p';v'; ...
                 double(available);double(~available);double(info.Feasible);info.MaximumViolation; ...
                 info.MinimumH;info.MinimumPsi1;double(goal);double(obj.Index);toc(timer);1;sectors'];

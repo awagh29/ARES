@@ -13,7 +13,7 @@ import warnings
 import numpy as np
 from scipy.io import savemat
 import torch
-from dense_saits_single_episode import (SCHEMA as TRAINING_SCHEMA, BEAMS, FEATURES,
+from scripts.saits.dense_saits_single_episode import (SCHEMA as TRAINING_SCHEMA, BEAMS, FEATURES,
     DenseSaitsReconstructor, build_dataset, build_train_val_tensors, normalize_history, source_hashes)
 from export_saits_matlab import _linear, _layer
 
