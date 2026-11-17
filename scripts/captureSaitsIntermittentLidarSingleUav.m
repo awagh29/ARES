@@ -1,10 +1,52 @@
 %CAPTURESAITSINTERMITTENTLIDARSINGLEUAV Run the existing faults with online SAITS.
-% Optional base-workspace override: SaitsArtifactPathOverride (model.mat path).
+% Default: completed local augmented SAITS/BarrierNet deployment when present.
+% SaitsBackendOverride="legacy" explicitly selects the previous SAITS-only path.
+% New overrides: SaitsDeploymentPathOverride, SaitsPythonExecutableOverride.
+% SaitsContinueAfterBarrierFailureOverride defaults true (diagnostic nominal fallback).
+% Optional legacy override: SaitsArtifactPathOverride (old model.mat path).
 % SaitsShowSimulationOverride=true opens the diagram and live scenario viewer.
 % The saved baseline model and original intermittent capture script are unchanged.
-% Outputs are exposed in this workspace and saved under data/saits_intermittent/<UUID>.
+% Augmented outputs: data/saits_barrier_intermittent/<UUID>.
+% Legacy outputs: data/saits_intermittent/<UUID>.
 saitsProject = currentProject;
 saitsProjectRoot = string(saitsProject.RootFolder);
+% The augmented architecture executes its trained controller and hard QP;
+% routing its output through the old VFH/PID would change the trained system.
+saitsDefaultDeployment=fullfile(saitsProjectRoot,"results","augmented_saits_barrier", ...
+    "ares_augmented_saits_barrier_local_seed42_v1","deployment");
+if exist("SaitsBackendOverride","var")
+    saitsUseBarrier=string(SaitsBackendOverride)=="augmented-barrier";
+    assert(any(string(SaitsBackendOverride)==["augmented-barrier","legacy"]), ...
+        "ARES:InvalidSaitsBackend","Choose augmented-barrier or legacy.");
+else
+    saitsUseBarrier=exist("SaitsDeploymentPathOverride","var") || ...
+        (~exist("SaitsArtifactPathOverride","var") && isfile(fullfile(saitsDefaultDeployment,"deployment.json")));
+end
+if saitsUseBarrier
+    if exist("SaitsDeploymentPathOverride","var")
+        saitsDeployment=string(SaitsDeploymentPathOverride);
+    else
+        saitsDeployment=saitsDefaultDeployment;
+    end
+    if exist("SaitsPythonExecutableOverride","var")
+        saitsPython=string(SaitsPythonExecutableOverride);
+    else
+        saitsPython=fullfile(saitsProjectRoot,".venv","Scripts","python.exe");
+    end
+    if exist("SaitsShowSimulationOverride","var")
+        saitsShowSimulation=logical(SaitsShowSimulationOverride);
+    else
+        saitsShowSimulation=usejava("desktop");
+    end
+    if exist("SaitsContinueAfterBarrierFailureOverride","var")
+        saitsContinueAfterFailure=logical(SaitsContinueAfterBarrierFailureOverride);
+    else
+        saitsContinueAfterFailure=true;
+    end
+    [saitsManifest,saitsTelemetry,saitsManifestPath,saitsTelemetryPath,saitsSummary]= ...
+        ares.inference.captureSaitsBarrier(saitsProjectRoot,saitsDeployment,saitsPython,saitsShowSimulation,saitsContinueAfterFailure);
+    return;
+end
 if exist("SaitsArtifactPathOverride","var")
     saitsArtifactPath = string(SaitsArtifactPathOverride);
 else

@@ -1,0 +1,359 @@
+{
+  "schemaVersion": "2.0.0",
+  "runId": "1952f948-a1f1-4979-927c-f914f0cc3636",
+  "createdAtUtc": "2026-11-11T12:06:54.250Z",
+  "system": {
+    "name": "ARES",
+    "vehicleScope": "single-uav"
+  },
+  "simulation": {
+    "modelName": "ares_single_uav_cnn_f9ab72efe1d744798faa03bb5b36776c",
+    "scenarioName": "cnn-single-episode-intermittent-lidar-single-uav",
+    "coordinateFrame": "NED",
+    "timeBase": "simulation-time"
+  },
+  "software": {
+    "matlabRelease": "2026a",
+    "platform": "PCWIN64"
+  },
+  "repository": {
+    "commit": "8b1be37950fb58fa9a0671ea58bbc2969bb94df7",
+    "isDirty": true
+  },
+  "configuration": {
+    "identity": {
+      "id": "uav_001"
+    },
+    "frames": {
+      "world": "world_ned",
+      "body": "uav_001/base_link",
+      "lidar": "uav_001/lidar_link"
+    },
+    "simulation": {
+      "sampleTime": 0.001,
+      "stopTime": 60
+    },
+    "vehicle": {
+      "massKg": 0.1,
+      "gravityMps2": 9.81,
+      "radiusM": 0.1
+    },
+    "mission": {
+      "initialPositionNed": [
+        0.56742387771851766,
+        0,
+        -7
+      ],
+      "waypointsNed": [
+        [
+          0.56742387771851766,
+          0,
+          -7
+        ],
+        [
+          30,
+          35,
+          -7
+        ]
+      ]
+    },
+    "safety": {
+      "maxHorizontalSpeedMps": 5,
+      "brakingDecelerationMps2": 2,
+      "sensorLatencySeconds": 0.2,
+      "additionalMarginM": 0.5,
+      "minimumSurfaceClearanceM": 1
+    },
+    "acceptance": {
+      "finalWaypointToleranceM": 1,
+      "minimumAltitudeM": 5,
+      "maximumAltitudeM": 9
+    },
+    "avoidance": {
+      "planningSafetyDistanceM": 1.5
+    },
+    "sensors": {
+      "lidar": {
+        "enabled": true,
+        "mode": "intermittent-cnn-mlp"
+      }
+    }
+  },
+  "static": {
+    "maximum_sensor_range_m": 7,
+    "nominal_observation_dimension": 10740,
+    "lidar_grid_size": [
+      15,
+      716
+    ],
+    "observation_channel_order": "elevation-index-fastest-then-azimuth-index",
+    "obstacle_centers_enu_m": [
+      [
+        10,
+        0
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        10,
+        20
+      ],
+      [
+        5,
+        15
+      ],
+      [
+        22,
+        18
+      ],
+      [
+        15,
+        25
+      ],
+      [
+        10,
+        20
+      ]
+    ],
+    "obstacle_centers_ned_m": [
+      [
+        0,
+        10
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        15,
+        5
+      ],
+      [
+        18,
+        22
+      ],
+      [
+        25,
+        15
+      ],
+      [
+        20,
+        10
+      ]
+    ],
+    "obstacle_width_m": 3,
+    "obstacle_height_m": 15,
+    "obstacle_mesh_reference_frame": "ENU",
+    "oracle_usage": "Nominal raw LiDAR retained for scoring only during outages; never a reconstruction input."
+  },
+  "groundTruth": {
+    "condition": "intermittent-lidar-with-cnn",
+    "faultType": "intermittent-lidar-unavailable",
+    "faultActive": true,
+    "faultStartTime_s": 3.5443486030280162,
+    "faultEndTime_s": 16.549329689818645,
+    "outageIntervals_s": [
+      [
+        3.5443486030280162,
+        5.1058226856548945
+      ],
+      [
+        10.356031289257292,
+        12.010370739258892
+      ],
+      [
+        14.974288494995,
+        16.549329689818645
+      ]
+    ],
+    "randomSeed": 513,
+    "numberOfOutages": 3,
+    "faultWindowEndTime_s": 21,
+    "scheduleTime_s": [
+      0,
+      3.5443486030280162,
+      5.1058226856548945,
+      10.356031289257292,
+      12.010370739258892,
+      14.974288494995,
+      16.549329689818645,
+      60
+    ],
+    "scheduleEnabled": [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true
+    ],
+    "faultConfiguration": {
+      "randomSeed": 513,
+      "numberOfOutages": 3,
+      "initialHealthyTime_s": 3,
+      "finalHealthyTime_s": 4,
+      "minimumOutageDuration_s": 1.5,
+      "maximumOutageDuration_s": 3,
+      "minimumRecoveryDuration_s": 2,
+      "faultWindowEndTime_s": 21
+    }
+  },
+  "inference": {
+    "modelType": "state-only-MLP-CNN-dense-range-reconstruction",
+    "sourceEpisodeId": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+    "trainingRunDirectory": "A:\\Projects\\ARES\\results\\output_directoryZ\\single_episode\\CNN_MLP_BASELINE_SINGLE_EPISODE_20261111T115152_978364Z_241f12",
+    "sourceCheckpointSha256": "13bac3b4f8236aa5fbdd33743057303350ed6715ed4b334be1a3d293211ead36",
+    "artifactPath": "A:\\Projects\\ARES\\data\\models\\cnn_mlp_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\7707c0d4e8b8df75\\model.mat",
+    "artifactSha256": "f227383a880c1571c86fa49eab6687dee986051f4affbccf55043f247ce8be82",
+    "numericalValidation": {
+      "schemaVersion": "ares-cnn-mlp-matlab-validation-v1",
+      "episodeId": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+      "modelSha256": "f227383a880c1571c86fa49eab6687dee986051f4affbccf55043f247ce8be82",
+      "maximumPredictionError": 7.152557373046875E-6,
+      "maximumEncodingError": 5.9604644775390625E-8,
+      "absoluteTolerance": 0.0005,
+      "fixtureCount": 5,
+      "medianInferenceMilliseconds": 5.9304,
+      "matlabRelease": "2026a",
+      "plantSimulationRun": false,
+      "allParityChecksPassed": true
+    },
+    "inputFeatureCount": 12,
+    "targetFeatureCount": 10740,
+    "loggedSectorSummaryCount": 14,
+    "densePredictionAvailableSignal": "cnn_reconstruction_used",
+    "unusedDensePredictionFillValue": 0,
+    "historyLength": 0,
+    "scanPeriodS": 0.1,
+    "wiring": {
+      "originalAvoidanceMaxAge": "3",
+      "experimentAvoidanceMaxAge": 0,
+      "schemaVersion": "ares-cnn-mlp-controller-wiring-v1",
+      "artifactSha256": "f227383a880c1571c86fa49eab6687dee986051f4affbccf55043f247ce8be82",
+      "pointCloudAdapter": "dense-15x716-predicted-range-to-recorded-FLU-ray-cloud",
+      "reconstructionSampleTimeSeconds": 0.1,
+      "originalModelUnchanged": true
+    },
+    "sectorBodyBearingEdgesDeg": [
+      -60,
+      -42.857142857142854,
+      -25.714285714285715,
+      -8.5714285714285712,
+      8.5714285714285712,
+      25.714285714285715,
+      42.857142857142854,
+      60
+    ],
+    "controllerAdapter": "full predicted 15x716 range grid projected onto recorded sensor rays; ranges clipped to [0,7]m",
+    "baselineModelPath": "A:\\Projects\\ARES\\models\\ares_single_uav_top.slx",
+    "baselineModelSha256": "f9984025b16439b5bb47cf7c723de2c20654abf5dfcb64b8321c965380041d10",
+    "temporaryModelPath": "A:\\Projects\\ARES\\results\\cnn_mlp_integration\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\ares_single_uav_cnn_f9ab72efe1d744798faa03bb5b36776c.slx",
+    "fallbackReasonCodes": {
+      "healthy": 0,
+      "unusedWarmupCode": 1,
+      "invalidPrediction": 2,
+      "modelUsed": 3
+    },
+    "runtimeProof": {
+      "scanCount": 364,
+      "observedOutageCount": 3,
+      "observedRecoveryCount": 3,
+      "disabledLidarScanCount": 49,
+      "enabledLidarScanCount": 315,
+      "reconstructionUsedScanCount": 49,
+      "nativeInferenceScanCount": 49,
+      "nativeBackendSelected": true,
+      "warmupFallbackScanCount": 0,
+      "invalidPredictionFallbackScanCount": 0,
+      "controllerInfluencedScanCount": 49,
+      "controllerInfluencedDuringOutage": true,
+      "maximumUsedReferenceDifferenceM": 4.6906513009699893,
+      "totalInferenceSeconds": 0.23762339999999998,
+      "meanInferenceMilliseconds": 4.8494571428571431,
+      "maximumInferenceMilliseconds": 11.235,
+      "oracleOutageScansWithReturns": 42,
+      "failedChecks": [],
+      "instrumentationChecksPassed": true,
+      "rawDenseOutageRmseM": 2.3217450357836436,
+      "rawDenseOutageMaeM": 1.3758957271015306
+    }
+  },
+  "runtime": {
+    "visualization": {
+      "enabled": true,
+      "cloudSource": "selected-controller-observation",
+      "pacingRate": 1
+    },
+    "wallSeconds": 117.0411095,
+    "completedAtUtc": "2026-11-11T12:08:51.673Z"
+  },
+  "metrics": {
+    "positionSampleCount": 36301,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0.56742387771851766,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0.56742388010025024,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      30.423027038574219,
+      34.700431823730469,
+      -7.20772647857666
+    ],
+    "initialPositionErrorM": 2.3817325889297081E-9,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 0.55842927708008483,
+    "minimumAltitudeM": 6.808323860168457,
+    "maximumAltitudeM": 7.5253524780273438,
+    "minimumObstacleCenterDistanceM": -0.33734703063964844,
+    "minimumObstacleClearanceM": -0.43734703063964842,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": true,
+    "nearCollisionOccurred": true,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": true,
+    "goalReachedAtTermination": true,
+    "firstGoalEntryTimeS": 35.87,
+    "durationS": 36.300000000000004,
+    "finalTimeS": 36.300000000000004,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 54.400927516948713,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "goal-reached",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "outcome": {
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "collisionOccurred": true,
+    "terminationReason": "goal-reached",
+    "observedOutageCount": 3,
+    "observedRecoveryCount": 3,
+    "reconstructionUsedScanCount": 49,
+    "controllerInfluencedDuringOutage": true,
+    "instrumentationChecksPassed": true,
+    "failureIdentifier": "",
+    "failureMessage": ""
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "ares-dense-saits-single-episode-mat-v1",
+  "episode_id": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "training_run_dir": "A:\\Projects\\ARES\\results\\saits_dense_single_episode\\SAITS_BASELINE_SINGLE_EPISODE_20261112T225534_035646Z_1cd42bf9",
+  "checkpoint_path": "A:\\Projects\\ARES\\results\\saits_dense_single_episode\\SAITS_BASELINE_SINGLE_EPISODE_20261112T225534_035646Z_1cd42bf9\\best.pt",
+  "checkpoint_sha256": "afe49884a5a8e6cfd5058087e1e0c07f2999b22b03a075fc0babf27d064c9bab",
+  "model_mat_sha256": "57d663501fa2dd17f518f1b1a8e73541173723e9fc64a536efe9b44b536998e1",
+  "source_manifest_sha256": "16a484878064d699caa32d4c607257eb9a12e35c76b8b5aa99deb0afbce7e03c",
+  "source_npz_sha256": "dc30f9fa3623a09be8d923d0e798391dfe17cf9bffb9118cd558e8910341b842",
+  "best_epoch": 105,
+  "validation_mse": 0.28052231669425964,
+  "model_source_sha256": {
+    "dense_saits_single_episode_py": "be9ffcdba700924648d779b52abb9a7c3ff8c3ba8b1d120b155449ccf4724fae",
+    "saits_endpoint_model_py": "b5e1ce284fcee387ad628d777d171a06295fb6d436fc4cbaa3ff5648ca993a2c"
+  },
+  "exporter_sha256": "9d658b864d782b222d67b63d8556c073ead11b8ba767ab251a80de330a9a76f1",
+  "history_length": 50,
+  "matlab_parity_verified": true,
+  "barrier_enabled": false,
+  "closed_loop_training": false,
+  "matlab_validation_report": "A:\\Projects\\ARES\\data\\models\\saits_dense_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\3e616a16d9e57fb7\\matlab_validation.json",
+  "matlab_maximum_prediction_error": 7.62939453125E-6
+}

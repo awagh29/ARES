@@ -1,0 +1,370 @@
+{
+  "schemaVersion": "2.0.0",
+  "runId": "6f64e7b7-524a-41bf-8c62-6687fd0d074c",
+  "createdAtUtc": "2026-11-10T12:29:13.860Z",
+  "system": {
+    "name": "ARES",
+    "vehicleScope": "single-uav"
+  },
+  "simulation": {
+    "modelName": "ares_single_uav_saits_barrier",
+    "scenarioName": "saits-barrier-intermittent-lidar-single-uav",
+    "coordinateFrame": "NED",
+    "timeBase": "simulation-time"
+  },
+  "software": {
+    "matlabRelease": "2026a",
+    "platform": "PCWIN64"
+  },
+  "repository": {
+    "commit": "8b1be37950fb58fa9a0671ea58bbc2969bb94df7",
+    "isDirty": true
+  },
+  "configuration": {
+    "identity": {
+      "id": "uav_001"
+    },
+    "frames": {
+      "world": "world_ned",
+      "body": "uav_001/base_link",
+      "lidar": "uav_001/lidar_link"
+    },
+    "simulation": {
+      "sampleTime": 0.001,
+      "stopTime": 60
+    },
+    "vehicle": {
+      "massKg": 0.1,
+      "gravityMps2": 9.81,
+      "radiusM": 0.1
+    },
+    "mission": {
+      "initialPositionNed": [
+        0,
+        0,
+        -7
+      ],
+      "waypointsNed": [
+        [
+          0,
+          0,
+          -7
+        ],
+        [
+          30,
+          35,
+          -7
+        ]
+      ]
+    },
+    "safety": {
+      "maxHorizontalSpeedMps": 5,
+      "brakingDecelerationMps2": 2,
+      "sensorLatencySeconds": 0.2,
+      "additionalMarginM": 0.5,
+      "minimumSurfaceClearanceM": 1
+    },
+    "acceptance": {
+      "finalWaypointToleranceM": 1,
+      "minimumAltitudeM": 5,
+      "maximumAltitudeM": 9
+    },
+    "avoidance": {
+      "planningSafetyDistanceM": 1.5
+    },
+    "sensors": {
+      "lidar": {
+        "enabled": true,
+        "mode": "intermittent-saits-barrier"
+      }
+    }
+  },
+  "static": {
+    "maximum_sensor_range_m": 7,
+    "nominal_observation_dimension": 10740,
+    "lidar_grid_size": [
+      15,
+      716
+    ],
+    "observation_channel_order": "elevation-index-fastest-then-azimuth-index",
+    "obstacle_centers_enu_m": [
+      [
+        10,
+        0
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        10,
+        20
+      ],
+      [
+        5,
+        15
+      ],
+      [
+        22,
+        18
+      ],
+      [
+        15,
+        25
+      ],
+      [
+        10,
+        20
+      ]
+    ],
+    "obstacle_centers_ned_m": [
+      [
+        0,
+        10
+      ],
+      [
+        15,
+        15
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        15,
+        5
+      ],
+      [
+        18,
+        22
+      ],
+      [
+        25,
+        15
+      ],
+      [
+        20,
+        10
+      ]
+    ],
+    "obstacle_width_m": 3,
+    "obstacle_height_m": 15,
+    "oracle_usage": "Raw LiDAR/geometry are scoring-only during outage; never runtime reconstruction or QP inputs."
+  },
+  "inference": {
+    "schemaVersion": "ares-saits-barrier-preparation-v1",
+    "projectRoot": "A:\\Projects\\ARES",
+    "modelName": "ares_single_uav_saits_barrier",
+    "modelPath": "A:\\Projects\\ARES\\results\\saits_barrier_integration\\ares_single_uav_saits_barrier.slx",
+    "preparedModelSha256": "43c932fa8319284b2451fef671a691c15eca504db2bfd27000344511fed93d24",
+    "baselineModelSha256": "f9984025b16439b5bb47cf7c723de2c20654abf5dfcb64b8321c965380041d10",
+    "deploymentPath": "A:\\Projects\\ARES\\results\\augmented_saits_barrier\\ares_augmented_saits_barrier_local_seed42_v1\\deployment",
+    "deploymentManifestSha256": "3af6f2b06f4c5b1634be5dc02a94e93e01ba1906055194cae9a4f77debd08617",
+    "selectedCheckpointSha256": "23fdd45618b27c008bfb8bb003d6290cdbc08d42071ba544841c44e21810c0bf",
+    "pythonExecutable": "A:\\Projects\\ARES\\.venv\\Scripts\\python.exe",
+    "numericalValidation": {
+      "passed": true,
+      "checks": {
+        "prediction_physical": {
+          "maximum_absolute_error": 9.5367431640625E-7,
+          "absolute_tolerance": 2E-5,
+          "relative_tolerance": 0,
+          "passed": true
+        },
+        "qp_constraint_matrix": {
+          "maximum_absolute_error": 0,
+          "absolute_tolerance": 2E-6,
+          "relative_tolerance": 0,
+          "passed": true
+        },
+        "qp_constraint_rhs": {
+          "maximum_absolute_error": 0.0007660892115382012,
+          "absolute_tolerance": 2E-5,
+          "relative_tolerance": 2E-7,
+          "passed": true
+        },
+        "qp_selected_solution": {
+          "maximum_absolute_error": 1.3552527156068805E-20,
+          "absolute_tolerance": 2E-5,
+          "relative_tolerance": 0,
+          "passed": true
+        },
+        "allocated_commands": {
+          "maximum_absolute_error": 0,
+          "absolute_tolerance": 2E-5,
+          "relative_tolerance": 0,
+          "passed": true
+        },
+        "qp_feasible": {
+          "passed": true
+        }
+      },
+      "device": "cpu",
+      "neural_dtype": "float32",
+      "qp_dtype": "float64",
+      "matlabPacketMaximumError": 0,
+      "outageBridgeMaximumError": 0,
+      "matlabRoundTripMedianMilliseconds": 24.245099999999997,
+      "matlabRoundTripMaximumMilliseconds": 29.886,
+      "performanceIsHardRealtimeGuarantee": false,
+      "matlabRelease": "2026a",
+      "pythonExecutable": "A:\\Projects\\ARES\\.venv\\Scripts\\python.exe",
+      "deploymentManifestSha256": "3af6f2b06f4c5b1634be5dc02a94e93e01ba1906055194cae9a4f77debd08617",
+      "schemaVersion": "ares-saits-barrier-matlab-validation-v1",
+      "plantSimulationRun": false
+    },
+    "wiring": {
+      "schemaVersion": "ares-augmented-saits-barrier-wiring-v1",
+      "controller": "state-augmented SAITS + frozen reference/controller + learned-gain hard QP + exact allocation",
+      "executedControlRoute": "ARES Barrier Control Bus -> Rate Transition2 -> Quadrotor Plant",
+      "previousControllerBypassed": true,
+      "failurePolicy": "Stop Simulation at first invalid/infeasible safety filter; bounded emergency output is not certified safe",
+      "samplePeriodS": 0.1,
+      "backend": "persistent out-of-process Python; CPU FP32 neural and FP64 QP; no MEX",
+      "oracleMapInput": false,
+      "diagnosticOrder": [
+        "available",
+        "reconstructionUsed",
+        "feasible",
+        "maxViolation",
+        "trackingSlack",
+        "k2",
+        "failureLatched",
+        "computeSeconds",
+        "minimumH",
+        "minimumPsi1"
+      ]
+    },
+    "visualization": {
+      "enabled": true,
+      "cloudSource": "selected-controller-observation",
+      "pacingRate": 1
+    },
+    "plantSimulationRun": false,
+    "telemetrySubdirectory": "saits_barrier_intermittent",
+    "runtimeSources": {
+      "scripts_saits_barrier_simulink_py": "46cc469f1a07c8ba6a40dcbce7d1db5f7ce82ab5a106ec3632822681defed3da",
+      "src__ares__inference_SaitsBarrierController_m": "1cc490defd3fa17e2aea29924f5c83ae7766dab4eb8db0a700160f17443679f3",
+      "src__ares__inference_configureSaitsBarrierModel_m": "bd52bf519268b820aaf01daa65ea11876aa2ec3e8bb79fcd47ccc56571d5a97a",
+      "src__ares__inference_loadSaitsBarrierRuntime_m": "75865b407539e8cc7ace95851f87789aa6f86ca8ea48ad1aa7557a601662baeb"
+    },
+    "safetyCertified": false,
+    "runtimeProof": {
+      "availabilityMatchesSchedule": true,
+      "missingLidarExcluded": true,
+      "executedController": "augmented-SAITS + live BarrierNet QP + acceleration allocation",
+      "filterFailureStopsSimulation": true,
+      "filterFailureObserved": true
+    }
+  },
+  "groundTruth": {
+    "condition": "intermittent-lidar-with-augmented-saits-barrier",
+    "faultType": "intermittent-lidar-unavailable",
+    "faultActive": true,
+    "outageIntervals_s": [
+      [
+        3.5443486030280162,
+        5.1058226856548945
+      ],
+      [
+        10.356031289257292,
+        12.010370739258892
+      ],
+      [
+        14.974288494995,
+        16.549329689818645
+      ]
+    ],
+    "faultConfiguration": {
+      "randomSeed": 513,
+      "numberOfOutages": 3,
+      "initialHealthyTime_s": 3,
+      "finalHealthyTime_s": 4,
+      "minimumOutageDuration_s": 1.5,
+      "maximumOutageDuration_s": 3,
+      "minimumRecoveryDuration_s": 2,
+      "faultWindowEndTime_s": 21
+    },
+    "scheduleTime_s": [
+      0,
+      3.5443486030280162,
+      5.1058226856548945,
+      10.356031289257292,
+      12.010370739258892,
+      14.974288494995,
+      16.549329689818645,
+      60
+    ],
+    "scheduleEnabled": [
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true
+    ]
+  },
+  "runtime": {
+    "wallSeconds": 14.1616625,
+    "completedAtUtc": "10-Nov-2026 12:29:28"
+  },
+  "metrics": {
+    "positionSampleCount": 3601,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0,
+      0,
+      -7
+    ],
+    "finalPositionNedM": [
+      0.28472918272018433,
+      0.333431214094162,
+      -8.24157428741455
+    ],
+    "initialPositionErrorM": 0,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 45.676140575177662,
+    "minimumAltitudeM": 5.9813551902771,
+    "maximumAltitudeM": 8.24157428741455,
+    "minimumObstacleCenterDistanceM": 8.166568785905838,
+    "minimumObstacleClearanceM": 8.0665687859058384,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": false,
+    "nearCollisionOccurred": false,
+    "altitudeWithinLimits": true,
+    "goalReachedAtAnyTime": false,
+    "goalReachedAtTermination": false,
+    "firstGoalEntryTimeS": null,
+    "durationS": 3.6,
+    "finalTimeS": 3.6,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 3.3234230155709441,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "filter-infeasible-or-invalid",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples"
+  },
+  "outcome": {
+    "missionSuccess": false,
+    "safetyChecksPassed": false,
+    "collisionOccurred": false,
+    "terminationReason": "filter-infeasible-or-invalid",
+    "filterFailed": true,
+    "reconstructedScanCount": 1,
+    "scansLogged": 37
+  }
+}

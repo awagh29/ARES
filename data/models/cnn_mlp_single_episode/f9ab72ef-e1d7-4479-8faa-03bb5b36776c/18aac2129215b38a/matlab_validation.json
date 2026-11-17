@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "ares-cnn-mlp-matlab-validation-v1",
+  "episodeId": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "modelSha256": "b3c808aaf84fb902b5f921a7686eb430c4951f4abbf6eb252d28be9b7b106fb1",
+  "maximumPredictionError": 7.62939453125E-6,
+  "maximumEncodingError": 5.9604644775390625E-8,
+  "absoluteTolerance": 0.0005,
+  "fixtureCount": 5,
+  "medianInferenceMilliseconds": 6.6626,
+  "matlabRelease": "2026a",
+  "plantSimulationRun": false,
+  "allParityChecksPassed": true
+}

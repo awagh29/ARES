@@ -1,0 +1,460 @@
+<?xml version="1.0"?>
+<sdf version="1.8">
+  <world name="ares_three_uav">
+    <physics name="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 20 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <direction>-0.3 0.2 -0.9</direction>
+    </light>
+
+    <model name="ground">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>400 400</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>400 400</size></plane></geometry>
+          <material><ambient>0.35 0.4 0.3 1</ambient><diffuse>0.35 0.4 0.3 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_1_10_0">
+      <static>true</static>
+      <pose>10.000000 0.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_1_15_15">
+      <static>true</static>
+      <pose>15.000000 15.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_1_10_20">
+      <static>true</static>
+      <pose>10.000000 20.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_1_5_15">
+      <static>true</static>
+      <pose>5.000000 15.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_1_22_18">
+      <static>true</static>
+      <pose>22.000000 18.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_1_15_25">
+      <static>true</static>
+      <pose>15.000000 25.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="uav_001">
+      <static>true</static>
+      <pose>0.000000 0.000000 7.000000 0 0 1.57079633</pose>
+      <link name="base_link">
+        <visual name="body">
+          <geometry><box><size>0.45 0.45 0.12</size></box></geometry>
+          <material>
+            <ambient>0.1 0.3 0.7 1</ambient>
+            <diffuse>0.1 0.3 0.7 1</diffuse>
+          </material>
+        </visual>
+        <sensor name="lidar" type="gpu_lidar">
+          <pose>0 0 0.4 0 0 0</pose>
+          <topic>uav_001/lidar</topic>
+          <update_rate>10</update_rate>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>716</samples>
+                <min_angle>-3.12413936</min_angle>
+                <max_angle>3.12413936</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>15</samples>
+                <min_angle>-0.26179939</min_angle>
+                <max_angle>0.26179939</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.2</min>
+              <max>7.0</max>
+              <resolution>0.02</resolution>
+            </range>
+          </lidar>
+          <always_on>1</always_on>
+          <visualize>true</visualize>
+        </sensor>
+      </link>
+    </model>
+
+    <model name="building_2_10_0">
+      <static>true</static>
+      <pose>70.000000 0.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_2_15_15">
+      <static>true</static>
+      <pose>75.000000 15.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_2_10_20">
+      <static>true</static>
+      <pose>70.000000 20.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_2_5_15">
+      <static>true</static>
+      <pose>65.000000 15.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_2_22_18">
+      <static>true</static>
+      <pose>82.000000 18.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_2_15_25">
+      <static>true</static>
+      <pose>75.000000 25.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="uav_002">
+      <static>true</static>
+      <pose>60.000000 0.000000 7.000000 0 0 1.57079633</pose>
+      <link name="base_link">
+        <visual name="body">
+          <geometry><box><size>0.45 0.45 0.12</size></box></geometry>
+          <material>
+            <ambient>0.1 0.3 0.7 1</ambient>
+            <diffuse>0.1 0.3 0.7 1</diffuse>
+          </material>
+        </visual>
+        <sensor name="lidar" type="gpu_lidar">
+          <pose>0 0 0.4 0 0 0</pose>
+          <topic>uav_002/lidar</topic>
+          <update_rate>10</update_rate>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>716</samples>
+                <min_angle>-3.12413936</min_angle>
+                <max_angle>3.12413936</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>15</samples>
+                <min_angle>-0.26179939</min_angle>
+                <max_angle>0.26179939</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.2</min>
+              <max>7.0</max>
+              <resolution>0.02</resolution>
+            </range>
+          </lidar>
+          <always_on>1</always_on>
+          <visualize>true</visualize>
+        </sensor>
+      </link>
+    </model>
+
+    <model name="building_3_10_0">
+      <static>true</static>
+      <pose>130.000000 0.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_3_15_15">
+      <static>true</static>
+      <pose>135.000000 15.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_3_10_20">
+      <static>true</static>
+      <pose>130.000000 20.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_3_5_15">
+      <static>true</static>
+      <pose>125.000000 15.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_3_22_18">
+      <static>true</static>
+      <pose>142.000000 18.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="building_3_15_25">
+      <static>true</static>
+      <pose>135.000000 25.000000 7.500000 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>3.0000 3.0000 15.0000</size></box></geometry>
+          <material>
+            <ambient>0.65 0.65 0.65 1</ambient>
+            <diffuse>0.65 0.65 0.65 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="uav_003">
+      <static>true</static>
+      <pose>120.000000 0.000000 7.000000 0 0 1.57079633</pose>
+      <link name="base_link">
+        <visual name="body">
+          <geometry><box><size>0.45 0.45 0.12</size></box></geometry>
+          <material>
+            <ambient>0.1 0.3 0.7 1</ambient>
+            <diffuse>0.1 0.3 0.7 1</diffuse>
+          </material>
+        </visual>
+        <sensor name="lidar" type="gpu_lidar">
+          <pose>0 0 0.4 0 0 0</pose>
+          <topic>uav_003/lidar</topic>
+          <update_rate>10</update_rate>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>716</samples>
+                <min_angle>-3.12413936</min_angle>
+                <max_angle>3.12413936</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>15</samples>
+                <min_angle>-0.26179939</min_angle>
+                <max_angle>0.26179939</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.2</min>
+              <max>7.0</max>
+              <resolution>0.02</resolution>
+            </range>
+          </lidar>
+          <always_on>1</always_on>
+          <visualize>true</visualize>
+        </sensor>
+      </link>
+    </model>
+  </world>
+</sdf>

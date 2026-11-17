@@ -1,0 +1,198 @@
+{
+  "schema_version": "ares-pose-to-range-cnn-architecture-v1",
+  "latent_channels": 64,
+  "latent_length": 45,
+  "encoder": [
+    {
+      "type": "Linear",
+      "in_features": 12,
+      "out_features": 512,
+      "bias": true
+    },
+    {
+      "type": "GELU"
+    },
+    {
+      "type": "Dropout",
+      "p": 0.1,
+      "inplace": false
+    },
+    {
+      "type": "Linear",
+      "in_features": 512,
+      "out_features": 1024,
+      "bias": true
+    },
+    {
+      "type": "GELU"
+    },
+    {
+      "type": "Dropout",
+      "p": 0.1,
+      "inplace": false
+    },
+    {
+      "type": "Linear",
+      "in_features": 1024,
+      "out_features": 2880,
+      "bias": true
+    }
+  ],
+  "decoder": [
+    {
+      "type": "Upsample",
+      "size": [
+        90
+      ],
+      "mode": "linear",
+      "align_corners": false
+    },
+    {
+      "type": "Conv1d",
+      "in_channels": 64,
+      "out_channels": 64,
+      "kernel_size": [
+        5
+      ],
+      "stride": [
+        1
+      ],
+      "padding": [
+        2
+      ],
+      "dilation": [
+        1
+      ],
+      "groups": 1,
+      "bias": true,
+      "padding_mode": "zeros"
+    },
+    {
+      "type": "GELU"
+    },
+    {
+      "type": "Upsample",
+      "size": [
+        179
+      ],
+      "mode": "linear",
+      "align_corners": false
+    },
+    {
+      "type": "Conv1d",
+      "in_channels": 64,
+      "out_channels": 64,
+      "kernel_size": [
+        5
+      ],
+      "stride": [
+        1
+      ],
+      "padding": [
+        2
+      ],
+      "dilation": [
+        1
+      ],
+      "groups": 1,
+      "bias": true,
+      "padding_mode": "zeros"
+    },
+    {
+      "type": "GELU"
+    },
+    {
+      "type": "Upsample",
+      "size": [
+        358
+      ],
+      "mode": "linear",
+      "align_corners": false
+    },
+    {
+      "type": "Conv1d",
+      "in_channels": 64,
+      "out_channels": 48,
+      "kernel_size": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding": [
+        1
+      ],
+      "dilation": [
+        1
+      ],
+      "groups": 1,
+      "bias": true,
+      "padding_mode": "zeros"
+    },
+    {
+      "type": "GELU"
+    },
+    {
+      "type": "Upsample",
+      "size": [
+        716
+      ],
+      "mode": "linear",
+      "align_corners": false
+    },
+    {
+      "type": "Conv1d",
+      "in_channels": 48,
+      "out_channels": 32,
+      "kernel_size": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding": [
+        1
+      ],
+      "dilation": [
+        1
+      ],
+      "groups": 1,
+      "bias": true,
+      "padding_mode": "zeros"
+    },
+    {
+      "type": "GELU"
+    },
+    {
+      "type": "Upsample",
+      "size": [
+        716
+      ],
+      "mode": "linear",
+      "align_corners": false
+    },
+    {
+      "type": "Conv1d",
+      "in_channels": 32,
+      "out_channels": 15,
+      "kernel_size": [
+        1
+      ],
+      "stride": [
+        1
+      ],
+      "padding": [
+        0
+      ],
+      "dilation": [
+        1
+      ],
+      "groups": 1,
+      "bias": true,
+      "padding_mode": "zeros"
+    },
+    {
+      "type": "Identity"
+    }
+  ]
+}

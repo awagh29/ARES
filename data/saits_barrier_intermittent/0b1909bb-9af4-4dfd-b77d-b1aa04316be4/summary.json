@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "ares-saits-barrier-run-summary-v1",
+  "runId": "0b1909bb-9af4-4dfd-b77d-b1aa04316be4",
+  "checkpointSha256": "23fdd45618b27c008bfb8bb003d6290cdbc08d42071ba544841c44e21810c0bf",
+  "metrics": {
+    "positionSampleCount": 40701,
+    "telemetryValid": true,
+    "plannedInitialPositionNedM": [
+      0,
+      0,
+      7
+    ],
+    "goalPositionNedM": [
+      30,
+      35,
+      -7
+    ],
+    "actualInitialPositionNedM": [
+      0,
+      0,
+      7
+    ],
+    "finalPositionNedM": [
+      30,
+      35,
+      245.31471252441406
+    ],
+    "initialPositionErrorM": 0,
+    "initialPositionMatchesPlan": true,
+    "finalWaypointErrorM": 252.31471252441406,
+    "minimumAltitudeM": -245.31471252441406,
+    "maximumAltitudeM": 93.7312240600586,
+    "minimumObstacleCenterDistanceM": 2.6526166349055487,
+    "minimumObstacleClearanceM": 2.5526166349055486,
+    "requiredObstacleClearanceM": 1,
+    "requiredObstacleCenterDistanceM": 1.1,
+    "collisionOccurred": false,
+    "nearCollisionOccurred": false,
+    "altitudeWithinLimits": false,
+    "goalReachedAtAnyTime": false,
+    "goalReachedAtTermination": false,
+    "firstGoalEntryTimeS": null,
+    "durationS": 40.7,
+    "finalTimeS": 40.7,
+    "reachedTimeLimit": false,
+    "timedOut": false,
+    "totalPathLengthM": 479.73057800529182,
+    "safetyChecksPassed": false,
+    "missionSuccess": false,
+    "terminationReason": "early-stop-before-goal",
+    "clearanceEvaluation": "signed-3d-box-distance-at-native-position-samples",
+    "barrierCertificateHeldEntireRun": false,
+    "continuedAfterBarrierFailure": true,
+    "uncertifiedNominalFallbackScanCount": 145
+  },
+  "scans": 408,
+  "observedOutageCount": 3,
+  "reconstructedScanCount": 49,
+  "filterFeasibleScanCount": 263,
+  "filterFailureObserved": true,
+  "plannedOutageIntervalsS": [
+    [
+      3.5443486030280162,
+      5.1058226856548945
+    ],
+    [
+      10.356031289257292,
+      12.010370739258892
+    ],
+    [
+      14.974288494995,
+      16.549329689818645
+    ]
+  ],
+  "finalTimeS": 40.7,
+  "safetyCertified": false,
+  "continueAfterBarrierFailure": true,
+  "goalReachedAtAnyTime": false,
+  "goalReachedAtTermination": false,
+  "uncertifiedNominalFallbackScanCount": 145
+}
