@@ -20,15 +20,17 @@ else
     assert(strcmpi(string(environment.Executable),pythonExecutable), ...
         "ARES:WrongBarrierPython","MATLAB selected another Python interpreter.");
 end
-scripts = char(fullfile(projectRoot,"scripts"));
 pythonPath=py.sys.path;
-if int64(pythonPath.count(scripts))==0
-    pythonPath.insert(int32(0),scripts);
+for directory=[fullfile(projectRoot,"scripts"),fullfile(projectRoot,"scripts","saits")]
+    scripts=char(directory);
+    if int64(pythonPath.count(scripts))==0
+        pythonPath.insert(int32(0),scripts);
+    end
 end
 module = py.importlib.import_module("saits_barrier_simulink");
 % A previous capture can leave the old module cached in this MATLAB session.
 % Refresh changed bridge code without discarding the user's Python host.
-expectedSource=ares.inference.fileSha256(fullfile(projectRoot,"scripts","saits_barrier_simulink.py"));
+expectedSource=ares.inference.fileSha256(fullfile(projectRoot,"scripts","saits","saits_barrier_simulink.py"));
 if ~logical(py.hasattr(module,"RUNTIME_SOURCE_SHA256")) || string(module.RUNTIME_SOURCE_SHA256)~=expectedSource
     py.importlib.invalidate_caches();
     module=py.importlib.reload(module);

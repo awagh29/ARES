@@ -5,7 +5,7 @@ arguments
     episodeId (1,1) string
 end
 python=fullfile(projectRoot,".venv","Scripts","python.exe");
-script=fullfile(projectRoot,"scripts","export_cnn_mlp_matlab.py");
+script=fullfile(projectRoot,"scripts","cnn_mlp","export_cnn_mlp_matlab.py");
 command='"'+python+'" "'+script+'" --project-root "'+projectRoot+ ...
     '" --episode-id "'+episodeId+'" --verify-integration';
 [status,text]=system(command);

@@ -7,13 +7,19 @@ import json
 import os
 from pathlib import Path
 import re
+import sys
 import uuid
 import warnings
+
+# Support MATLAB's absolute script invocation from any working directory.
+for _directory in (Path(__file__).resolve().parent, Path(__file__).resolve().parents[1]):
+    if str(_directory) not in sys.path:
+        sys.path.insert(0, str(_directory))
 
 import numpy as np
 from scipy.io import savemat
 import torch
-from scripts.saits.dense_saits_single_episode import (SCHEMA as TRAINING_SCHEMA, BEAMS, FEATURES,
+from dense_saits_single_episode import (SCHEMA as TRAINING_SCHEMA, BEAMS, FEATURES,
     DenseSaitsReconstructor, build_dataset, build_train_val_tensors, normalize_history, source_hashes)
 from export_saits_matlab import _linear, _layer
 
@@ -151,7 +157,13 @@ def export_episode(project_root,episode_id,*,training_run=None,results_root=None
             source_npz_sha256=source['npz_sha256'],best_epoch=cp['best_epoch'],validation_mse=cp['best_val_mse'],
             model_source_sha256=source_hashes(),exporter_sha256=exporter_sha,history_length=config['model']['window_size'],
             matlab_parity_verified=False,barrier_enabled=False,closed_loop_training=False)
-        atomic_json(staging/'export_manifest.json',exported); os.rename(staging,destination)
+        atomic_json(staging/'export_manifest.json',exported)
+        # Match the CNN exporter: Windows may deny renaming a populated
+        # directory. Publish prepared files, then update the pointer last.
+        destination.mkdir()
+        for name in ('model.mat','export_manifest.json'):
+            os.replace(staging/name,destination/name)
+        staging.rmdir()
     pointer=dict(exported,model_path=str(destination/'model.mat'),export_dir=str(destination))
     atomic_json(episode_folder/'deployment.json',pointer)
     return pointer

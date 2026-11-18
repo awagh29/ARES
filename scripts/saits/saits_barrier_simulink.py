@@ -7,7 +7,13 @@ from dataclasses import fields
 import hashlib
 import json
 from pathlib import Path
+import sys
 import time
+
+# Resolve sibling SAITS modules and the shared scripts/ares_safe_training package.
+for _directory in (Path(__file__).resolve().parent, Path(__file__).resolve().parents[1]):
+    if str(_directory) not in sys.path:
+        sys.path.insert(0, str(_directory))
 
 import numpy as np
 import torch
@@ -38,11 +44,14 @@ class Controller:
                 raise ValueError(f'Deployment integrity failure: {name}')
         # Enforce the source functions actually used by this runtime. Added
         # bridge code is separately hashed in the MATLAB preparation report.
-        root = Path(__file__).parent
+        root = Path(__file__).resolve().parent
         used = {'models.py', 'barrier.py', 'qp.py', 'control.py', 'dynamics.py', 'data.py', 'config.py', 'saits_endpoint_model.py'}
         for name, expected in self.manifest['provenance']['export_source_sha256'].items():
             if Path(name).name in used:
-                actual = hashlib.sha256((root / name).read_text(encoding='utf-8').encode()).hexdigest()
+                basename = Path(name).name
+                source = (root / basename if basename == 'saits_endpoint_model.py' else
+                          root.parent / 'ares_safe_training' / basename)
+                actual = hashlib.sha256(source.read_text(encoding='utf-8').encode()).hexdigest()
                 if actual != expected:
                     raise ValueError(f'Training/export runtime source changed: {name}')
         torch.set_num_threads(int(threads))
@@ -159,7 +168,7 @@ class Controller:
     @torch.inference_mode()
     def reference_check(self):
         """Compare actual installed inference/QP against exported CPU fixtures."""
-        from scripts.saits.export_augmented_saits_barrier import make_reference_cases
+        from export_augmented_saits_barrier import make_reference_cases
         payload = torch.load(self.folder / 'deployment.pt', map_location='cpu', weights_only=True)
         arrays, _ = make_reference_cases(self.model, self.barrier, self.normalizer, payload)
         checks = {}

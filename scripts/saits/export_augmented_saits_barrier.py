@@ -22,7 +22,13 @@ import math
 import os
 from pathlib import Path
 import shutil
+import sys
 import uuid
+
+# The training package remains directly under scripts; SAITS helpers are here.
+for _directory in (Path(__file__).resolve().parent, Path(__file__).resolve().parents[1]):
+    if str(_directory) not in sys.path:
+        sys.path.insert(0, str(_directory))
 
 import numpy as np
 from scipy.io import loadmat, savemat
@@ -87,7 +93,7 @@ def state_sha256(state):
 def runtime_source_sha256():
     root = Path(__file__).resolve().parent
     return {name: hashlib.sha256((root / name if name == "saits_endpoint_model.py" else
-            root / "ares_safe_training" / name).read_text(encoding="utf-8").encode("utf-8")).hexdigest()
+            root.parent / "ares_safe_training" / name).read_text(encoding="utf-8").encode("utf-8")).hexdigest()
             for name in RUNTIME_SOURCES}
 
 
@@ -492,8 +498,8 @@ def export_checkpoint(checkpoint_path, output_dir=None, *, export_onnx=False):
         raise ImportError("--onnx requires the optional onnx package. Omit the flag for portable MAT-v5/PT export.")
     checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     model, barrier, normalizer, deployment = _selected_checkpoint(checkpoint)
-    package_root = Path(__file__).resolve().parent
-    source_paths = [Path(__file__), package_root / "saits_endpoint_model.py"]
+    package_root = Path(__file__).resolve().parents[1]
+    source_paths = [Path(__file__), Path(__file__).with_name("saits_endpoint_model.py")]
     source_paths.extend(package_root / "ares_safe_training" / name for name in
                         ("models.py", "barrier.py", "qp.py", "control.py", "dynamics.py", "data.py", "config.py"))
     deployment["provenance"] = {

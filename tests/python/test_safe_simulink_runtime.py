@@ -11,6 +11,7 @@ import numpy as np
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts'))
+sys.path.insert(0, str(ROOT / "scripts" / 'saits'))
 AVAILABLE=importlib.util.find_spec('torch') is not None and importlib.util.find_spec('scipy') is not None
 if AVAILABLE:
     import torch

@@ -8,7 +8,7 @@ arguments
 end
 assert(isfile(pythonExecutable),"ARES:MissingDenseSaitsPython","Missing Python executable: %s",pythonExecutable);
 ares.inference.denseSaitsSingleEpisodeConfig(projectRoot,episodeId); % Validate ID/start first.
-script=fullfile(projectRoot,"scripts","export_dense_saits_matlab.py");
+script=fullfile(projectRoot,"scripts","saits","export_dense_saits_matlab.py");
 command='"'+pythonExecutable+'" "'+script+'" --project-root "'+projectRoot+ ...
     '" --episode-id "'+episodeId+'"';
 if strlength(trainingRunDirectory)>0

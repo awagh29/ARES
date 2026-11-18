@@ -8,7 +8,7 @@ arguments
 end
 assert(isfile(pythonExecutable),"ARES:MissingSparseReconstructionPython","Missing Python executable: %s",pythonExecutable);
 ares.inference.sparseReconstructionSingleEpisodeConfig(projectRoot,episodeId); % Validate ID/start first.
-script=fullfile(projectRoot,"scripts","export_sparse_reconstruction_matlab.py");
+script=fullfile(projectRoot,"scripts","sparsity-invariant-cnn","export_sparse_reconstruction_matlab.py");
 command='"'+pythonExecutable+'" "'+script+'" --project-root "'+projectRoot+ ...
     '" --episode-id "'+episodeId+'"';
 if strlength(trainingRunDirectory)>0

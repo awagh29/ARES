@@ -4,10 +4,10 @@
   "training_run_dir": "A:\\Projects\\ARES\\results\\sparse_reconstruction_single_episode_baseline\\Sparsity Invariant CNN_20261115T074333_785532Z_20261114_234333",
   "checkpoint_path": "A:\\Projects\\ARES\\results\\sparse_reconstruction_single_episode_baseline\\Sparsity Invariant CNN_20261115T074333_785532Z_20261114_234333\\best.pt",
   "checkpoint_sha256": "2b6ed9099499d8a2632ff6bb2c620f6874d58188fde6c67af0001d589cb834f2",
-  "model_mat_sha256": "42125a9569adacd5d354d006f6000157003c9871b6f1db9c75aa25cae8044212",
+  "model_mat_sha256": "2d63cb7fec38891c18f6db8033d0f8715588a4e460edf8abc90a073907f7faa9",
   "source_manifest_sha256": "16a484878064d699caa32d4c607257eb9a12e35c76b8b5aa99deb0afbce7e03c",
   "source_npz_sha256": "dc30f9fa3623a09be8d923d0e798391dfe17cf9bffb9118cd558e8910341b842",
-  "exporter_sha256": "06fd6f805b06330ef71015c4aaede25d0971dfb0fc84714b2ebbaee8940ff141",
+  "exporter_sha256": "93f568c3b5cdd5598448d725508f0ce0d25242f5d09efdc5931924028a3dda20",
   "inference_source_sha256": "d61f9ce38654f1795691958911db2ac515acecc855efbe640bd1d2093a545763",
   "notebook_architecture_sha256": "7d2f54ee30a93176a0962560aecafa343df91f83739c5c3748c5fcbc95aa5455",
   "architecture_provenance": "inspected-notebook-legacy-profile; checkpoint has no train-time source fingerprint",
@@ -33,8 +33,8 @@
     "validation_seed": 1234
   },
   "deployment_scope": "Per-scan model; whole-scan temporal outages are more severe than the training azimuth-block gaps.",
-  "matlab_validation_report": "A:\\Projects\\ARES\\data\\models\\sparse_reconstruction_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\622649cc4a6c49e6\\matlab_validation.json",
+  "matlab_validation_report": "A:\\Projects\\ARES\\data\\models\\sparse_reconstruction_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\832c0cb2963475c5\\matlab_validation.json",
   "matlab_maximum_prediction_error": 2.384185791015625E-6,
-  "model_path": "A:\\Projects\\ARES\\data\\models\\sparse_reconstruction_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\622649cc4a6c49e6\\model.mat",
-  "export_dir": "A:\\Projects\\ARES\\data\\models\\sparse_reconstruction_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\622649cc4a6c49e6"
+  "model_path": "A:\\Projects\\ARES\\data\\models\\sparse_reconstruction_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\832c0cb2963475c5\\model.mat",
+  "export_dir": "A:\\Projects\\ARES\\data\\models\\sparse_reconstruction_single_episode\\f9ab72ef-e1d7-4479-8faa-03bb5b36776c\\832c0cb2963475c5"
 }

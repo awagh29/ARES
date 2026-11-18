@@ -10,14 +10,20 @@ import json
 import os
 from pathlib import Path
 import re
+import sys
 import uuid
 import warnings
+
+# The sparse exporter shares metadata helpers with the SAITS exporter.
+for _directory in (Path(__file__).resolve().parent, Path(__file__).resolve().parents[1] / 'saits'):
+    if str(_directory) not in sys.path:
+        sys.path.insert(0, str(_directory))
 
 import numpy as np
 from scipy.io import savemat
 import torch
 import sparse_reconstruction_inference as inference
-from scripts.saits.export_dense_saits_matlab import atomic_json, read_json, require, sha256
+from export_dense_saits_matlab import atomic_json, read_json, require, sha256
 
 SCHEMA = 'ares-sparse-reconstruction-single-episode-mat-v1'
 DEFINITIONS = ('encode_sensor_state', 'pad_ring', 'SparseConv2d', 'RingConv2d', 'SparseRangeReconstructor')
@@ -210,7 +216,12 @@ def export_episode(project_root, episode_id, *, training_run=None, results_root=
                         training_masking=config['masking'],
                         deployment_scope='Per-scan model; whole-scan temporal outages are more severe than the training azimuth-block gaps.')
         atomic_json(staging / 'export_manifest.json', exported)
-        os.rename(staging, destination)
+        # Publish the prepared files before the pointer, as in the CNN exporter;
+        # Windows can deny renaming a populated artifact directory.
+        destination.mkdir()
+        for name in ('model.mat', 'export_manifest.json'):
+            os.replace(staging / name, destination / name)
+        staging.rmdir()
     pointer = dict(exported, model_path=str(destination / 'model.mat'), export_dir=str(destination))
     atomic_json(episode_folder / 'deployment.json', pointer)
     return pointer

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "ares-dense-saits-matlab-validation-v1",
+  "episodeId": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "modelSha256": "5945bf64fb4996c6cf01e189f122651933e300b622df40886a78f9db92ba54a6",
+  "maximumPredictionError": 5.245208740234375E-6,
+  "absoluteTolerance": 0.0005,
+  "fixtureCount": 5,
+  "medianInferenceMilliseconds": 50.4723,
+  "matlabRelease": "2026a",
+  "plantSimulationRun": false,
+  "allParityChecksPassed": true
+}

@@ -11,6 +11,8 @@ import torch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
+sys.path.insert(0, str(ROOT / "scripts" / 'sparsity-invariant-cnn'))
+sys.path.insert(0, str(ROOT / "scripts" / 'saits'))
 from export_sparse_reconstruction_matlab import architecture_fingerprint, resolve_training_run, validate_model_config
 from sparse_reconstruction_inference import SparseRangeReconstructor, encode_sensor_state
 
