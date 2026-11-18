@@ -244,7 +244,7 @@ The exporter verifies the dataset, checks arrays against their source, and write
 
 Choose the notebook for the intended architecture and dataset scope:
 
-- [ARES_Reconstruction.ipynb](notebooks/ARES_Reconstruction.ipynb): existing data exploration and reconstruction preparation.
+- [ARES_Reconstruction_legacy.ipynb](notebooks/ARES_Reconstruction_legacy.ipynb): existing data exploration and reconstruction preparation.
 - [train_cnn_mlp_baseline.ipynb](notebooks/train_cnn_mlp_baseline.ipynb): CNN/MLP baseline workflow.
 - [train_cnn_mlp_baseline_single_episode.ipynb](notebooks/train_cnn_mlp_baseline_single_episode.ipynb): single-episode CNN/MLP training and checkpoint production.
 - [train_saits_baseline_single_episode.ipynb](notebooks/train_saits_baseline_single_episode.ipynb): dense single-episode SAITS reconstruction, with [configuration](configs/dense_saits_single_episode.json).

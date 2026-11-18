@@ -11,7 +11,7 @@ from torch import nn
 ## PRE-PROCESSING FUNCTION
 ###################################################################
 def encode_sensor_state(raw_states):
-    
+
     if raw_states.ndim < 1 or raw_states.shape[-1] != 9:
         raise ValueError(
             "Expected raw sensor states with last dimension 9."
@@ -174,4 +174,3 @@ class PoseToRangeCNN(nn.Module):
             sensor_state.shape[0], self.latent_channels, self.latent_length
         )
         return self.decoder(features)
-

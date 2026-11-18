@@ -179,4 +179,3 @@ query = min(max(query,time(1)),time(end));
 values = interp1(time,native,query,"previous");
 assert(all(isfinite(values),"all"),"ARES:NonfiniteSparseReconstructionProofSignal","Proof signals must be finite.");
 end
-
