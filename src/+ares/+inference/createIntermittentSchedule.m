@@ -8,11 +8,11 @@ end
 faultConfiguration.randomSeed = 513;
 faultConfiguration.numberOfOutages = 3;
 faultConfiguration.initialHealthyTime_s = 3;
-faultConfiguration.finalHealthyTime_s = 4;
-faultConfiguration.minimumOutageDuration_s = 1.5;
+faultConfiguration.finalHealthyTime_s = 3;
+faultConfiguration.minimumOutageDuration_s = 2.0;
 faultConfiguration.maximumOutageDuration_s = 3.0;
-faultConfiguration.minimumRecoveryDuration_s = 2.0;
-faultConfiguration.faultWindowEndTime_s = 21;
+faultConfiguration.minimumRecoveryDuration_s = 2.5;
+faultConfiguration.faultWindowEndTime_s = 35;
 faultWindowEndTime = min(simulationStopTime,faultConfiguration.faultWindowEndTime_s);
 outageCount = faultConfiguration.numberOfOutages;
 minimumRequiredTime = faultConfiguration.initialHealthyTime_s ...

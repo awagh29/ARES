@@ -15,6 +15,7 @@ import torch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT / "scripts" / 'cnn_mlp'))
 from cnn_mlp_inference import (
     PoseToRangeCNN, encode_sensor_state, describe_model_architecture, load_checkpoint_network,
 )

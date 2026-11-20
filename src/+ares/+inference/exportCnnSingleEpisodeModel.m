@@ -8,7 +8,7 @@ arguments
 end
 assert(isfile(pythonExecutable),"ARES:MissingCnnPython","Missing Python executable: %s",pythonExecutable);
 ares.inference.cnnSingleEpisodeConfig(projectRoot,episodeId); % Validate ID/start first.
-script=fullfile(projectRoot,"scripts","export_cnn_mlp_matlab.py");
+script=fullfile(projectRoot,"scripts","cnn_mlp","export_cnn_mlp_matlab.py");
 command='"'+pythonExecutable+'" "'+script+'" --project-root "'+projectRoot+ ...
     '" --episode-id "'+episodeId+'"';
 if strlength(trainingRunDirectory)>0

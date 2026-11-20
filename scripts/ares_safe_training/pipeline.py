@@ -28,7 +28,7 @@ def _sha256(path):
 
 def finalize_deployment(folder, result):
     """Recover publication after a sealed test without ever rerunning test."""
-    from export_augmented_saits_barrier import export_checkpoint
+    from scripts.saits.export_augmented_saits_barrier import export_checkpoint
     folder = Path(folder)
     checkpoint = folder / "stage2" / "best.pt"
     checkpoint_hash = _sha256(checkpoint)

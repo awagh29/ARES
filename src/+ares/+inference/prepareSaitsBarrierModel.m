@@ -70,7 +70,7 @@ prepared.plantSimulationRun=false;
 prepared.continueAfterBarrierFailure=continueAfterFailure;
 prepared.telemetrySubdirectory="saits_barrier_intermittent";
 prepared.runtimeSources=struct();
-files=["scripts/saits_barrier_simulink.py","src/+ares/+inference/SaitsBarrierController.m", ...
+files=["scripts/saits/saits_barrier_simulink.py","src/+ares/+inference/SaitsBarrierController.m", ...
     "src/+ares/+inference/configureSaitsBarrierModel.m","src/+ares/+inference/loadSaitsBarrierRuntime.m"];
 for k=1:numel(files)
     prepared.runtimeSources.(matlab.lang.makeValidName(files(k)))=ares.inference.fileSha256(fullfile(projectRoot,files(k)));

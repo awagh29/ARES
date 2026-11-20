@@ -20,6 +20,7 @@ assert(options.WorkerId=="" || ~isempty(regexp(options.WorkerId,"^[a-zA-Z0-9_]+$
 assert(options.WorkerId=="" || options.ResumeBatchPath~="", ...
     "ARES:WorkerRequiresBatch","Prepare the batch before starting independent workers.");
 addpath(fullfile(projectRoot,"src"),fullfile(projectRoot,"scripts"),"-end");
+ares.config.configureSimulinkCache(projectRoot);
 outputRoot=options.OutputRoot;
 if outputRoot=="", outputRoot=projectRoot; end
 model="ares_single_uav_top";
