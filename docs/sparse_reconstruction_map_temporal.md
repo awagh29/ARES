@@ -3,8 +3,9 @@
 Open `notebooks/train_sparse_reconstruction_map_temporal.ipynb` and run its cells
 in order. It is a separate copy of the single-episode baseline with the same
 29 cells, cell order and sections 0–9. The original notebook is unchanged.
-All model, dataset, generation, training and inference definitions are embedded;
-the notebook does not depend on the temporary authoring files.
+Model, dataset, generation, training and inference definitions are embedded.
+Checkpoint/resume utilities are shared with `scripts/carc/checkpoint_resume.py`;
+keep that file in the checkout. Temporary authoring files are not required.
 
 ## Defaults and training
 
@@ -113,3 +114,8 @@ recorded-scan geometry/order, synthetic route clearance, whole-flight splits,
 causal and per-UAV history isolation, input masking, repeated/long/cold-start
 blackouts, cache integrity, gradients, a tiny training/artifact run, and the
 default architecture's CUDA forward/backward path.
+
+`scripts/carc/resume_map_temporal.py` resumes a saved run in a new allocation.
+It restores optimizer/scheduler/scaler, metric and RNG state in the same results
+folder. Existing checkpoints resume at their saved epoch; new checkpoints also
+preserve batch progress. See [the CARC guide](CARC_MAP_TEMPORAL.md#6-pick-up-training-in-the-next-salloc-allocation).
