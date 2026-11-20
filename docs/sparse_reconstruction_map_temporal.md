@@ -101,11 +101,12 @@ clears its history; another UAV's frames cannot enter it.
 Generalization is to new flights on this known static map. Long blackout behavior
 still depends on localization and map accuracy. A reconstruction score does not
 establish arbitrary-goal mission success, collision safety, or inter-UAV avoidance.
-Moving UAVs and new obstacles are absent from the static map. MATLAB closed-loop
-validation remains a separate next step after training. This notebook does not
-change the simulation or existing controller. Its new architecture is incompatible
-with the existing single-episode MATLAB exporter and requires a separate export
-integration before Simulink deployment.
+Moving UAVs and new obstacles are absent from the static map. The notebook does
+not change the simulation or existing controller. For MATLAB closed-loop tests,
+use the separate [map-temporal single-UAV runner](map_temporal_single_uav.md),
+which exports this checkpoint architecture, checks PyTorch/MATLAB parity and
+feeds reconstructed scans to the original VFH/PID controller. The single-episode
+MATLAB exporter remains incompatible with this architecture.
 
 ## Checks
 
