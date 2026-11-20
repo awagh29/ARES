@@ -203,8 +203,9 @@ The original model, optimizer, learning rate, cosine scheduler position and
 horizon, scaler, best validation state, patience counter, metric history,
 training seeds, flight splits and data fingerprint are restored. There is no
 fresh optimizer or learning-rate warm-up. Configuration mismatches fail clearly:
-do not change batch size, precision, data generation or masking when continuing
-the same experiment. A saved BF16 run needs a BF16-capable GPU. Floating-point
+do not edit saved precision, data generation or masking when continuing
+the same experiment. Batch size can be changed explicitly with the supported
+epoch-boundary transition described below. A saved BF16 run needs a BF16-capable GPU. Floating-point
 results can still differ across GPU models/software versions; retain your
 environment for the closest numerical continuation.
 
@@ -239,6 +240,70 @@ that target. The scheduler is never silently restarted or stretched. When all
 epochs are already done, training updates are skipped and final reports can be
 regenerated. Interrupted validation/report generation can be rerun without
 repeating completed training updates.
+
+## 7. Resume with a larger batch on the 32 GB GPU
+
+Inside the new allocation, after pulling these changes:
+
+```bash
+conda activate /scratch1/awagh/conda-envs/ares-map-temporal
+cd /scratch1/awagh/ARES
+python -u scripts/carc/resume_map_temporal.py --auto-batch-size --gpu-memory-fraction 0.90
+```
+
+The launcher detects the actual allocated GPU and measures disposable forward,
+backward, gradient-clipping and optimizer steps with the same architecture,
+precision and saved weights/Adam state. It searches for a fitting batch size,
+handles CUDA out-of-memory probes, and confirms the chosen size. The default
+budget is about 90% of device memory, accounting for already-used GPU memory;
+it leaves workspace headroom. This is GPU VRAM, not Slurm's `--mem` host RAM.
+No GPU model or batch capacity is assumed from the allocation request alone.
+PyTorch documents its [free/total device memory](https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.mem_get_info.html)
+and [peak reserved memory](https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.max_memory_reserved.html) measurements.
+
+The probe uses scratch model/optimizer copies. Its optimizer steps do not modify
+the production checkpoint, and its random-state changes are restored afterwards.
+The resulting `launches/<launch>/batch_tuning.json` records every trial's memory
+and GPU samples/second, the selected size and GPU identity. Defaults are two
+timed steps after warm-up per trial, a maximum batch size of 1,024 and refinement
+in roughly eight-sample increments. Override with `--max-batch-size 512` or
+`--batch-probe-steps 3` if appropriate. If allocation time runs low during the
+probe it stops without changing the training checkpoint.
+
+If the checkpoint completed epoch 6, the larger batch starts at epoch 7. If it
+contains part of epoch 7, the remaining epoch-7 batches keep their original
+grouping; the new size starts at epoch 8. Completed batches/epochs are not repeated
+and optimizer moments, scaler, learning rate and scheduler position are retained.
+The pending request is itself checkpointed if another allocation ends before
+that boundary. There is **no automatic learning-rate scaling**.
+
+Larger batches also use a packed sampler: short trajectories can share a batch,
+so the GPU receives full batches instead of a small remainder after every flight.
+Each sample still has its own strictly causal history from one trajectory.
+Frames are used once per epoch and never cross train/validation/test folds.
+The checkpoint records the new batch policy and `batch_size_changes.json`
+records each transition. Subsequent ordinary resume commands keep the new size;
+they do not need to tune again on the same GPU configuration.
+
+To request an explicit size instead of probing:
+
+```bash
+python -u scripts/carc/resume_map_temporal.py --batch-size 128
+```
+
+That command uses the same boundary transition but does not check that 128 fits.
+Automatic and explicit sizing options are mutually exclusive. New runs support
+`--auto-batch-size` too, using `run_map_temporal.py`.
+
+Changing batch size changes the number/grouping of optimizer updates per epoch,
+so subsequent training is not numerically identical to the old smaller-batch
+trajectory. Validation should still be monitored. Memory use alone does not
+guarantee faster epochs: CPU preprocessing, storage and validation can dominate.
+Each completed epoch now writes `performance_latest.json` with training and
+validation times, samples/second and peak GPU memory. Compare those values with
+the GPU-only probe throughput to see whether more time is spent outside GPU
+computation. Actual capacity and speed are established on CARC when you run the
+probe, not by the local checks used to develop it.
 
 ## Optional: use a notebook interface
 

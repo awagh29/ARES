@@ -39,7 +39,7 @@ class ResumeTests(unittest.TestCase):
         cls.ns["plot_run_history"] = lambda *a, **k: None
         cls.ns["plot_validation_example"] = lambda *a, **k: None
 
-    def fit(self, corpus, config, *, checkpoint=None, control=None):
+    def fit(self, corpus, config, *, checkpoint=None, control=None, batch_size_request=None):
         train, val, _ = self.ns["build_train_val_tensors"](corpus, config)
         val.force_profile = "cold_blackout"
         self.ns["seed_training"](config["run"]["seed"])
@@ -47,7 +47,7 @@ class ResumeTests(unittest.TestCase):
         with redirect_stdout(io.StringIO()):
             return self.ns["train_sparse_reconstruction"](model, train, val, config=config,
                 split_ids=corpus.splits, source_metadata=corpus.source_metadata,
-                resume_checkpoint=checkpoint, control=control or StopAt())
+                resume_checkpoint=checkpoint, control=control or StopAt(), batch_size_request=batch_size_request)
 
     def test_mid_epoch_resume_matches_uninterrupted_weights_optimizer_and_lr(self):
         with fixture_workspace(self.ns) as (root, config, corpus):

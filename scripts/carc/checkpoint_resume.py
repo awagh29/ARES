@@ -82,14 +82,14 @@ def resolve_checkpoint(selection, output_root):
 def validate_resume(saved, config, split_ids, source_metadata):
     old, current = copy.deepcopy(saved["config"]), copy.deepcopy(config)
     # Only storage locations, visible GPU index, and the requested total epoch
-    # target may vary. Optimizer, batch size, precision, scheduler horizon, data,
-    # masks, seeds and model features must keep their original meaning.
+    # target may vary at restoration. An explicit batch transition is applied
+    # separately at an epoch boundary, after the saved cursor/state is restored.
     for item in (old, current):
         item.pop("paths", None)
         item["runtime"].pop("gpu_index", None)
         item["training"].pop("epochs", None)
     if old != current:
-        raise ValueError("Resume settings differ from the checkpoint. Keep the saved architecture, batch size, precision, data, optimizer and scheduler; only paths/GPU index/total epochs may change.")
+        raise ValueError("Resume settings differ from the checkpoint. Keep the saved architecture, precision, data, optimizer and scheduler; only paths/GPU index/total epochs may change at restoration. Request batch changes with --batch-size or --auto-batch-size for an epoch-boundary transition.")
     if config["training"]["epochs"] < saved["epoch"]:
         raise ValueError("Requested total epochs is below the completed epoch.")
     if saved["split_ids"] != split_ids or saved["source_metadata"].get("fingerprint") != source_metadata.get("fingerprint"):

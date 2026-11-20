@@ -70,7 +70,8 @@ def run_notebook(args):
         state_path.write_text(json.dumps(status, indent=2)+"\n", encoding="utf-8")
     save_status()
     namespace = {"__name__": "__main__", "__file__": str(notebook),
-                 "RESUME_CHECKPOINT": resume_path, "TRAINING_CONTROL": control}
+                 "RESUME_CHECKPOINT": resume_path, "TRAINING_CONTROL": control,
+                 "BATCH_SIZE_REQUEST": None}
     print("Launch directory:", launch, flush=True)
     with (launch/"console.log").open("w", encoding="utf-8", buffering=1) as log:
         with redirect_stdout(Tee(sys.stdout, log)), redirect_stderr(Tee(sys.stderr, log)), control.signals():
@@ -102,8 +103,11 @@ def run_notebook(args):
                             config["training"]["epochs"] = args.epochs
                             if resume_saved is None:
                                 config["scheduler"]["t_max_epochs"] = max(args.epochs, config["scheduler"]["t_max_epochs"])
-                        if args.batch_size is not None:
+                        if args.batch_size is not None and resume_saved is None:
                             config["training"]["batch_size"] = args.batch_size
+                        if args.batch_size is not None:
+                            namespace["BATCH_SIZE_REQUEST"] = dict(batch_size=args.batch_size,
+                                batch_policy="packed", source="explicit batch-size request")
                         import torch
                         if args.amp_dtype == "auto" and resume_saved is None:
                             config["runtime"]["amp_dtype"] = "bf16" if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else "fp16"
@@ -118,6 +122,14 @@ def run_notebook(args):
                         (launch/"effective_config.json").write_text(json.dumps(config, indent=2)+"\n", encoding="utf-8")
                         print("Epochs:", config["training"]["epochs"], "| batch size:", config["training"]["batch_size"],
                               "| AMP:", config["runtime"]["amp_dtype"], flush=True)
+                    if index == 24 and args.auto_batch_size:
+                        from batch_tuning import tune_batch_size
+                        selected, report = tune_batch_size(namespace, namespace["train_dataset"], namespace["CONFIG"],
+                            resume_saved, launch/"batch_tuning.json", fraction=args.gpu_memory_fraction,
+                            maximum=args.max_batch_size, steps=args.batch_probe_steps, control=control)
+                        namespace["BATCH_SIZE_REQUEST"] = dict(batch_size=selected, batch_policy="packed",
+                            source="GPU memory calibration", report=str(launch/"batch_tuning.json"))
+                        status["selected_batch_size"] = selected
                     if namespace.get("TRAINING_PAUSED"):
                         status["status"] = "paused"
                         break
@@ -146,7 +158,12 @@ def parse_args(argv=None):
     parser.add_argument("--prepare-data", action="store_true", help="Reuse checked NPZs, or rebuild from raw MAT data if missing")
     parser.add_argument("--check-only", action="store_true", help="Check data, packages and GPU without training or synthetic generation")
     parser.add_argument("--epochs", type=int, help="Override notebook epochs for an initial timing run")
-    parser.add_argument("--batch-size", type=int)
+    batch_options = parser.add_mutually_exclusive_group()
+    batch_options.add_argument("--batch-size", type=int, help="Use this batch size; resumed runs change at the next epoch boundary")
+    batch_options.add_argument("--auto-batch-size", action="store_true", help="Probe GPU training memory, then use the largest fitting batch")
+    parser.add_argument("--gpu-memory-fraction", type=float, default=.9, help="Device memory budget for auto sizing (default 0.90)")
+    parser.add_argument("--max-batch-size", type=int, default=1024)
+    parser.add_argument("--batch-probe-steps", type=int, default=2)
     parser.add_argument("--amp-dtype", choices=("auto", "bf16", "fp16"), default="auto")
     parser.add_argument("--resume", nargs="?", const="auto", help="Continue latest run, or supply a run directory/checkpoint")
     parser.add_argument("--checkpoint-minutes", type=float, default=5., help="Save an in-epoch continuation every N minutes")
@@ -154,9 +171,13 @@ def parse_args(argv=None):
     parser.add_argument("--walltime-margin-minutes", type=float, default=5., help="Stop this many minutes before Slurm expiry")
     parser.add_argument("--allow-local", action="store_true", help="Allow an intentional local run outside Slurm")
     args = parser.parse_args(argv)
-    for name in ("epochs", "batch_size", "checkpoint_minutes", "stop_after_minutes", "walltime_margin_minutes"):
+    for name in ("epochs", "batch_size", "checkpoint_minutes", "stop_after_minutes", "walltime_margin_minutes", "max_batch_size", "batch_probe_steps"):
         if getattr(args, name) is not None and getattr(args, name) <= 0:
             parser.error(f"--{name.replace('_', '-')} must be positive")
+    if not .5 <= args.gpu_memory_fraction <= .95:
+        parser.error("--gpu-memory-fraction must be between 0.5 and 0.95")
+    if args.auto_batch_size and args.check_only:
+        parser.error("--auto-batch-size performs calibration training steps; omit --check-only")
     return args
 
 
