@@ -5,7 +5,7 @@
   "maximumPredictionError": 2.384185791015625E-6,
   "absoluteTolerance": 0.0005,
   "fixtureCount": 6,
-  "medianInferenceMilliseconds": 479.7996,
+  "medianInferenceMilliseconds": 253.46405,
   "matlabRelease": "2026a",
   "plantSimulationRun": false,
   "allParityChecksPassed": true
