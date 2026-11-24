@@ -1,0 +1,34 @@
+# Single-drone test matrix for the Gazebo pipeline.
+#
+# Every scenario flies Atharva's map-correction controller (Python port of
+# src/+ares/+navigation) on the unchanged ARES building map. "seeds" picks the
+# lidar outage schedule (same generator and seed as MATLAB's outageSchedule)
+# and the wind realisation.
+
+campaign: single_drone
+
+# Mission and controller options; any field of ares.navigation.defaultOptions.
+mission:
+  StartState: [0, 0, -7, 0, 0, 0]     # NED [N E D vN vE vD]
+  GoalState: [30, 35, -7, 0, 0, 0]
+  NumberOfOutages: 5                  # intermittent mode, as in Atharva's run command
+  StopTimeS: 60
+
+seeds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Wind levels (m/s). Gust peaks: light 3, medium 6 (agreed). See ares_gz/wind.py.
+wind_profiles:
+  calm:   {mean_speed_mps: 0.0, gust_peak_mps: 0.0, gust_count: 0, turbulence_sigma_mps: 0.0}
+  light:  {mean_speed_mps: 1.0, gust_peak_mps: 3.0, gust_count: 4, turbulence_sigma_mps: 0.3}
+  medium: {mean_speed_mps: 2.0, gust_peak_mps: 6.0, gust_count: 4, turbulence_sigma_mps: 0.6}
+
+scenarios:
+  - {id: S0_baseline,                   lidar: healthy,      wind: calm,   note: "control run: healthy lidar, no wind"}
+  - {id: S1_intermittent,               lidar: intermittent, wind: calm,   note: "1. intermittent lidar failures"}
+  - {id: S2_blackout,                   lidar: blackout,     wind: calm,   note: "2. complete lidar blackout"}
+  - {id: S3_gusts_light,                lidar: healthy,      wind: light,  note: "3. wind gusts (light)"}
+  - {id: S3_gusts_medium,               lidar: healthy,      wind: medium, note: "3. wind gusts (medium)"}
+  - {id: S4_gusts_light_intermittent,   lidar: intermittent, wind: light,  note: "4. gusts + intermittent (light)"}
+  - {id: S4_gusts_medium_intermittent,  lidar: intermittent, wind: medium, note: "4. gusts + intermittent (medium)"}
+  - {id: S5_gusts_light_blackout,       lidar: blackout,     wind: light,  note: "5. gusts + blackout (light)"}
+  - {id: S5_gusts_medium_blackout,      lidar: blackout,     wind: medium, note: "5. gusts + blackout (medium)"}
