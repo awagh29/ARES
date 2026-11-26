@@ -1,11 +1,23 @@
 # Single-drone test matrix for the Gazebo pipeline.
 #
-# Every scenario flies Atharva's map-correction controller (Python port of
-# src/+ares/+navigation) on the unchanged ARES building map. "seeds" picks the
-# lidar outage schedule (same generator and seed as MATLAB's outageSchedule)
-# and the wind realisation.
+# Every scenario flies the selected controller on the unchanged ARES building
+# map. "seeds" picks the lidar outage schedule (same generator and seed as
+# MATLAB's outageSchedule) and the wind realisation.
 
 campaign: single_drone
+
+# System under test.
+#   map-temporal-cnn: Atharva's map-temporal sparsity-invariant CNN + original VFH/PID
+#                     (guidance runs in MATLAB through matlab/runGuidanceBridge.m)
+#   map-correction:   Atharva's barrier/map-correction controller (Python port)
+controller:
+  name: map-temporal-cnn
+  # Checkpoint (.pt) or exported model.mat. Relative paths are relative to the ARES folder.
+  # An existing export in results/map_temporal_exports with the same checkpoint hash is reused.
+  model_path: "../Map Temporal Sparsity Invariant CNN_20261120T002633_920339Z/best.pt"
+  # Windows Python with torch/numpy/scipy, only needed for the first export of a new .pt.
+  # Environment variable ARES_EXPORT_PYTHON overrides this.
+  export_python: ""
 
 # Mission and controller options; any field of ares.navigation.defaultOptions.
 mission:
@@ -14,7 +26,15 @@ mission:
   NumberOfOutages: 5                  # intermittent mode, as in Atharva's run command
   StopTimeS: 60
 
-seeds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# Start points (NED metres). Altitude stays 7 m (Down = -7); every scenario and
+# seed is flown from each start. The goal stays mission.GoalState (30, 35).
+# Both straight lines to the goal are blocked by buildings, so the drone must
+# navigate between them.
+starts:
+  - {id: W1, north: 15, east: 0, note: "west edge between buildings; straight path blocked by 3 buildings"}
+  - {id: W2, north: 25, east: 0, note: "north-west; straight path grazes the northern building"}
+
+seeds: [1, 2, 3]
 
 # Wind levels (m/s). Gust peaks: light 3, medium 6 (agreed). See ares_gz/wind.py.
 wind_profiles:

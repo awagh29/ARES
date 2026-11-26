@@ -44,6 +44,12 @@ class GazeboError(RuntimeError):
     pass
 
 
+def process_domain_id() -> int:
+    """One ROS 2 domain per process (rclpy can only join one). Workers set ARES_ROS_DOMAIN."""
+    value = os.environ.get("ARES_ROS_DOMAIN")
+    return int(value) if value else 40 + (os.getpid() % 100)
+
+
 @dataclass
 class OdometrySample:
     time_s: float
@@ -83,7 +89,8 @@ class GazeboSession:
 
     def __init__(self, world_file: Path, log_dir: Path, gui: bool = False, headless_rendering: bool = True,
                  steps_per_tick: int = 50, physics_step_s: float = 0.001, domain_id: int | None = None,
-                 timeout_s: float = 30.0):
+                 timeout_s: float = 30.0, render_warmup_s: float = 3.0, stall_retry_s: float = 5.0,
+                 scan_wait_s: float = 5.0):
         self.world_file = Path(world_file)
         self.log_dir = Path(log_dir)
         self.gui = gui
@@ -91,8 +98,13 @@ class GazeboSession:
         self.steps_per_tick = steps_per_tick
         self.physics_step_s = physics_step_s
         self.timeout_s = timeout_s
+        self.render_warmup_s = render_warmup_s
+        self.stall_retry_s = stall_retry_s
+        self.scan_wait_s = scan_wait_s
+        self.step_retries = 0
+        self.missed_scans = 0
         self.partition = f"ares_{uuid.uuid4().hex[:12]}"
-        self.domain_id = domain_id if domain_id is not None else 40 + (os.getpid() % 100)
+        self.domain_id = domain_id if domain_id is not None else process_domain_id()
         self.processes: list[subprocess.Popen] = []
         self.odometry: list[OdometrySample] = []
         self.latest_scan: ScanSample | None = None
@@ -163,12 +175,31 @@ class GazeboSession:
             self._check_processes()
             if wallclock.monotonic() > deadline:
                 raise GazeboError(f"Gazebo control service did not appear. See logs in {self.log_dir}")
+        # The bridge offers the ROS service before Gazebo has loaded the world; a step sent
+        # then is lost. Wait until Gazebo itself advertises the control service.
+        while not self._gazebo_service_ready():
+            self._check_processes()
+            if wallclock.monotonic() > deadline:
+                raise GazeboError(f"Gazebo world did not finish loading. See logs in {self.log_dir}")
+            wallclock.sleep(0.5)
+        # The lidar renderer starts in a background thread; let it come up before sim time moves.
+        warmup_end = wallclock.monotonic() + self.render_warmup_s
+        while wallclock.monotonic() < warmup_end:
+            rclpy.spin_once(self.node, timeout_sec=0.1)
         # Give the one-way bridges time to match publishers/subscribers before the first step.
         deadline = wallclock.monotonic() + 10.0
         while wallclock.monotonic() < deadline and (
                 self.cmd_pub.get_subscription_count() == 0 or self.enable_pub.get_subscription_count() == 0
                 or self.wrench_pub.get_subscription_count() == 0):
             rclpy.spin_once(self.node, timeout_sec=0.1)
+
+    def _gazebo_service_ready(self) -> bool:
+        try:
+            listing = subprocess.run(["gz", "service", "-l"], capture_output=True, text=True, timeout=10,
+                                     env=self._env()).stdout
+        except (subprocess.TimeoutExpired, OSError):
+            return False
+        return CONTROL_SERVICE in listing.split()
 
     def close(self) -> None:
         if self.node is not None:
@@ -244,27 +275,45 @@ class GazeboSession:
         self.wrench_pub.publish(message)
         self.wrench_total = force
 
-    def step(self, target_time_s: float, need_scan_at: float | None = None) -> OdometrySample:
-        """Advance one control tick and wait for state (and scan) at ``target_time_s``."""
+    def _request_step(self, deadline: float) -> None:
         request = self._ControlWorld.Request()
         request.world_control.pause = True
         request.world_control.multi_step = self.steps_per_tick
         future = self.control.call_async(request)
-        deadline = wallclock.monotonic() + self.timeout_s
         while not future.done():
             self._rclpy.spin_once(self.node, timeout_sec=0.05)
             self._timeout(deadline, "ControlWorld reply")
         if not future.result().success:
             raise GazeboError("Gazebo rejected the step request.")
-        while True:
-            have_state = bool(self.odometry) and self.odometry[-1].time_s >= target_time_s - 1e-6
-            have_scan = need_scan_at is None or (
-                self.latest_scan is not None and self.latest_scan.time_s >= need_scan_at - 1e-6)
-            if have_state and have_scan:
-                return self.odometry[-1]
+
+    def step(self, target_time_s: float, need_scan_at: float | None = None) -> OdometrySample:
+        """Advance one control tick and wait for state (and scan) at ``target_time_s``.
+
+        A step that produces no progress at all (no newer odometry) was lost and is
+        sent again; that cannot double-step because nothing advanced. A scan that is
+        late by more than ``scan_wait_s`` is counted in ``missed_scans`` and the run
+        continues with the latest scan (its age is logged by the runner).
+        """
+        before = self.odometry[-1].time_s if self.odometry else -1.0
+        deadline = wallclock.monotonic() + self.timeout_s
+        self._request_step(deadline)
+        sent = wallclock.monotonic()
+        while not (self.odometry and self.odometry[-1].time_s >= target_time_s - 1e-6):
             self._rclpy.spin_once(self.node, timeout_sec=0.05)
-            self._timeout(deadline, f"state at t={target_time_s:.3f} s"
-                          + ("" if need_scan_at is None else f" and scan at t={need_scan_at:.3f} s"))
+            progressed = bool(self.odometry) and self.odometry[-1].time_s > before + 1e-9
+            if not progressed and wallclock.monotonic() - sent > self.stall_retry_s:
+                self.step_retries += 1
+                self._request_step(deadline)
+                sent = wallclock.monotonic()
+            self._timeout(deadline, f"state at t={target_time_s:.3f} s")
+        if need_scan_at is not None:
+            scan_deadline = wallclock.monotonic() + self.scan_wait_s
+            while not (self.latest_scan is not None and self.latest_scan.time_s >= need_scan_at - 1e-6):
+                if wallclock.monotonic() > scan_deadline:
+                    self.missed_scans += 1
+                    break
+                self._rclpy.spin_once(self.node, timeout_sec=0.05)
+        return self.odometry[-1]
 
     def _timeout(self, deadline: float, what: str) -> None:
         if wallclock.monotonic() > deadline:

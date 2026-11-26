@@ -11,13 +11,20 @@ import numpy as np
 
 from .scene import scene_map
 
-COLUMNS = ["scenario", "seed", "lidar_mode", "wind", "mission_success", "termination_reason", "arrival_time_s",
-           "minimum_clearance_m", "collision", "near_collision", "max_route_deviation_m", "observed_outages",
-           "planned_outages", "max_wind_mps", "max_drag_n", "all_filters_feasible", "error", "directory"]
+COLUMNS = ["scenario", "start_id", "start_ned", "seed", "controller", "lidar_mode", "wind", "mission_success", "termination_reason",
+           "arrival_time_s", "minimum_clearance_m", "collision", "near_collision", "final_goal_error_m",
+           "max_route_deviation_m", "observed_outages", "planned_outages", "reconstruction_scans",
+           "max_wind_mps", "max_drag_n", "controller_healthy", "outages_used_reconstruction", "error", "directory"]
 
 
 def collect(campaign_dir: Path) -> list[dict]:
-    return [json.loads(path.read_text()) for path in sorted(Path(campaign_dir).glob("*/*/summary.json"))]
+    summaries = [json.loads(path.read_text()) for path in sorted(Path(campaign_dir).rglob("summary.json"))]
+    return [summary for summary in summaries if "scenario" in summary]
+
+
+def group_key(summary: dict) -> str:
+    start = summary.get("start_id")
+    return summary["scenario"] if not start or start == "default" else f"{summary['scenario']} @ {start}"
 
 
 def _fmt(value, digits=2) -> str:
@@ -42,11 +49,12 @@ def write_report(campaign_dir: Path) -> Path:
 
     groups: dict[str, list[dict]] = defaultdict(list)
     for summary in summaries:
-        groups[summary["scenario"]].append(summary)
+        groups[group_key(summary)].append(summary)
+    controllers = sorted({summary.get("controller", "map-correction") for summary in summaries})
     lines = [f"# Gazebo test report: `{campaign_dir.name}`", "",
-             "Controller: Python port of the MATLAB map-correction solution (`src/+ares/+navigation`), "
-             "parity-tested against MATLAB. Pass = goal reached at rest, no collision, surface clearance "
-             f">= {summaries[0]['required_clearance_m']} m, every barrier-filter step feasible.", "",
+             f"Controller(s): {', '.join(controllers)}. Pass = goal reached at rest, no collision, "
+             f"surface clearance >= {summaries[0]['required_clearance_m']} m, altitude in bounds, the "
+             "controller never failed, and (CNN) every outage scan used the reconstruction.", "",
              "| Scenario | Runs | Passed | Collisions | Min clearance (m) | Mean arrival (s) | Max route deviation (m) | Failure reasons |",
              "|---|---|---|---|---|---|---|---|"]
     for scenario in sorted(groups):
@@ -61,7 +69,8 @@ def write_report(campaign_dir: Path) -> Path:
                      f"{_fmt(min(clearances) if clearances else None, 3)} | "
                      f"{_fmt(float(np.mean(arrivals)) if arrivals else None)} | "
                      f"{_fmt(max(deviations) if deviations else None)} | {', '.join(reasons) or '-'} |")
-    lines += ["", "Per-run results: `all_runs.csv`. Plots: `trajectories.png`, `clearance.png`.", ""]
+    lines += ["", "Per-run results: `all_runs.csv`. Plots: `trajectories.png`, `clearance.png`. "
+              "Replay videos (if rendered): `videos/`.", ""]
     report = campaign_dir / "REPORT.md"
     report.write_text("\n".join(lines))
     try:

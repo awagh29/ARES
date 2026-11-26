@@ -135,9 +135,10 @@ def main() -> int:
                         + ", ".join(f"{value:.2f}" for value in expected) + ")")
         results["force_drift_mps"] = speeds
 
-    # 5: inside the building cluster, so plenty of beams hit walls.
+    # 5: inside the cluster at 14 m, just below the 15 m roofs: upward beams pass over the
+    # roofs while downward beams hit walls, so a vertical flip is detectable.
     print("5. Lidar layout vs the MATLAB ray cast")
-    with Probe([10.0, 12.0, -7.0], args, workdir, "lidar") as probe:
+    with Probe([10.0, 12.0, -14.0], args, workdir, "lidar") as probe:
         probe.run(1.0, need_scan=True)
         scan = probe.session.latest_scan
         odometry = probe.session.odometry[-1]

@@ -1,0 +1,19 @@
+{
+ "hover_drift_m": 0.10974594658236025,
+ "frame": "heading",
+ "gain_per_s": 1.4058766160756786,
+ "force_drift_mps": [
+  0.5101731283261428,
+  1.0219092210324277,
+  0.0
+ ],
+ "lidar_flip_vertical": false,
+ "lidar_flip_horizontal": false,
+ "lidar_hit_agreement": 0.9994413407821229,
+ "lidar_median_range_error_m": 0.005320920302068544,
+ "lidar_shape": [
+  15,
+  716
+ ],
+ "all_checks_passed": true
+}

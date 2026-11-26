@@ -21,11 +21,33 @@ class Scenario:
 
 
 @dataclass(frozen=True)
+class Start:
+    id: str
+    north: float
+    east: float
+    note: str = ""
+
+    def state(self, altitude_down: float) -> list[float]:
+        return [float(self.north), float(self.east), float(altitude_down), 0.0, 0.0, 0.0]
+
+
+@dataclass(frozen=True)
 class Matrix:
     campaign: str
     mission: dict
     seeds: list
     scenarios: list
+    controller: dict
+    starts: list
+
+    def select_starts(self, ids: list[str] | None) -> list[Start]:
+        if not ids:
+            return list(self.starts)
+        chosen = [start for start in self.starts if start.id in ids]
+        missing = set(ids) - {start.id for start in chosen}
+        if missing:
+            raise SystemExit(f"Unknown start(s) {sorted(missing)}; known: {[s.id for s in self.starts]}")
+        return chosen
 
     def select(self, ids: list[str] | None) -> list[Scenario]:
         if not ids:
@@ -48,5 +70,14 @@ def load_matrix(path: Path = DEFAULT_MATRIX) -> Matrix:
             raise ValueError(f"Scenario {item['id']} uses unknown wind profile {item['wind']}")
         scenarios.append(Scenario(id=item["id"], lidar=item["lidar"], wind=profiles[item["wind"]],
                                   note=item.get("note", "")))
-    return Matrix(campaign=data.get("campaign", "campaign"), mission=dict(data.get("mission", {})),
-                  seeds=[int(seed) for seed in data.get("seeds", [513])], scenarios=scenarios)
+    controller = {"name": "map-temporal-cnn", "model_path": "", "export_python": ""}
+    controller.update(data.get("controller") or {})
+    mission = dict(data.get("mission", {}))
+    starts = [Start(id=str(item["id"]), north=float(item["north"]), east=float(item["east"]),
+                    note=item.get("note", "")) for item in data.get("starts") or []]
+    if not starts:  # no list: fly from mission.StartState only
+        state = mission.get("StartState", [0, 0, -7, 0, 0, 0])
+        starts = [Start(id="default", north=float(state[0]), east=float(state[1]))]
+    return Matrix(campaign=data.get("campaign", "campaign"), mission=mission,
+                  seeds=[int(seed) for seed in data.get("seeds", [513])], scenarios=scenarios,
+                  controller=controller, starts=starts)
