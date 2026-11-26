@@ -14,8 +14,10 @@
 
 set -euo pipefail
 
-# Optional: pass a specific checkpoint/run path as $1, or "fresh" to force a new run
+# Pass a checkpoint/run path as $1, or resume the latest saved run by default.
+# "fresh" is an explicit opt-in only. Continuations pass the total target as $2.
 MODE="${1:-auto}"
+TARGET_EPOCHS="${2:-800}"
 
 # 1. Load Conda (no separate CUDA module needed per guide; PyTorch wheel bundles CUDA)
 module purge
@@ -49,42 +51,25 @@ print('PyTorch:', torch.__version__, '| CUDA available:', torch.cuda.is_availabl
 if torch.cuda.is_available():
     print('Device 0:', torch.cuda.get_device_name(0), '| VRAM (GB):', round(torch.cuda.get_device_properties(0).total_memory / 1e9, 2))
 "
-python -u scripts/carc/run_map_temporal.py --prepare-data --check-only
+python -u scripts/carc/run_map_temporal.py --prepare-data --check-only --epochs "$TARGET_EPOCHS"
 
-# 4. Launch training (auto-detects whether to resume an existing run or start fresh)
-RESULTS_BASE="$ARES_RUN_ROOT/results/sparse_reconstruction_map_temporal"
+# 4. Continue the saved run to the total target and chain time-limited allocations.
+# Use the repository path: Slurm executes a spooled copy of this batch script.
+CONTINUATION_SCRIPT="$ARES_REPO_ROOT/run_ares_map_temporal.slurm"
 
 if [ "$MODE" = "fresh" ]; then
-    echo "=== Starting NEW 1,000-epoch run with auto-batch-size ==="
-    python -u scripts/carc/run_map_temporal.py \
-        --prepare-data \
-        --auto-batch-size \
-        --gpu-memory-fraction 0.90 \
-        --checkpoint-minutes 5 \
-        --walltime-margin-minutes 10
-elif [ "$MODE" != "auto" ]; then
-    echo "=== Resuming SPECIFIC checkpoint/run: $MODE ==="
-    python -u scripts/carc/resume_map_temporal.py \
-        --resume "$MODE" \
-        --auto-batch-size \
-        --gpu-memory-fraction 0.90 \
-        --checkpoint-minutes 5 \
-        --walltime-margin-minutes 10
-elif [ -d "$RESULTS_BASE" ] && [ -n "$(ls -A "$RESULTS_BASE" 2>/dev/null)" ]; then
-    echo "=== Auto-resuming LATEST run in $RESULTS_BASE ==="
-    python -u scripts/carc/resume_map_temporal.py \
-        --auto-batch-size \
-        --gpu-memory-fraction 0.90 \
-        --checkpoint-minutes 5 \
-        --walltime-margin-minutes 10
+    echo "=== Starting NEW $TARGET_EPOCHS-epoch run with auto-batch-size ==="
+    TRAIN_COMMAND=(python -u scripts/carc/run_map_temporal.py --prepare-data)
 else
-    echo "=== No existing run found; starting NEW 1,000-epoch run ==="
-    python -u scripts/carc/run_map_temporal.py \
-        --prepare-data \
-        --auto-batch-size \
-        --gpu-memory-fraction 0.90 \
-        --checkpoint-minutes 5 \
-        --walltime-margin-minutes 10
+    echo "=== Resuming $MODE toward $TARGET_EPOCHS total epochs ==="
+    TRAIN_COMMAND=(python -u scripts/carc/resume_map_temporal.py --resume "$MODE")
 fi
 
-echo "=== Job finished cleanly at $(date) ==="
+# Replacing the shell lets Slurm's B:USR1 warning reach Python's save handler.
+exec "${TRAIN_COMMAND[@]}" \
+    --epochs "$TARGET_EPOCHS" \
+    --auto-batch-size \
+    --gpu-memory-fraction 0.90 \
+    --checkpoint-minutes 5 \
+    --walltime-margin-minutes 10 \
+    --submit-continuation "$CONTINUATION_SCRIPT"
