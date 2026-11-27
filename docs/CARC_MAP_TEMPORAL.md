@@ -4,7 +4,8 @@ This workflow uses your operating directory `/scratch1/awagh`. The notebook find
 its cloned checkout on Linux or Windows; there are no hard-coded Windows paths.
 The command-line launcher executes the notebook's code cells in order, so the
 model and training loop have one source of truth. Its original 29-cell flow and
-your current **1,000 epochs** are preserved.
+notebook settings are preserved unless explicitly overridden. The batch script
+in section 8 resumes a saved run toward **800 total epochs** across allocations.
 
 ## Locations
 
@@ -304,6 +305,54 @@ validation times, samples/second and peak GPU memory. Compare those values with
 the GPU-only probe throughput to see whether more time is spent outside GPU
 computation. Actual capacity and speed are established on CARC when you run the
 probe, not by the local checks used to develop it.
+
+## 8. Continue to 800 epochs with automatic batch jobs
+
+Update `run_ares_map_temporal.slurm`, `scripts/carc/run_map_temporal.py`, and
+`scripts/carc/slurm_continuation.py` in the cluster checkout before submitting.
+Keep the batch script's Unix (LF) line endings; `.gitattributes` enforces this.
+From the login node, submit your existing run explicitly:
+
+```bash
+cd /scratch1/awagh/ARES
+mkdir -p /scratch1/awagh/ares-training/slurm_logs
+sbatch run_ares_map_temporal.slurm \
+  "/scratch1/awagh/ares-training/results/sparse_reconstruction_map_temporal/Map Temporal Sparsity Invariant CNN_20261120T002633_920339Z"
+```
+
+The script passes `--epochs 800`, meaning 800 total epochs including completed
+epochs. It restores the saved batch cursor, optimizer, scheduler, precision,
+metric history and data splits. The notebook's configured epoch default does
+not override this target, and the saved scheduler horizon is preserved.
+GPU probing is unchanged: automatic batch sizing, a 90% memory budget, the
+default two timed steps, maximum 1,024, and the existing refinement/confirmation.
+It runs again in each allocation, as before.
+
+Each job still requests one V100 for four hours, checkpoints every five minutes,
+and saves a pause ten minutes before expiry. After a committed time-limit pause
+(or Slurm's USR1 warning), the launcher submits **one** successor with the explicit
+same run folder and epoch target. It uses Slurm's
+[`afterok` dependency](https://slurm.schedmd.com/sbatch.html#OPT_dependency)
+so the successor waits for the current job to exit successfully. The current
+account and QoS are carried forward. The shell is replaced with Python for the
+training launch so the batch-process USR1 warning reaches the save handler.
+
+The chain ends when training reaches 800 epochs. Completed/failed launches,
+user cancellations, and manual stops do not submit a successor. A pause without
+checkpoint progress or a failed `sbatch` submission raises an error instead
+of creating a loop. Hard kills and node failures require manual resubmission
+from the saved run. No extra job is queued before the pause has been saved.
+
+The launch's `status.json` records `target_epochs`, starting progress, and the
+successor's job ID/submission command (or submission error). The Slurm output
+also prints the successor ID. Check the chain with `squeue -u "$USER"`; stop it
+with `scancel JOB_ID`, cancelling any already queued successor as well.
+
+Submitting `sbatch run_ares_map_temporal.slurm` without a path chooses the latest
+saved run for the first job; later jobs stay pinned to that run. If no checkpoint
+exists it fails rather than silently starting over. `fresh` remains an explicit
+option for a new experiment. A second positional argument overrides the total
+target and is passed unchanged to successors.
 
 ## Optional: use a notebook interface
 

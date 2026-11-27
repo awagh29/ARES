@@ -18,7 +18,15 @@ s=options.StartState; g=options.GoalState;
 plot3(ax,s(1),s(2),-s(3),'go','MarkerFaceColor','g','DisplayName','Start');
 plot3(ax,g(1),g(2),-g(3),'rx','LineWidth',2,'MarkerSize',10,'DisplayName','Goal');
 grid(ax,'on'); axis(ax,'equal'); view(ax,3); xlabel(ax,'North (m)'); ylabel(ax,'East (m)'); zlabel(ax,'Altitude (m)');
-legend(ax,'Location','best'); title(ax,'Original VFH/PID with learned LiDAR reconstruction');
+legend(ax,'Location','best');
+label='Original VFH/PID with learned LiDAR reconstruction';
+if isfield(options,'EnableReferenceGovernor') && options.EnableReferenceGovernor
+    label='VFH/PID and braking governor with learned LiDAR reconstruction';
+    if isfield(options,'EnableLocalPlanner') && options.EnableLocalPlanner
+        label='Trajectory planner with learned LiDAR reconstruction';
+    end
+end
+title(ax,label);
 ax=nexttile(layout); stairs(ax,scans.time_s,scans.lidar_available,'LineWidth',1.3); hold(ax,'on');
 stairs(ax,scans.time_s,scans.reconstruction_used,'--','LineWidth',1.3);
 ylim(ax,[-.1 1.1]); grid(ax,'on'); legend(ax,'Measured available','CNN used'); xlabel(ax,'Time (s)');

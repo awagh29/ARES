@@ -1,7 +1,9 @@
 """Clone-relative paths, raw MATLAB parity, and the ordered cluster launcher."""
+from contextlib import redirect_stdout
 import ast
 import csv
 import importlib.util
+import io
 import json
 import os
 from pathlib import Path
@@ -91,6 +93,55 @@ trace = [1]
             failed = [p for p in (root/"generated/launches").iterdir() if p != launch][0]
             self.assertEqual(json.loads((failed/"status.json").read_text())["status"], "failed")
             self.assertIn("intentional fixture failure", (failed/"console.log").read_text())
+
+    def test_resume_overrides_total_to_800_and_submits_after_saved_pause(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/"tmp") as folder:
+            root = Path(folder)
+            run = root/"saved run"
+            run.mkdir()
+            checkpoint = run/"last.pt"
+            checkpoint.touch()
+            config = dict(paths=dict(repo_root=str(root), output_root=str(root), cache_root=str(root)),
+                training=dict(epochs=1000, batch_size=576), scheduler=dict(t_max_epochs=2000),
+                runtime=dict(amp_dtype="bf16"), data=dict(batch_id="fixture"))
+            saved = dict(config=config, epoch=27, resume_state=dict(next_batch=45),
+                         split_ids={}, source_metadata={})
+            notebook = root/"fixture.ipynb"
+            notebook.write_text(json.dumps(dict(cells=[dict(cell_type="markdown", source=[]),
+                dict(cell_type="code", source=[
+                    "from pathlib import Path\nimport json\nCONFIG = "+repr(config)+
+                    "\ndef validate_config(config): pass\n"]),
+                dict(cell_type="code", source=[
+                    "assert CONFIG['training']['epochs'] == 800\n"
+                    "assert CONFIG['training']['batch_size'] == 576\n"
+                    "assert CONFIG['runtime']['amp_dtype'] == 'bf16'\n"
+                    "assert CONFIG['scheduler']['t_max_epochs'] == 2000\n"
+                    "run_dir = RESUME_CHECKPOINT.parent\nTRAINING_PAUSED = True\n"
+                    "(run_dir/'summary.json').write_text(json.dumps(dict(status='paused', "
+                    "completed_epochs=28, next_batch=12, stop_reason='time budget reached')))\n"])])))
+            script = root/"continue.slurm"
+            script.touch()
+            argv = ["run_map_temporal.py", "--repo-root", str(root), "--run-root", str(root),
+                    "--notebook", str(notebook), "--resume", str(run), "--epochs", "800",
+                    "--submit-continuation", str(script)]
+            fake_torch = types.SimpleNamespace(cuda=types.SimpleNamespace(is_available=lambda: False))
+            with patch.object(sys, "argv", argv), patch.dict(os.environ, {"SLURM_JOB_ID": "123"}), \
+                    patch.dict(sys.modules, {"torch": fake_torch}), \
+                    patch.object(launcher, "resolve_checkpoint", return_value=(checkpoint, saved)), \
+                    patch.object(launcher, "validate_resume") as validate, \
+                    patch("checkpoint_resume.slurm_remaining_seconds", return_value=14400), \
+                    patch("slurm_continuation.subprocess.run") as submit, redirect_stdout(io.StringIO()):
+                submit.return_value.stdout = "456\n"
+                launcher.main()
+            validate.assert_called_once()
+            submit.assert_called_once()
+            self.assertEqual(submit.call_args.args[0][-2:], [str(run.resolve()), "800"])
+            self.assertEqual(saved["config"]["training"]["epochs"], 1000)
+            launch = next((root/"launches").iterdir())
+            status = json.loads((launch/"status.json").read_text())
+            self.assertEqual(status["resume_progress"], [27, 45])
+            self.assertEqual(status["target_epochs"], 800)
+            self.assertEqual(status["continuation"]["job_id"], "456")
 
 
 @unittest.skipUnless(importlib.util.find_spec("h5py"), "h5py needed for raw MATLAB conversion")

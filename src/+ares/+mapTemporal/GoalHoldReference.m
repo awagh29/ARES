@@ -8,6 +8,7 @@ classdef GoalHoldReference < matlab.System
         Radius
         Holding = false
         HoldYaw = 0
+        Options
     end
     methods
         function obj=GoalHoldReference(varargin), setProperties(obj,nargin,varargin{:}); end
@@ -16,11 +17,25 @@ classdef GoalHoldReference < matlab.System
         function setupImpl(obj)
             mission=load(obj.PlanFile,'options'); o=mission.options;
             obj.Goal=o.GoalState(1:3)';
-            obj.Radius=min(.75,o.MinimumSurfaceClearanceM/2);
+            obj.Options=ares.mapTemporal.validateOptions(o);
+            if obj.Options.EnableReferenceGovernor
+                obj.Radius=obj.Options.GoalApproachRadiusM;
+            else
+                obj.Radius=min(.75,o.MinimumSurfaceClearanceM/2);
+            end
         end
         function resetImpl(obj), obj.Holding=false; obj.HoldYaw=0; end
-        function [reference,yaw,holding]=stepImpl(obj,nominalReference,nominalYaw,position,eulerZYX)
-            if ~obj.Holding && norm(double(position(:))-obj.Goal)<=obj.Radius
+        function [reference,yaw,holding]=stepImpl(obj,nominalReference,nominalYaw,position,eulerZYX,points)
+            delta=obj.Goal-double(position(:)); distance=norm(delta);
+            clear=true;
+            if obj.Options.EnableReferenceGovernor && distance<=obj.Radius
+                offsets=ares.mapTemporal.cloudOffsets(points,eulerZYX);
+                radius=obj.Options.VehicleRadiusM+obj.Options.MinimumSurfaceClearanceM+obj.Options.GovernorMarginM;
+                clear=ares.mapTemporal.corridorDistance(offsets,delta,radius,7)>=distance;
+                % Rejoin VFH if a newly selected scan blocks the approach.
+                if ~clear, obj.Holding=false; end
+            end
+            if ~obj.Holding && distance<=obj.Radius && clear
                 obj.Holding=true; obj.HoldYaw=double(eulerZYX(1));
             end
             reference=reshape(nominalReference,3,1); yaw=nominalYaw;
@@ -30,8 +45,11 @@ classdef GoalHoldReference < matlab.System
             end
             holding=obj.Holding;
         end
-        function n=getNumInputsImpl(~), n=4; end
+        function n=getNumInputsImpl(~), n=5; end
         function n=getNumOutputsImpl(~), n=3; end
+        function sample=getSampleTimeImpl(obj)
+            sample=createSampleTime(obj,'Type','Discrete','SampleTime',.1);
+        end
         function varargout=getOutputSizeImpl(~), varargout={[3 1],[1 1],[1 1]}; end
         function varargout=getOutputDataTypeImpl(obj)
             varargout={propagatedInputDataType(obj,1),propagatedInputDataType(obj,2),'logical'};

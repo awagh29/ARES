@@ -20,7 +20,7 @@ import sys
 import traceback
 
 from prepare_map_temporal_data import prepare
-from checkpoint_resume import TrainingControl, resolve_checkpoint, validate_resume
+from checkpoint_resume import TrainingControl, checkpoint_progress, resolve_checkpoint, validate_resume
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -64,7 +64,8 @@ def run_notebook(args):
     shutil.copyfile(notebook, launch/"input_notebook.ipynb")
     status = dict(status="running", notebook=str(notebook), notebook_sha256=hashlib.sha256(payload).hexdigest(),
                   repo_root=str(root), run_root=str(run_root), job_id=job_id, check_only=args.check_only,
-                  resume_checkpoint=str(resume_path) if resume_path else None)
+                  resume_checkpoint=str(resume_path) if resume_path else None,
+                  resume_progress=list(checkpoint_progress(resume_saved)) if resume_saved is not None else None)
     state_path = launch/"status.json"
     def save_status():
         state_path.write_text(json.dumps(status, indent=2)+"\n", encoding="utf-8")
@@ -120,6 +121,7 @@ def run_notebook(args):
                             episode_root, audit = prepare(root, run_root, config["data"]["batch_id"])
                             os.environ["ARES_EPISODE_ROOT"], os.environ["ARES_EXPORT_AUDIT"] = str(episode_root), str(audit)
                         (launch/"effective_config.json").write_text(json.dumps(config, indent=2)+"\n", encoding="utf-8")
+                        status["target_epochs"] = config["training"]["epochs"]
                         print("Epochs:", config["training"]["epochs"], "| batch size:", config["training"]["batch_size"],
                               "| AMP:", config["runtime"]["amp_dtype"], flush=True)
                     if index == 24 and args.auto_batch_size:
@@ -157,7 +159,7 @@ def parse_args(argv=None):
     parser.add_argument("--batch-id")
     parser.add_argument("--prepare-data", action="store_true", help="Reuse checked NPZs, or rebuild from raw MAT data if missing")
     parser.add_argument("--check-only", action="store_true", help="Check data, packages and GPU without training or synthetic generation")
-    parser.add_argument("--epochs", type=int, help="Override notebook epochs for an initial timing run")
+    parser.add_argument("--epochs", type=int, help="Total epoch target, including epochs already completed when resuming")
     batch_options = parser.add_mutually_exclusive_group()
     batch_options.add_argument("--batch-size", type=int, help="Use this batch size; resumed runs change at the next epoch boundary")
     batch_options.add_argument("--auto-batch-size", action="store_true", help="Probe GPU training memory, then use the largest fitting batch")
@@ -169,6 +171,8 @@ def parse_args(argv=None):
     parser.add_argument("--checkpoint-minutes", type=float, default=5., help="Save an in-epoch continuation every N minutes")
     parser.add_argument("--stop-after-minutes", type=float, help="Gracefully stop this session after N minutes")
     parser.add_argument("--walltime-margin-minutes", type=float, default=5., help="Stop this many minutes before Slurm expiry")
+    parser.add_argument("--submit-continuation", type=Path, metavar="SLURM_SCRIPT",
+                        help="After a saved time-limit pause, submit this script with the same run directory and total epoch target")
     parser.add_argument("--allow-local", action="store_true", help="Allow an intentional local run outside Slurm")
     args = parser.parse_args(argv)
     for name in ("epochs", "batch_size", "checkpoint_minutes", "stop_after_minutes", "walltime_margin_minutes", "max_batch_size", "batch_probe_steps"):
@@ -178,6 +182,8 @@ def parse_args(argv=None):
         parser.error("--gpu-memory-fraction must be between 0.5 and 0.95")
     if args.auto_batch_size and args.check_only:
         parser.error("--auto-batch-size performs calibration training steps; omit --check-only")
+    if args.submit_continuation and args.check_only:
+        parser.error("--submit-continuation requires training; omit --check-only")
     return args
 
 
@@ -185,7 +191,16 @@ def main():
     args = parse_args()
     if not os.environ.get("SLURM_JOB_ID") and not args.allow_local:
         raise SystemExit("No Slurm allocation detected. Run salloc first, then run this launcher on the allocated node. Use --allow-local only for an intentional local check.")
-    run_notebook(args)
+    if args.submit_continuation:
+        if not os.environ.get("SLURM_JOB_ID"):
+            raise SystemExit("--submit-continuation requires a Slurm batch job")
+        args.submit_continuation = args.submit_continuation.expanduser().resolve()
+        if not args.submit_continuation.is_file():
+            raise SystemExit(f"Continuation batch script missing: {args.submit_continuation}")
+    launch = run_notebook(args)
+    if args.submit_continuation:
+        from slurm_continuation import submit_continuation
+        submit_continuation(launch, args.submit_continuation)
 
 
 if __name__ == "__main__":
