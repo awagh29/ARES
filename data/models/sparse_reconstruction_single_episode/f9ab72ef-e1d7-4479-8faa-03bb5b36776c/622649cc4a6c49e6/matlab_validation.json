@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "ares-sparse-reconstruction-matlab-validation-v1",
+  "episodeId": "f9ab72ef-e1d7-4479-8faa-03bb5b36776c",
+  "modelSha256": "42125a9569adacd5d354d006f6000157003c9871b6f1db9c75aa25cae8044212",
+  "maximumPredictionError": 2.384185791015625E-6,
+  "absoluteTolerance": 0.0005,
+  "fixtureCount": 6,
+  "medianInferenceMilliseconds": 260.911,
+  "matlabRelease": "2026a",
+  "plantSimulationRun": false,
+  "allParityChecksPassed": true
+}

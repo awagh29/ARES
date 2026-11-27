@@ -15,6 +15,8 @@ import torch
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts'))
+sys.path.insert(0, str(ROOT / "scripts" / 'saits'))
+sys.path.insert(0, str(ROOT / "scripts" / 'cnn_mlp'))
 from dense_saits_single_episode import (BEAMS,FEATURES,DenseSaitsReconstructor,build_dataset,
     build_train_val_tensors,validate_config,train_saits_baseline,fit_normalizer)
 from export_dense_saits_matlab import export_episode,resolve_training_run

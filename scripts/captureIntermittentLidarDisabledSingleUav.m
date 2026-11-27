@@ -18,11 +18,11 @@ simulationStopTime = ...
 %% Random outage configuration
 
 faultConfiguration.randomSeed = 513;
-faultConfiguration.numberOfOutages = 3;
+faultConfiguration.numberOfOutages = 5;
 faultConfiguration.initialHealthyTime_s = 3;       % Was 5
-faultConfiguration.finalHealthyTime_s = 4;         % Was 5
-faultConfiguration.minimumOutageDuration_s = 1.5;   % Was 2
-faultConfiguration.maximumOutageDuration_s = 3.0;   % Was 5
+faultConfiguration.finalHealthyTime_s = 3;         % Was 5
+faultConfiguration.minimumOutageDuration_s = 3.0;   % Was 2
+faultConfiguration.maximumOutageDuration_s = 5.0;   % Was 5
 faultConfiguration.minimumRecoveryDuration_s = 2.0; % Was 4
 
 faultConfiguration.faultWindowEndTime_s = 21;
@@ -107,8 +107,7 @@ manifest.groundTruth.faultWindowEndTime_s = ...
 
 SingleUavConfigOverride = experimentCfg;
 
-SingleUavLidarScheduleOverride = ...
-    LidarEnableSchedule;
+SingleUavLidarScheduleOverride = LidarEnableSchedule;
 
 safetyChecksPassed = true;
 failureIdentifier = "";

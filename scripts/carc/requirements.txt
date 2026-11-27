@@ -1,0 +1,6 @@
+# Install CUDA-enabled PyTorch separately, using a build supported by the GPU driver.
+# This file leaves an existing working PyTorch installation unchanged.
+numpy>=1.26
+pandas>=2.1
+matplotlib>=3.8
+h5py>=3.10

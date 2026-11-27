@@ -57,3 +57,9 @@ results/
 *venv/
 
 /tmp
+/Claude outputs
+/data/processed
+
+# Optional local CARC launcher output (cluster runs normally use ARES_RUN_ROOT)
+/exports/
+/launches/
