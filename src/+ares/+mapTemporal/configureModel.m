@@ -39,11 +39,19 @@ add_line(model,selection.Outport(1),hp.Inport(1),'autorouting','on');
 add_line(model,selection.Outport(2),hp.Inport(2),'autorouting','on');
 add_line(model,state.Outport(1),hp.Inport(3),'autorouting','on');
 add_line(model,state.Outport(3),hp.Inport(4),'autorouting','on');
+add_line(model,cp.Outport(1),hp.Inport(5),'autorouting','on');
 add_line(model,hp.Outport(1),controller.Inport(2),'autorouting','on');
 add_line(model,hp.Outport(2),controller.Inport(1),'autorouting','on');
 set_param(selection.Outport(1),'DataLogging','off');
 logPort(hp.Outport(1),'desired_position_ned_m');
 logPort(hp.Outport(3),'map_temporal_goal_hold');
+if options.EnableReferenceGovernor
+    % VFH must propose corridors wider than the governor's stopping envelope;
+    % otherwise slowing can converge to a stationary, still-blocked request.
+    set_param(model+"/Obstacle Avoidance",'SafetyDistance',num2str( ...
+        options.MinimumSurfaceClearanceM+options.GovernorMarginM+options.GovernorPlanningBufferM,17));
+    ares.mapTemporal.configureGovernor(model,planFile,cp.Outport(1),hp.Outport(3));
+end
 sink=model+"/ARES Map Temporal Goal Hold Logger";
 add_block('simulink/Sinks/Terminator',sink,'Position',[1110 450 1130 470]);
 p=get_param(sink,'PortHandles'); add_line(model,hp.Outport(3),p.Inport(1),'autorouting','on');
@@ -86,12 +94,17 @@ if options.ShowSimulation
 else
     set_param(scope,'Commented','on'); set_param(model,'EnablePacing','off');
 end
+policy="Original VFH/PID";
+if options.EnableReferenceGovernor
+    policy="VFH/PID with braking governor";
+    if options.EnableLocalPlanner, policy="Selected-scan trajectory planner and braking governor"; end
+end
 note=Simulink.Annotation(model,sprintf(['MAP-TEMPORAL SPARSITY-INVARIANT CNN\n' ...
     'Start NED: %s | Goal NED: %s\nLiDAR: %s | Requested outages: %d\n' ...
     'Known obstacle map + current pose/goal + measured history.\n' ...
-    'Original VFH/PID; no barrier correction or global route planner.\n' ...
+    '%s; no CBF or supplied-map route planner.\n' ...
     'Edit MapTemporalOptions and run prepareMapTemporalSingleUav to change inputs.'], ...
-    mat2str(options.StartState),mat2str(options.GoalState),options.LidarMode,options.NumberOfOutages));
+    mat2str(options.StartState),mat2str(options.GoalState),options.LidarMode,options.NumberOfOutages,policy));
 note.Position=[-470 -400];
 wiring.schemaVersion="ares-map-temporal-controller-wiring-v1";
 wiring.ExecutedControlRoute="Selected measured/learned cloud -> original VFH -> original PID -> Quadrotor Plant";
@@ -100,6 +113,35 @@ wiring.History="16 measured-input summaries, states, goals and blackout ages; cl
 wiring.OfflineScoringRoute="Nominal scan -> ranges -> log terminator only";
 wiring.FailurePolicy="Stop on invalid state or nonfinite prediction";
 wiring.TerminalPolicy="Within min(0.75 m, endpoint clearance / 2), latch the exact goal reference and current yaw; original PID brakes to hover";
+if options.EnableReferenceGovernor
+    wiring.TerminalPolicy="Clear selected-scan goal corridor inside approach radius: fixed goal/yaw with braking-distance and proportional speed taper; rejoin VFH if blocked";
+    wiring.ExecutedControlRoute="Selected measured/learned cloud -> original VFH -> position PID -> braking-aware velocity governor -> original velocity/attitude PID -> Quadrotor Plant";
+end
+wiring.ReferenceGovernorEnabled=options.EnableReferenceGovernor;
+wiring.LocalPlannerEnabled=options.EnableReferenceGovernor && options.EnableLocalPlanner;
+if wiring.LocalPlannerEnabled
+    % Direction is selected by sampled rollouts, not VFH. Keep the original
+    % position/velocity/attitude PID blocks for diagnostics and plant tracking.
+    % Bypass the unused VFH to avoid accumulating synthetic obstacle memory.
+    for index=1:2
+        source=get_param(get_param(selection.Inport(index+2),'Line'),'SrcPortHandle');
+        line=get_param(selection.Inport(index),'Line');
+        if line~=-1, delete_line(line); end
+        add_line(model,source,selection.Inport(index),'autorouting','on');
+    end
+    set_param(model+"/Obstacle Avoidance",'Commented','on');
+    wiring.ExecutedControlRoute="Selected cloud -> trajectory-sampling planner + stall recovery -> braking governor -> original velocity/attitude PID -> plant";
+    wiring.AvoidanceMemoryPolicy="Unused VFH bypassed; selected-scan route memory and visited poses reset each flight";
+    wiring.PlannerGeometrySource="Selected scans including predictions during outages; no supplied obstacle boxes or hidden nominal scan";
+    wiring.TerminalPolicy="Goal-distance velocity taper; existing position/speed terminal tolerances; goal-hold position reference is diagnostic";
+end
+wiring.PlannerPacketOrder=["recovering","stalled","recovery_entries","feasible_candidates", ...
+    "requested_speed_mps","predicted_surface_clearance_m","window_goal_progress_m", ...
+    "target_n","target_e","target_d","no_feasible_trajectory","compute_s"];
+wiring.GovernorGeometrySource="Selected measured/reconstructed cloud only; no nominal scoring cloud or direct map access";
+wiring.GovernorPacketOrder=["nominal_vn","nominal_ve","nominal_vd", ...
+    "executed_vn","executed_ve","executed_vd","speed_cap_mps", ...
+    "requested_corridor_m","motion_corridor_m","braking","approaching","goal_distance_m"];
 wiring.SafetyCertified=false;
 end
 function logPort(port,name)

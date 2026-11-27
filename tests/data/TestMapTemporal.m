@@ -83,14 +83,15 @@ classdef TestMapTemporal < matlab.unittest.TestCase
             cleanup=onCleanup(@()delete(planFile)); %#ok<NASGU>
             hold=ares.mapTemporal.GoalHoldReference('PlanFile',planFile);
             nominal=single([1;2;-7]); goal=single(options.GoalState(1:3)');
-            [reference,~,active]=hold(nominal,single(1),single([0;0;-7]),single([.3;0;0]));
+            cloud=NaN(10740,3,'single');
+            [reference,~,active]=hold(nominal,single(1),single([0;0;-7]),single([.3;0;0]),cloud);
             test.verifyEqual(reference,nominal); test.verifyFalse(active);
-            [reference,yaw,active]=hold(nominal,single(1),goal+single([.1;0;0]),single([.3;0;0]));
+            [reference,yaw,active]=hold(nominal,single(1),goal+single([.1;0;0]),single([.3;0;0]),cloud);
             test.verifyEqual(reference,goal); test.verifyEqual(yaw,single(.3)); test.verifyTrue(active);
-            [reference,~,active]=hold(nominal,single(1),goal+single([2;0;0]),single([.6;0;0]));
+            [reference,~,active]=hold(nominal,single(1),goal+single([2;0;0]),single([.6;0;0]),cloud);
             test.verifyEqual(reference,goal); test.verifyTrue(active);
             reset(hold);
-            [reference,~,active]=hold(nominal,single(1),single([0;0;-7]),single([.3;0;0]));
+            [reference,~,active]=hold(nominal,single(1),single([0;0;-7]),single([.3;0;0]),cloud);
             test.verifyEqual(reference,nominal); test.verifyFalse(active); release(hold);
         end
     end
