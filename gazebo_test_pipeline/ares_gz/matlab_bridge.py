@@ -103,12 +103,12 @@ class MatlabBridge:
         return reply
 
     # ---- API ---------------------------------------------------------------------
-    def init(self, options: dict, model_path: str, export_python: str = "") -> dict:
+    def init(self, options: dict, model_path: str, export_python: str = "", guidance: str = "planner") -> dict:
         return self.request({"type": "init", "options": options, "model_path": model_path,
-                             "export_python": export_python})
+                             "export_python": export_python, "guidance": guidance})
 
     def step(self, time_s: float, position_ned, velocity_ned, euler_zyx, body_rates, available: bool,
-             points_matlab_order: np.ndarray | None) -> dict:
+             points_matlab_order: np.ndarray | None, velocity_request=None) -> dict:
         payload = b""
         if available:
             if points_matlab_order is None:
@@ -118,7 +118,16 @@ class MatlabBridge:
                   "position": [float(x) for x in position_ned], "velocity": [float(x) for x in velocity_ned],
                   "euler_zyx": [float(x) for x in euler_zyx], "body_rates": [float(x) for x in body_rates],
                   "available": bool(available)}
+        if velocity_request is not None:
+            header["velocity_request"] = [float(x) for x in velocity_request]
         return self.request(header, payload)
+
+    def retarget(self, goal_ned, position_ned, velocity_ned, euler_zyx) -> dict:
+        """Swarm: new goal mid-flight (``retarget`` in runGuidanceBridge.m)."""
+        return self.request({"type": "retarget", "goal": [float(x) for x in goal_ned],
+                             "position": [float(x) for x in position_ned],
+                             "velocity": [float(x) for x in velocity_ned],
+                             "euler_zyx": [float(x) for x in euler_zyx]})
 
     def end_run(self) -> None:
         self.request({"type": "end"})

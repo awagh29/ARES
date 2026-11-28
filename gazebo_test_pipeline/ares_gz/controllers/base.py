@@ -44,5 +44,9 @@ class Controller:
     def finish(self) -> None:
         pass
 
+    def summary_extras(self) -> dict:
+        """Controller-specific numbers added to the run's summary.json."""
+        return {}
+
     def close(self) -> None:
         pass

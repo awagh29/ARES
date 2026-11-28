@@ -1,4 +1,4 @@
-"""Generate the Gazebo world: ground, the ARES buildings and one quadcopter.
+"""Generate the Gazebo world: ground, the ARES buildings and one or more quadcopters.
 
 Buildings come from ``scripts/initializeSingleUav.m`` via :mod:`ares_gz.scene`,
 so Gazebo and MATLAB fly the same map. The quadcopter is a mesh-free copy of
@@ -65,7 +65,7 @@ def _building(index: int, center_enu: np.ndarray, width: float, height: float) -
     </model>"""
 
 
-def _rotor(index: int, position, quad: QuadParameters) -> str:
+def _rotor(index: int, position, quad: QuadParameters, name: str = MODEL_NAME) -> str:
     return f"""
       <link name="rotor_{index}">
         <pose>{_vector(position)} 0 0 0</pose>
@@ -84,7 +84,7 @@ def _rotor(index: int, position, quad: QuadParameters) -> str:
         <axis><xyz>0 0 1</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit></axis>
       </joint>
       <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
-        <robotNamespace>{MODEL_NAME}</robotNamespace>
+        <robotNamespace>{name}</robotNamespace>
         <jointName>rotor_{index}_joint</jointName>
         <linkName>rotor_{index}</linkName>
         <turningDirection>{quad.rotor_directions[index]}</turningDirection>
@@ -102,11 +102,15 @@ def _rotor(index: int, position, quad: QuadParameters) -> str:
       </plugin>"""
 
 
-def quad_model(start_ned, euler_zyx, quad: QuadParameters = QuadParameters()) -> str:
+DRONE_COLORS = ("0.1 0.3 0.8 1", "0.85 0.45 0.05 1", "0.1 0.6 0.25 1", "0.6 0.1 0.6 1")
+
+
+def quad_model(start_ned, euler_zyx, quad: QuadParameters = QuadParameters(), name: str = MODEL_NAME,
+               color: str = DRONE_COLORS[0], lidar: bool = True) -> str:
     x, y, z = ned_to_enu(start_ned)
     roll, pitch, yaw = ned_euler_to_gazebo_rpy(euler_zyx)
     ixx, iyy, izz = quad.inertia
-    rotors = "".join(_rotor(index, position, quad) for index, position in enumerate(quad.arm_positions))
+    rotors = "".join(_rotor(index, position, quad, name) for index, position in enumerate(quad.arm_positions))
     rotor_config = "".join(
         f"""
           <rotor>
@@ -118,7 +122,7 @@ def quad_model(start_ned, euler_zyx, quad: QuadParameters = QuadParameters()) ->
     vertical = 15
     horizontal = 716
     return f"""
-    <model name="{MODEL_NAME}">
+    <model name="{name}">
       <pose>{x:.6f} {y:.6f} {z:.6f} {roll:.9f} {pitch:.9f} {yaw:.9f}</pose>
       <link name="base_link">
         <inertial>
@@ -128,11 +132,12 @@ def quad_model(start_ned, euler_zyx, quad: QuadParameters = QuadParameters()) ->
         <collision name="collision"><geometry><box><size>0.47 0.47 0.11</size></box></geometry></collision>
         <visual name="visual">
           <geometry><box><size>0.47 0.47 0.11</size></box></geometry>
-          <material><ambient>0.1 0.3 0.8 1</ambient><diffuse>0.1 0.3 0.8 1</diffuse></material>
+          <material><ambient>{color}</ambient><diffuse>{color}</diffuse></material>
         </visual>
+        {"" if lidar else "<!-- LiDAR ray-cast by the runner (raycast mode)"}
         <sensor name="lidar" type="gpu_lidar">
           <pose>0 0 0.4 0 0 0</pose>
-          <topic>/{MODEL_NAME}/lidar</topic>
+          <topic>/{name}/lidar</topic>
           <update_rate>10</update_rate>
           <always_on>1</always_on>
           <visualize>false</visualize>
@@ -145,10 +150,10 @@ def quad_model(start_ned, euler_zyx, quad: QuadParameters = QuadParameters()) ->
             </scan>
             <range><min>0.05</min><max>7.0</max><resolution>0.001</resolution></range>
           </lidar>
-        </sensor>
+        </sensor>{"" if lidar else " -->"}
       </link>{rotors}
       <plugin filename="gz-sim-multicopter-control-system" name="gz::sim::systems::MulticopterVelocityControl">
-        <robotNamespace>{MODEL_NAME}</robotNamespace>
+        <robotNamespace>{name}</robotNamespace>
         <commandSubTopic>cmd_vel</commandSubTopic>
         <enableSubTopic>enable</enableSubTopic>
         <comLinkName>base_link</comLinkName>
@@ -161,19 +166,46 @@ def quad_model(start_ned, euler_zyx, quad: QuadParameters = QuadParameters()) ->
       </plugin>
       <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
         <odom_frame>world</odom_frame>
-        <robot_base_frame>{MODEL_NAME}</robot_base_frame>
+        <robot_base_frame>{name}</robot_base_frame>
         <odom_publish_frequency>1000</odom_publish_frequency>
         <dimensions>3</dimensions>
-        <odom_topic>/{MODEL_NAME}/odometry</odom_topic>
+        <odom_topic>/{name}/odometry</odom_topic>
       </plugin>
     </model>"""
 
 
+def victim_marker(name: str, north: float, east: float) -> str:
+    """Visual-only marker (no collision, below the LiDAR's field of view at flight altitude)."""
+    x, y = east, north
+    return f"""
+    <model name="{name}">
+      <static>true</static>
+      <pose>{x:.3f} {y:.3f} 0.15 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.5</radius><length>0.3</length></cylinder></geometry>
+          <material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse><emissive>0.5 0 0 1</emissive></material>
+        </visual>
+      </link>
+    </model>"""
+
+
 def world_sdf(scene: SceneMap, start_ned, euler_zyx=(0.0, 0.0, 0.0), physics_step_s: float = 0.001,
-              quad: QuadParameters = QuadParameters()) -> str:
+              quad: QuadParameters = QuadParameters(), drones: list | None = None, markers: list | None = None,
+              lidar: bool = True) -> str:
+    """One quad (``start_ned``) by default; ``drones=[(name, start_ned, euler_zyx), ...]`` for a swarm.
+
+    ``markers=[(name, north, east), ...]`` adds visual-only victim markers.
+    """
     buildings = "".join(
         _building(index, center, scene.width_m, scene.height_m)
         for index, center in enumerate(scene.centers_enu))
+    if drones:
+        vehicles = "".join(quad_model(start, euler, quad, name, DRONE_COLORS[index % len(DRONE_COLORS)], lidar)
+                           for index, (name, start, euler) in enumerate(drones))
+    else:
+        vehicles = quad_model(start_ned, euler_zyx, quad)
+    extras = "".join(victim_marker(*marker) for marker in markers or [])
     return f"""<?xml version="1.0"?>
 <sdf version="1.9">
   <world name="{WORLD_NAME}">
@@ -205,7 +237,7 @@ def world_sdf(scene: SceneMap, start_ned, euler_zyx=(0.0, 0.0, 0.0), physics_ste
         </visual>
       </link>
     </model>{buildings}
-{quad_model(start_ned, euler_zyx, quad)}
+{vehicles}{extras}
   </world>
 </sdf>
 """

@@ -70,12 +70,13 @@ def build_controller(name: str, settings: dict, options: dict, worker: int):
     model_path, info = resolve_model(options["model"] or settings.get("model_path", ""))
     if worker == 0:
         print(f"Model: {info.get('requested')}"
-              + (f" (reusing export {info['reused_export']}, epoch {info.get('best_epoch')})"
-                 if "reused_export" in info else ""))
+              + (f" (reusing export {info['reused_export']})" if "reused_export" in info else "")
+              + f"   guidance: {options.get('guidance') or settings.get('guidance', 'planner')}")
     export_python = os.environ.get("ARES_EXPORT_PYTHON", settings.get("export_python", "") or "")
     bridge = MatlabBridge(port=options["port"] + worker, launch=not options["manual_matlab"],
                           log_file=RESULTS_ROOT / f"matlab_bridge_worker{worker}.log")
-    return MapTemporalController(bridge, model_path, export_python), bridge
+    guidance = options.get("guidance") or settings.get("guidance", "planner")
+    return MapTemporalController(bridge, model_path, export_python, guidance), bridge
 
 
 def worker_main(worker: int, jobs, options: dict) -> int:
@@ -133,6 +134,8 @@ def main() -> int:
                         help="simulations at once; each has its own MATLAB + Gazebo (2-3 on a 16 GB PC)")
     parser.add_argument("--controller", choices=CONTROLLERS, help="override the YAML controller")
     parser.add_argument("--model", help="override controller.model_path (best.pt or model.mat)")
+    parser.add_argument("--guidance", choices=("planner", "governor", "vfh"),
+                        help="map-temporal guidance after the CNN (default from the YAML: planner)")
     parser.add_argument("--campaign", help="results sub-folder name (default from the YAML)")
     parser.add_argument("--gui", action="store_true", help="also open the Gazebo GUI to watch")
     parser.add_argument("--no-headless-rendering", action="store_true",
@@ -159,12 +162,14 @@ def main() -> int:
     if not (args.all or args.scenario):
         parser.error("choose --scenario ..., --all, --list or --report")
     controller_name = args.controller or matrix.controller["name"]
-    campaign = args.campaign or f"{matrix.campaign}_{controller_name}"
+    guidance = args.guidance or matrix.controller.get("guidance", "planner")
+    suffix = f"_{guidance}" if controller_name == "map-temporal-cnn" else ""
+    campaign = args.campaign or f"{matrix.campaign}_{controller_name}{suffix}"
     jobs = build_jobs(matrix, args)
     workers = max(1, min(args.workers, len(jobs)))
     if args.gui and workers > 1:
         parser.error("--gui works with --workers 1 only")
-    options = {"matrix": str(args.matrix), "controller": controller_name, "model": args.model,
+    options = {"matrix": str(args.matrix), "controller": controller_name, "model": args.model, "guidance": guidance,
                "manual_matlab": args.manual_matlab, "port": args.port, "gui": args.gui,
                "headless_rendering": not args.no_headless_rendering, "campaign": campaign,
                "video": args.video, "workers": workers, "domain_base": 40 + (os.getpid() % 40)}

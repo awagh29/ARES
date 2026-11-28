@@ -59,10 +59,18 @@ class PidCascade:
         self.velocity = [DiscretePID(GAINS_P[k], GAINS_I[k], GAINS_D[k], GAINS_N[k], ACCELERATION_LIMITS[k], ts)
                          for k in range(3)]
 
-    def step(self, reference_ned, position_ned, velocity_ned) -> tuple[np.ndarray, np.ndarray]:
-        """Return (acceleration command NED, velocity command NED)."""
+    def step(self, reference_ned, position_ned, velocity_ned, velocity_override=None) -> tuple[np.ndarray, np.ndarray]:
+        """Return (acceleration command NED, executed velocity command NED).
+
+        ``velocity_override`` replaces the position loop's output before the velocity loop, as
+        Atharva's braking governor / trajectory planner does (ares.mapTemporal.configureGovernor).
+        The position loop still runs; its output is kept in ``self.position_request``.
+        """
         error = np.asarray(reference_ned, float) - np.asarray(position_ned, float)
         velocity_command = np.array([self.position[k].step(float(error[k])) for k in range(3)])
+        self.position_request = velocity_command
+        if velocity_override is not None:
+            velocity_command = np.asarray(velocity_override, float)
         velocity_error = velocity_command - np.asarray(velocity_ned, float)
         acceleration = np.array([self.velocity[k].step(float(velocity_error[k])) for k in range(3)])
         return acceleration, velocity_command

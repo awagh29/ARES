@@ -1,0 +1,74 @@
+# Three-drone search-and-rescue test matrix (hub in the loop) for the Gazebo pipeline.
+#
+# Same building map, same model and guidance as the single-drone tests. The hub
+# (ares_gz/swarm/hub.py) explores the map with the three drones, finds and
+# confirms victims, detects LiDAR failures with its trust model, contains the
+# unreliable drone and reassigns its work, then brings everyone to a
+# rendezvous slot. Drone pairs must never be closer than hub.separation_m.
+
+campaign: swarm
+
+controller:
+  name: map-temporal-cnn
+  model_path: "../Map Temporal Sparsity Invariant CNN_Latest/best.pt"
+  guidance: planner          # planner | governor | vfh (see single_drone_scenarios.yaml)
+  export_python: ""
+
+# Shared by all drones (any ares.navigation option). Outages are spread over the
+# first 80 s of the mission instead of the single-drone 20 s window.
+mission:
+  StopTimeS: 180
+  NumberOfOutages: 5
+  OutageWindowEndS: 80
+
+# Start points at 7 m altitude, at least 5.6 m apart, clear of buildings.
+# Rendezvous slots ("goal slots") are 6 m apart so the 3 m separation rule
+# (plus the hub's buffer) can hold with everyone parked.
+drones:
+  - {id: UAV1, north: 0, east: 15, slot: [30, 35]}
+  - {id: UAV2, north: 4, east: 19, slot: [30, 29]}
+  - {id: UAV3, north: 0, east: 23, slot: [24, 35]}
+
+# Victims on the ground (detected by a downward camera within 5 m with line of sight).
+victims:
+  - {id: v1, north: 5, east: 30}
+  - {id: v2, north: 21.5, east: 18.5}   # in the gap between buildings D, E and F
+  - {id: v3, north: 35, east: 8}
+  - {id: v4, north: 10, east: 3}
+
+hub:
+  separation_m: 3.0          # the invariant: no two drones closer than this, ever
+  buffer_m: 0.5              # the CBF works on 3.5 m to absorb tracking lag
+  gamma: 1.0
+  explore_time_s: 100
+  coverage_goal: 0.9
+  hold_s: 3.0
+
+comms: nominal               # ideal | nominal (50 ms, 2% loss) | lossy (100 ms, 15% loss)
+
+seeds: [1]
+
+# Same levels as the single-drone tests, but the gusts are spread over the whole ~140 s
+# mission at the same rate (4 gusts per 20 s -> 28 gusts in 2..140 s) instead of the first 22 s.
+wind_profiles:
+  calm:   {mean_speed_mps: 0.0, gust_peak_mps: 0.0, gust_count: 0, turbulence_sigma_mps: 0.0}
+  light:  {mean_speed_mps: 1.0, gust_peak_mps: 3.0, gust_count: 28, gust_window_s: [2, 140], turbulence_sigma_mps: 0.3}
+  medium: {mean_speed_mps: 2.0, gust_peak_mps: 6.0, gust_count: 28, gust_window_s: [2, 140], turbulence_sigma_mps: 0.6}
+  strong: {mean_speed_mps: 3.0, gust_peak_mps: 8.0, gust_count: 28, gust_window_s: [2, 140], turbulence_sigma_mps: 0.9}
+
+# faulty: which drones get the scenario's LiDAR fault ("all" or a list).
+# outages: independent (each drone its own schedule) | simultaneous (same schedule).
+scenarios:
+  - {id: S0_baseline,                  lidar: healthy,      wind: calm,   note: "control: healthy lidar, no wind"}
+  - {id: S1_intermittent,              lidar: intermittent, wind: calm,   faulty: all, outages: independent,  note: "1. intermittent failures, independent per drone"}
+  - {id: S1_intermittent_simultaneous, lidar: intermittent, wind: calm,   faulty: all, outages: simultaneous, note: "1. intermittent failures, all drones at once"}
+  - {id: S2_blackout,                  lidar: blackout,     wind: calm,   faulty: [UAV2],                     note: "2. complete blackout on UAV2"}
+  - {id: S3_gusts_light,               lidar: healthy,      wind: light,  note: "3. wind gusts (light)"}
+  - {id: S3_gusts_medium,              lidar: healthy,      wind: medium, note: "3. wind gusts (medium)"}
+  - {id: S3_gusts_strong,              lidar: healthy,      wind: strong, note: "3. wind gusts (strong, limit test)"}
+  - {id: S4_gusts_light_intermittent,  lidar: intermittent, wind: light,  faulty: all, outages: independent,  note: "4. gusts + intermittent (light)"}
+  - {id: S4_gusts_medium_intermittent, lidar: intermittent, wind: medium, faulty: all, outages: independent,  note: "4. gusts + intermittent (medium)"}
+  - {id: S4_gusts_strong_intermittent, lidar: intermittent, wind: strong, faulty: all, outages: independent,  note: "4. gusts + intermittent (strong)"}
+  - {id: S5_gusts_light_blackout,      lidar: blackout,     wind: light,  faulty: [UAV2],                     note: "5. gusts + blackout on UAV2 (light)"}
+  - {id: S5_gusts_medium_blackout,     lidar: blackout,     wind: medium, faulty: [UAV2],                     note: "5. gusts + blackout on UAV2 (medium)"}
+  - {id: S5_gusts_strong_blackout,     lidar: blackout,     wind: strong, faulty: [UAV2],                     note: "5. gusts + blackout on UAV2 (strong)"}

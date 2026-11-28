@@ -294,6 +294,10 @@ def run_scenario(config: RunConfig, controller: Controller | None = None, output
         reason = "time-limit-before-terminal-state"
     else:
         reason = axis.get("terminationReason", "early-stop")
+    try:
+        controller_extras = dict(controller.summary_extras())
+    except Exception:  # extras are diagnostics only
+        controller_extras = {}
     deviation = route_deviation(native_p, route)
     flags = [row["lidar_available"] for row in rows]
     observed = (int(flags[0] == 0) + sum(1 for a, b in zip(flags, flags[1:]) if a == 1 and b == 0)) if flags else 0
@@ -316,7 +320,7 @@ def run_scenario(config: RunConfig, controller: Controller | None = None, output
         "reconstruction_scans": int(sum(used)), "max_wind_mps": wind.describe()["max_speed_mps"],
         "max_drag_n": max((math.hypot(row["drag_n"], row["drag_e"], row["drag_d"]) for row in rows), default=0.0),
         "wall_time_s": wall, "scans_received": session.scan_count, "missed_scans": session.missed_scans,
-        "step_retries": session.step_retries, "axis_metrics": axis,
+        "step_retries": session.step_retries, **controller_extras, "axis_metrics": axis,
         "directory": str(directory),
     }
     if rows:

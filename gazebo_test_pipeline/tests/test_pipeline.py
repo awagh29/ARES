@@ -115,4 +115,4 @@ def test_matrix_covers_the_five_scenarios():
     for prefix in ("S0", "S1", "S2", "S3", "S4", "S5"):
         assert any(item.startswith(prefix) for item in ids)
     winds = {scenario.wind.name for scenario in matrix.scenarios}
-    assert winds == {"calm", "light", "medium"}
+    assert winds == {"calm", "light", "medium", "strong"}

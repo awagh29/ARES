@@ -61,11 +61,14 @@ class DragModel:
 CALM = WindProfile()
 PRESETS = {
     "calm": CALM,
-    # Agreed levels: light gusts peak at 3 m/s, medium at 6 m/s.
+    # Agreed levels: light gusts peak at 3 m/s, medium at 6 m/s; strong (8 m/s) probes the limit:
+    # beyond ~6 m/s relative wind the drag exceeds the controller's 1 m/s^2 horizontal authority.
     "light": WindProfile(name="light", mean_speed_mps=1.0, gust_peak_mps=3.0, gust_count=4,
                          turbulence_sigma_mps=0.3),
     "medium": WindProfile(name="medium", mean_speed_mps=2.0, gust_peak_mps=6.0, gust_count=4,
                           turbulence_sigma_mps=0.6),
+    "strong": WindProfile(name="strong", mean_speed_mps=3.0, gust_peak_mps=8.0, gust_count=4,
+                          turbulence_sigma_mps=0.9),
 }
 
 

@@ -6,7 +6,8 @@ map ray cast. This checks MATLAB start-up from WSL, the socket link, Atharva's
 reconstruction, the UAV Toolbox follower/VFH blocks and the PID cascade
 together. It is not a physics test.
 
-    python3 scripts/bridge_smoke.py [--mode healthy|intermittent|blackout] [--seconds 25]
+    python3 scripts/bridge_smoke.py [--mode healthy|intermittent|blackout] [--seconds 25] [--start W1]
+                                    [--guidance planner|governor|vfh]
 """
 
 from __future__ import annotations
@@ -36,20 +37,27 @@ def main() -> int:
     parser.add_argument("--seconds", type=float, default=25.0)
     parser.add_argument("--seed", type=int, default=513)
     parser.add_argument("--manual-matlab", action="store_true")
+    parser.add_argument("--guidance", choices=["planner", "governor", "vfh"], help="default from the YAML")
+    parser.add_argument("--start", help="start point id from the YAML (e.g. W1); default mission.StartState")
     args = parser.parse_args()
 
     matrix = load_matrix()
     model, info = resolve_model(matrix.controller["model_path"])
     print("model:", info)
-    options = validate_options(dict(matrix.mission, LidarMode=args.mode, Seed=args.seed,
+    mission = dict(matrix.mission)
+    if args.start:
+        start = {s.id: s for s in matrix.starts}[args.start]
+        mission["StartState"] = start.state(float(mission["StartState"][2]))
+    options = validate_options(dict(mission, LidarMode=args.mode, Seed=args.seed,
                                      WorldBoundsNedM=TRAINED_BOUNDS_NED))
+    guidance = args.guidance or matrix.controller.get("guidance", "planner")
     times, enabled, intervals = outage_schedule(options)
     print("outages (s):", intervals.tolist())
     scene = scene_map()
     started = time.monotonic()
     with MatlabBridge(launch=not args.manual_matlab) as bridge:
         print(f"MATLAB connected after {time.monotonic() - started:.0f} s")
-        controller = MapTemporalController(bridge, model)
+        controller = MapTemporalController(bridge, model, guidance=guidance)
         print("init:", controller.start(options))
         dt = controller.tick_s
         p = options.start_state[0:3].copy()
@@ -74,6 +82,7 @@ def main() -> int:
                 timing["matlab"] += float(controller.guidance.get("bridge_s") or 0.0)
                 timing["recon"] = timing.get("recon", 0.0) + float(controller.guidance.get("reconstruction_block_s") or 0)
                 timing["vfh"] = timing.get("vfh", 0.0) + float(controller.guidance.get("avoidance_s") or 0)
+                timing["planner"] = timing.get("planner", 0.0) + float(controller.guidance.get("governor_s") or 0)
                 timing["calls"] += 1
             minimum = min(minimum, float(signed_box_distance(p, scene)[0]) - 0.1)
             if abs(t - round(t)) < 1e-9:
@@ -91,10 +100,12 @@ def main() -> int:
     calls = max(timing["calls"], 1)
     print(f"per guidance call: round trip {timing['round_trip'] / calls * 1000:.0f} ms "
           f"(MATLAB compute {timing['matlab'] / calls * 1000:.0f} ms: reconstruction block "
-          f"{timing.get('recon', 0) / calls * 1000:.0f} ms, VFH {timing.get('vfh', 0) / calls * 1000:.0f} ms), Python ray cast "
+          f"{timing.get('recon', 0) / calls * 1000:.0f} ms, VFH {timing.get('vfh', 0) / calls * 1000:.0f} ms, "
+          f"planner+governor {timing.get('planner', 0) / calls * 1000:.0f} ms), Python ray cast "
           f"{timing['raycast'] / calls * 1000:.0f} ms, {timing['calls']} calls")
     print(f"final position {np.round(p, 2).tolist()}, goal {options.goal_state[0:3].tolist()}, "
           f"min surface clearance {minimum:.2f} m, wall {time.monotonic() - started:.0f} s")
+    print("controller summary:", controller.summary_extras())
     return 0
 
 

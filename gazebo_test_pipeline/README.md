@@ -1,18 +1,24 @@
 # Gazebo test pipeline
 
-Flies the ARES single-drone navigation solution in **Gazebo** (real rigid-body
-and rotor physics) under lidar faults and wind, and scores every flight with
-the same pass/fail rules as the MATLAB code.
+Flies the ARES navigation solution in **Gazebo** (real rigid-body and rotor
+physics) under lidar faults and wind, and scores every flight with the same
+pass/fail rules as the MATLAB code: five single-drone experiments, and the same
+five with **three drones and the swarm hub** (see [Swarm hub](#swarm-hub-three-drones)).
 
 **System under test** (chosen in `config/single_drone_scenarios.yaml`):
 
 - `map-temporal-cnn` (default): Atharva's **map-temporal sparsity-invariant
-  CNN** (`src/+ares/+mapTemporal`) with the original waypoint follower, VFH
-  obstacle avoidance and PID. During lidar outages the CNN/GRU reconstructs the
-  15x716 scan that VFH flies on. The guidance runs in **MATLAB, unchanged**
-  (Atharva's code plus MathWorks' own blocks), through
-  `matlab/runGuidanceBridge.m`. The PID cascade runs in Python at 100 Hz and
-  Gazebo is the vehicle. The model file is `controller.model_path`.
+  CNN** (`src/+ares/+mapTemporal`). During lidar outages the CNN/GRU
+  reconstructs the 15x716 scan. `controller.guidance` picks what flies on it:
+  - `planner` (default): his trajectory-sampling local planner + braking
+    governor (`TrajectoryPlanner`, `SpeedGovernor`); VFH is bypassed;
+  - `governor`: VFH + position PID + braking governor;
+  - `vfh`: the original waypoint follower, VFH and PID.
+
+  The guidance runs in **MATLAB, unchanged** (Atharva's code plus MathWorks'
+  own blocks), through `matlab/runGuidanceBridge.m`. The velocity/attitude PID
+  runs in Python at 100 Hz and Gazebo is the vehicle. The model file is
+  `controller.model_path` (`--guidance` / `--model` override both).
 - `map-correction`: Atharva's barrier/map-correction controller
   (`src/+ares/+navigation`), ported to Python in `ares_gz/navigation/` and
   checked against MATLAB by `tests/test_parity.py`.
@@ -31,7 +37,7 @@ the same pass/fail rules as the MATLAB code.
 | 3 | `S3_gusts_light` / `S3_gusts_medium` | healthy | gusts |
 | 4 | `S4_gusts_{light,medium}_intermittent` | intermittent | gusts |
 | 5 | `S5_gusts_{light,medium}_blackout` | blackout | gusts |
-| 6 | three drones + hub | later | later |
+| 6 | the same five with three drones + hub | `run_swarm_tests.py` | see below |
 
 Wind levels: light = 1 m/s mean + 3 m/s gust peaks + 0.3 m/s turbulence;
 medium = 2 m/s mean + 6 m/s gust peaks + 0.6 m/s turbulence
@@ -129,6 +135,52 @@ Results go to `results/<campaign>/<scenario>/<start>/seed<N>_<id>/` (git-ignored
 (native 1 kHz path), `summary.json` (score), `world.sdf`, `logs/`. Each
 campaign gets `REPORT.md`, `all_runs.csv`, `trajectories.png` and `clearance.png`.
 
+## Swarm hub (three drones)
+
+`run_swarm_tests.py` flies a three-drone search-and-rescue mission in one
+Gazebo world, each drone running the same CNN + planner in its own MATLAB
+session (in parallel). The drones talk only to the **hub**
+(`ares_gz/swarm/hub.py`, star topology, simulated radio delay and loss). The hub:
+
+- **shares a map**: fuses the drones' *measured* scans (never reconstructed
+  ones, never untrusted drones) into one occupancy grid, and tracks what the
+  victim cameras have searched;
+- **explores**: sends drones to unsearched areas and LiDAR frontiers
+  (greedy auction, targets kept 6 m apart), then to their rendezvous slots;
+- **reports victims**: each report says which drone saw it and whether that
+  drone's LiDAR had failed; a report from an untrusted drone is confirmed by a
+  trusted one (that task pre-empts exploration);
+- **trusts interpretably**: `trust = 1 - (0.35 physical + 0.30 temporal + 0.20
+  peer + 0.15 historical)`, each with a plain-language reason
+  (`ares_gz/swarm/trust.py`). A 1-2 s outage *flags* a drone (DEGRADED); a
+  blackout longer than 3 s *quarantines* it;
+- **contains and recovers**: DEGRADED = slower, no new tasks, scans not fused;
+  QUARANTINED = hover 3 s, then limp to its slot at 0.6 m/s on the CNN, its task
+  reassigned; LOST (no uplink 1 s) = task reassigned; a drone that hears nothing
+  from the hub for 0.5 s hovers;
+- **keeps the invariant**: no two drones ever closer than **3 m**. Each pair
+  constraint of a control barrier function (h = |pi-pj|^2 - D^2,
+  dh/dt >= -gamma*h) is split between the two drones; each filters its own
+  command onboard, the reliable drone taking 80% of the duty next to an
+  unreliable one, and stale positions inflate D (`ares_gz/swarm/cbf.py`).
+
+```bash
+python3 run_swarm_tests.py --list
+python3 run_swarm_tests.py --scenario S0 --video          # one mission + videos
+python3 run_swarm_tests.py --all --video                  # all 10 swarm scenarios
+python3 run_swarm_tests.py --scenario S2 --comms lossy    # stress the radio
+python3 scripts/swarm_dry_run.py --scenario S2_blackout   # hub logic only, no Gazebo/MATLAB, seconds
+```
+
+Scenarios (`config/swarm_scenarios.yaml`): intermittent outages independent per
+drone *and* all at once; blackout on UAV2 (the containment case); light/medium
+gusts. A mission **passes** with no crash, the 3 m invariant held at 1 kHz,
+every trusted drone 1.0 m from buildings, all trusted drones at their slots,
+and every victim confirmed by a drone with working LiDAR. Each run writes
+`summary.json`, `hub_events.json` (every hub decision with its reason),
+`trust.csv`, `swarm_map.png` and per-drone `drones/<UAV>/control.csv`; videos
+show every drone's LiDAR state, hub mode, task and the live separation.
+
 ## When the MATLAB solution changes
 
 ```matlab
@@ -143,7 +195,8 @@ whose Python port must be updated.
 
 ```text
 gazebo_test_pipeline/
-├── run_tests.py                 command-line entry point
+├── run_tests.py                 single-drone command-line entry point
+├── run_swarm_tests.py           three-drone (hub) entry point
 ├── config/                      scenario matrix, measured vehicle calibration
 ├── ares_gz/
 │   ├── controllers/             systems under test: map-temporal CNN (MATLAB bridge + PID), map-correction
@@ -153,16 +206,19 @@ gazebo_test_pipeline/
 │   ├── scene.py world.py        building map from initializeSingleUav.m -> Gazebo world + quadcopter
 │   ├── gazebo.py                lock-step Gazebo session over ROS 2 (ros_gz_bridge)
 │   ├── run.py                   one scenario run: fault injection, wind, logging, scoring
+│   ├── swarm/                   hub, trust model, shared map, exploration, CBF, radio, agent, runner, replay
 │   ├── wind.py metrics.py       gust/turbulence/drag model; evaluateAxisRun port
 │   └── report.py scenarios.py
 ├── matlab/
-│   ├── runGuidanceBridge.m      runs Atharva's CNN + MathWorks follower/VFH + goal hold for Python
+│   ├── runGuidanceBridge.m      runs Atharva's CNN + planner/governor (or VFH) + goal hold for Python; swarm retargeting
 │   ├── aresVfhStep.m, buildVfhMex.m   the model's VFH block, optionally compiled (verified) for speed
 │   └── exportParityFixtures.m   reference outputs for the map-correction port
 ├── scripts/
 │   ├── diagnose.py              one-time Gazebo calibration and sanity checks
 │   ├── replay.py                smooth Gazebo replays of finished runs -> MP4 videos
-│   └── bridge_smoke.py          MATLAB-link check without Gazebo
+│   ├── bridge_smoke.py          MATLAB-link check without Gazebo
+│   ├── swarm_dry_run.py         hub logic check without Gazebo or MATLAB
+│   └── wrench_check.py          wind-force application stays fast and correct over long runs
 └── tests/                       parity + unit tests
 ```
 
@@ -171,9 +227,9 @@ modified, so merging into `main` is conflict-free.
 
 ## Known limits
 
-- The map is fixed and complete (every building is in the controller's map),
-  so the controller never needs lidar to avoid them. Lidar faults are expected
-  to matter little in calm air; wind is the main stress.
+- The swarm CBF works on the drones' velocity commands; the 0.5 m buffer
+  absorbs tracking lag, and the 3 m rule is checked on the 1 kHz Gazebo poses.
+  Obstacle avoidance stays with each drone's own planner.
 - Gazebo's drone is the 1.5 kg X3 example quadcopter with its own velocity
   controller; MATLAB uses UAV Toolbox's simplified guidance model. Both are
   driven by the same acceleration commands.
