@@ -34,29 +34,35 @@ five with **three drones and the swarm hub** (see [Swarm hub](#swarm-hub-three-d
 | 0 | `S0_baseline` (control run) | healthy | calm |
 | 1 | `S1_intermittent` | 5 random outages (MATLAB's generator and seeds) | calm |
 | 2 | `S2_blackout` | off for the whole flight | calm |
-| 3 | `S3_gusts_light` / `S3_gusts_medium` | healthy | gusts |
-| 4 | `S4_gusts_{light,medium}_intermittent` | intermittent | gusts |
-| 5 | `S5_gusts_{light,medium}_blackout` | blackout | gusts |
+| 3 | `S3_gusts_{light,medium,strong}` | healthy | gusts |
+| 4 | `S4_gusts_{light,medium,strong}_intermittent` | intermittent | gusts |
+| 5 | `S5_gusts_{light,medium,strong}_blackout` | blackout | gusts |
 | 6 | the same five with three drones + hub | `run_swarm_tests.py` | see below |
 
 Wind levels: light = 1 m/s mean + 3 m/s gust peaks + 0.3 m/s turbulence;
-medium = 2 m/s mean + 6 m/s gust peaks + 0.6 m/s turbulence
-(`config/single_drone_scenarios.yaml`).
+medium = 2 m/s mean + 6 m/s gust peaks + 0.6 m/s turbulence; strong = 3 m/s
+mean + 8 m/s gust peaks + 0.9 m/s turbulence (a limit test: beyond ~6 m/s
+relative wind the drag exceeds the controller's 1 m/s^2 horizontal authority).
+Single-drone gusts start in the first 2-22 s (the flight lasts ~30 s); swarm
+missions spread 28 gusts over 2-140 s (`config/*_scenarios.yaml`).
 
 ## How a run works
 
-Every 0.05 s (lock-step, so results repeat exactly):
+Every 0.01 s (lock-step, so results repeat exactly):
 
 1. Read the drone state from Gazebo and convert it to MATLAB's NED frame.
 2. **Lidar fault injection:** during an outage the scan is withheld and the
    controller is told the lidar is down, exactly like the MATLAB model.
 3. The controller returns an acceleration and a yaw rate. For the CNN stack:
-   every 0.1 s MATLAB returns VFH's target (from the real scan, or from the
-   CNN reconstruction during an outage); every 0.01 s the PID cascade turns it
-   into an acceleration.
+   every 0.1 s MATLAB runs the reconstruction (real scan, or the CNN during an
+   outage) and the guidance (default: his planner + braking governor, which
+   returns a velocity command); every 0.01 s the velocity PID turns it into an
+   acceleration.
 4. That acceleration becomes a velocity set-point for Gazebo's multicopter
    controller (calibrated by `scripts/diagnose.py`).
-5. **Wind:** the drag from (wind - drone velocity) is applied as a force on the body.
+5. **Wind:** the drag from (wind - drone velocity) is applied as a force on the
+   body (Gazebo persistent wrenches; the list is cleared every 50 entries so
+   long runs do not slow down, checked by `scripts/wrench_check.py`).
 6. Gazebo advances exactly one controller tick (1 ms physics steps).
 
 A run **passes** when the drone ends at rest within 0.35 m of the goal, never
@@ -97,10 +103,11 @@ keep the MEX unless it matches the interpreted block.
 ```bash
 python3 run_tests.py --list                              # scenario ids
 python3 run_tests.py --scenario S0 --seed 1 --gui        # one run, watch it in the Gazebo window
-python3 run_tests.py --all --workers 2 --video           # 9 scenarios x 2 starts x seeds, 2 at a time, with videos
+python3 run_tests.py --all --workers 3 --video           # 12 scenarios x 2 starts x seeds, 3 at a time, with videos
 python3 run_tests.py --scenario S3 S4 --seeds 1-3        # a subset
 python3 run_tests.py --all --controller map-correction   # the other controller
-python3 run_tests.py --report results/single_drone_map-temporal-cnn   # rebuild a report
+python3 run_tests.py --all --guidance vfh                # Atharva's earlier VFH stack instead of the planner
+python3 run_tests.py --report results/single_drone_map-temporal-cnn_planner   # rebuild a report
 ```
 
 Every scenario is flown from each start point in `starts:` (YAML; both at 7 m
@@ -120,15 +127,19 @@ a live mini-map and the final PASS/FAIL.
 
 ```bash
 sudo apt install -y ffmpeg                                        # once, for MP4 encoding
-python3 scripts/replay.py results/first_flight                     # every run in a campaign -> MP4s
+python3 scripts/replay.py results/<campaign>                      # every run in a campaign -> MP4s
+python3 scripts/replay.py results/<campaign> --organize           # sort existing videos into PASSED/FAILED
 python3 scripts/replay.py results/<campaign>/<scenario>/<run> --views overview --speed 2
 python3 scripts/replay.py results/<campaign>/<scenario>/<run> --watch   # watch in the Gazebo GUI
 python3 run_tests.py --scenario S1 --seed 513 --video             # run, then render its videos
 ```
 
 Videos: `replay_overview.mp4` (angled view) and `replay_top.mp4` (top-down)
-in each run folder, plus copies in `results/<campaign>/videos/`. On Windows
-they are under `ARES\gazebo_test_pipeline\results\`.
+in each run folder, plus copies sorted by experiment and outcome:
+`results/<campaign>/videos/<0_control..5_wind_gusts_plus_complete_blackout>/<PASSED|FAILED>/`.
+On Windows they are under `ARES\gazebo_test_pipeline\results\`. Campaign
+names are `single_drone_map-temporal-cnn_<guidance>` and
+`swarm_map-temporal-cnn_<guidance>`.
 
 Results go to `results/<campaign>/<scenario>/<start>/seed<N>_<id>/` (git-ignored):
 `manifest.json` (all inputs), `control.csv` (every tick), `odometry_ned.csv`
@@ -167,19 +178,29 @@ session (in parallel). The drones talk only to the **hub**
 ```bash
 python3 run_swarm_tests.py --list
 python3 run_swarm_tests.py --scenario S0 --video          # one mission + videos
-python3 run_swarm_tests.py --all --video                  # all 10 swarm scenarios
+python3 run_swarm_tests.py --all --video                  # all 13 swarm scenarios (~4 h)
 python3 run_swarm_tests.py --scenario S2 --comms lossy    # stress the radio
+python3 run_swarm_tests.py --all --lidar-source raycast   # faster: ray-cast LiDAR (buildings + other drones), Gazebo physics
 python3 scripts/swarm_dry_run.py --scenario S2_blackout   # hub logic only, no Gazebo/MATLAB, seconds
 ```
 
 Scenarios (`config/swarm_scenarios.yaml`): intermittent outages independent per
-drone *and* all at once; blackout on UAV2 (the containment case); light/medium
-gusts. A mission **passes** with no crash, the 3 m invariant held at 1 kHz,
+drone *and* all at once; blackout on UAV2 (the containment case); light,
+medium and strong gusts. A mission **passes** with no crash, the 3 m invariant held at 1 kHz,
 every trusted drone 1.0 m from buildings, all trusted drones at their slots,
 and every victim confirmed by a drone with working LiDAR. Each run writes
 `summary.json`, `hub_events.json` (every hub decision with its reason),
 `trust.csv`, `swarm_map.png` and per-drone `drones/<UAV>/control.csv`; videos
 show every drone's LiDAR state, hub mode, task and the live separation.
+
+First campaign (2026-11-27, seed 1, nominal radio): **10/13 missions passed**.
+In all 13 the 3 m invariant held (closest pair 3.90 m), all 4 victims were
+confirmed, every LiDAR failure was flagged after 0.1 s and a blackout
+quarantined after 2.3 s; the blind, quarantined UAV2 always kept >= 1.40 m from
+buildings on the CNN. The three failures (`S4` medium/strong, `S5` strong) share
+one cause: a gust pushed a *healthy* drone inside its 1 m building clearance,
+the planner then found no feasible trajectory and commanded zero velocity
+instead of backing away, and later gusts pushed it to 0.13-0.22 m from a wall.
 
 ## When the MATLAB solution changes
 
